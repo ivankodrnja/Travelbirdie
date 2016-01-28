@@ -44,15 +44,6 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="220" id="NSW-9m-NId"/>
                                 </constraints>
-                                <button key="tableFooterView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="SEB-pU-9jo">
-                                    <rect key="frame" x="0.0" y="72" width="560" height="60"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    <color key="backgroundColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                    <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="23"/>
-                                    <inset key="contentEdgeInsets" minX="16" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                    <size key="titleShadowOffset" width="2.2250738585072014e-308" height="0.0"/>
-                                    <state key="normal" title="SEARCH RENTALS"/>
-                                </button>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="SearchCell" textLabel="99b-4f-ZaS" style="IBUITableViewCellStyleDefault" id="bdt-2M-LuD">
                                         <rect key="frame" x="0.0" y="28" width="560" height="44"/>
@@ -77,42 +68,57 @@
                                     <outlet property="delegate" destination="8tJ-li-9D4" id="Dxi-Jz-oTb"/>
                                 </connections>
                             </tableView>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="L4L-cc-d0T">
+                                <rect key="frame" x="290" y="276" width="20" height="20"/>
+                            </activityIndicatorView>
                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NyL-P8-D2z">
-                                <rect key="frame" x="0.0" y="384" width="600" height="216"/>
+                                <rect key="frame" x="0.0" y="360" width="600" height="240"/>
                                 <subviews>
                                     <datePicker hidden="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="h3m-Rd-QOc">
-                                        <rect key="frame" x="0.0" y="0.0" width="600" height="216"/>
+                                        <rect key="frame" x="0.0" y="20" width="600" height="220"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="220" id="Jxk-SL-th6"/>
+                                        </constraints>
                                         <date key="date" timeIntervalSinceReferenceDate="473625278.09745198">
                                             <!--2016-01-04 18:34:38 +0000-->
                                         </date>
                                     </datePicker>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DRa-ic-XG3">
+                                        <rect key="frame" x="538" y="10" width="54" height="31"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="31" id="lCe-BB-c47"/>
+                                            <constraint firstAttribute="width" constant="54" id="ooP-6V-MOX"/>
+                                        </constraints>
+                                        <state key="normal" title="Done"/>
+                                        <connections>
+                                            <action selector="dismissPicker:" destination="8tJ-li-9D4" eventType="touchUpInside" id="LgW-Tz-LoT"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="216" id="9ep-OP-nlc"/>
-                                    <constraint firstAttribute="bottom" secondItem="h3m-Rd-QOc" secondAttribute="bottom" id="Ncv-ps-ODZ"/>
-                                    <constraint firstAttribute="trailing" secondItem="h3m-Rd-QOc" secondAttribute="trailing" id="cIf-CG-I73"/>
-                                    <constraint firstItem="h3m-Rd-QOc" firstAttribute="top" secondItem="NyL-P8-D2z" secondAttribute="top" id="f3P-9F-x4q"/>
-                                    <constraint firstItem="h3m-Rd-QOc" firstAttribute="leading" secondItem="NyL-P8-D2z" secondAttribute="leading" id="hA7-7G-kMY"/>
+                                    <constraint firstItem="h3m-Rd-QOc" firstAttribute="leading" secondItem="NyL-P8-D2z" secondAttribute="leading" id="6MI-Uk-ggK"/>
+                                    <constraint firstAttribute="trailing" secondItem="DRa-ic-XG3" secondAttribute="trailing" constant="8" id="EOF-dk-ycg"/>
+                                    <constraint firstItem="DRa-ic-XG3" firstAttribute="top" secondItem="NyL-P8-D2z" secondAttribute="top" constant="10" id="Eoz-5u-tL2"/>
+                                    <constraint firstAttribute="height" constant="240" id="GwF-Aj-Uq1"/>
+                                    <constraint firstAttribute="bottom" secondItem="h3m-Rd-QOc" secondAttribute="bottom" id="Jps-a1-9pd"/>
+                                    <constraint firstAttribute="trailing" secondItem="h3m-Rd-QOc" secondAttribute="trailing" id="bip-Xe-txh"/>
                                 </constraints>
                             </view>
-                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="L4L-cc-d0T">
-                                <rect key="frame" x="290" y="276" width="20" height="20"/>
-                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="bottom" secondItem="NyL-P8-D2z" secondAttribute="bottom" id="1c4-8x-IgA"/>
                             <constraint firstItem="Lgx-b7-6S6" firstAttribute="top" secondItem="rbZ-pb-ejp" secondAttribute="bottom" constant="112" id="5zB-46-Frv"/>
+                            <constraint firstAttribute="trailing" secondItem="NyL-P8-D2z" secondAttribute="trailing" id="8Yc-Cn-U4f"/>
                             <constraint firstItem="woA-VN-ixn" firstAttribute="top" secondItem="rbZ-pb-ejp" secondAttribute="bottom" id="JlP-B0-VE0"/>
                             <constraint firstItem="Lgx-b7-6S6" firstAttribute="leading" secondItem="B9D-uh-UDB" secondAttribute="leading" constant="20" id="ONF-sN-9HZ"/>
                             <constraint firstItem="L4L-cc-d0T" firstAttribute="centerY" secondItem="Lgx-b7-6S6" secondAttribute="centerY" id="TEg-Wo-SvS"/>
-                            <constraint firstItem="NyL-P8-D2z" firstAttribute="leading" secondItem="B9D-uh-UDB" secondAttribute="leading" id="VOi-9C-Qt3"/>
                             <constraint firstItem="woA-VN-ixn" firstAttribute="leading" secondItem="B9D-uh-UDB" secondAttribute="leading" id="bBp-ul-cd0"/>
                             <constraint firstItem="L4L-cc-d0T" firstAttribute="centerX" secondItem="Lgx-b7-6S6" secondAttribute="centerX" id="bc8-cn-Lqg"/>
                             <constraint firstAttribute="trailing" secondItem="woA-VN-ixn" secondAttribute="trailing" id="hRO-qU-8cr"/>
+                            <constraint firstAttribute="bottom" secondItem="NyL-P8-D2z" secondAttribute="bottom" id="lGJ-Wd-OUh"/>
                             <constraint firstAttribute="trailing" secondItem="Lgx-b7-6S6" secondAttribute="trailing" constant="20" id="pEu-xi-aod"/>
-                            <constraint firstAttribute="trailing" secondItem="NyL-P8-D2z" secondAttribute="trailing" id="sI7-ym-Kls"/>
+                            <constraint firstItem="NyL-P8-D2z" firstAttribute="leading" secondItem="B9D-uh-UDB" secondAttribute="leading" id="uC4-d4-Y66"/>
                             <constraint firstAttribute="bottom" secondItem="woA-VN-ixn" secondAttribute="bottom" id="vaF-i3-Cz0"/>
                         </constraints>
                     </view>
