@@ -30,11 +30,16 @@ class TravelbirdieSearchViewController: UIViewController, UITableViewDelegate, U
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        
-        checkOutDate = NSCalendar.currentCalendar().dateByAddingUnit(
+
+        // set default values for the search query
+        ZilyoClient.sharedInstance().tempRequestParameters[ZilyoClient.Keys.location] = "unknown"
+        ZilyoClient.sharedInstance().tempRequestParameters[ZilyoClient.Keys.guests] = 1
+        ZilyoClient.sharedInstance().tempRequestParameters[ZilyoClient.Keys.checkIn] = NSDate()
+        // checkout is tomorrow
+        ZilyoClient.sharedInstance().tempRequestParameters[ZilyoClient.Keys.checkOut] = NSCalendar.currentCalendar().dateByAddingUnit(
             .Day,
             value: 1,
-            toDate: self.checkInDate,
+            toDate: ZilyoClient.sharedInstance().tempRequestParameters[ZilyoClient.Keys.checkIn] as! NSDate,
             options: [])!
     }
     
@@ -43,11 +48,13 @@ class TravelbirdieSearchViewController: UIViewController, UITableViewDelegate, U
     }
     
     override func viewWillAppear(animated: Bool) {
+        // make sure table cells have an updated content
+        tableViewContainer.reloadData()
+        
         self.tableViewContainer.alpha = 1.0
         self.backgroundImage.alpha = 1.0
         activityIndicator.hidesWhenStopped = true
         activityIndicator.stopAnimating()
-        
     }
     
     override func didReceiveMemoryWarning() {
@@ -67,20 +74,32 @@ class TravelbirdieSearchViewController: UIViewController, UITableViewDelegate, U
         // set static cells
         switch(indexPath.row){
         case 0:
-            cell.textLabel?.text = SearchHelper.Constants.Location
+            cell.textLabel?.text = SearchHelper.Constants.Location + ": " + (ZilyoClient.sharedInstance().tempRequestParameters[ZilyoClient.Keys.location] as! String)
             cell.imageView?.image = UIImage(named: "Pin")
+            cell.selectionStyle = UITableViewCellSelectionStyle.None
             
         case 1:
-            cell.textLabel?.text = SearchHelper.Constants.NumberOfGuests
-            cell.imageView?.image = UIImage(named: "Pin")
+            cell.textLabel?.text = SearchHelper.Constants.NumberOfGuests + ": " + String(ZilyoClient.sharedInstance().tempRequestParameters[ZilyoClient.Keys.guests]!)
+            cell.imageView?.image = UIImage(named: "Guests")
+            cell.selectionStyle = UITableViewCellSelectionStyle.None
             
         case 2:
-            cell.textLabel?.text = SearchHelper.Constants.CheckIn
+            let dateFormatter = NSDateFormatter()
+            dateFormatter.dateFormat = "dd-MMM-yyyy"
+            let string = dateFormatter.stringFromDate(ZilyoClient.sharedInstance().tempRequestParameters[ZilyoClient.Keys.checkIn]! as! NSDate)
+            
+            cell.textLabel?.text = SearchHelper.Constants.CheckIn + ": " + string
             cell.imageView?.image = UIImage(named: "Pin")
+            cell.selectionStyle = UITableViewCellSelectionStyle.None
             
         case 3:
-            cell.textLabel?.text = SearchHelper.Constants.CheckOut
+            let dateFormatter = NSDateFormatter()
+            dateFormatter.dateFormat = "dd-MMM-yyyy"
+            let string = dateFormatter.stringFromDate(ZilyoClient.sharedInstance().tempRequestParameters[ZilyoClient.Keys.checkOut]! as! NSDate)
+            
+            cell.textLabel?.text = SearchHelper.Constants.CheckOut + ": " + string
             cell.imageView?.image = UIImage(named: "Pin")
+            cell.selectionStyle = UITableViewCellSelectionStyle.None
             
         case 4:
             cell.accessoryType = UITableViewCellAccessoryType.None
@@ -115,7 +134,6 @@ class TravelbirdieSearchViewController: UIViewController, UITableViewDelegate, U
         case 0:
             let placesSearchController = PlacesSearchResultsController()
             self.presentViewController(placesSearchController, animated: true, completion: nil)
-            
         // select number of guests
         case 1:
             break
@@ -170,19 +188,13 @@ class TravelbirdieSearchViewController: UIViewController, UITableViewDelegate, U
         // prevent user from submiting twice
         self.searchTapped = true
         
-        let date = NSDate().timeIntervalSince1970
-        
-        print(date)
-        
-        let checkIn = date
-        let checkOut = date + 86400
-        
+
         self.requestParameters[ZilyoClient.Keys.latitude] = ZilyoClient.sharedInstance().tempRequestParameters[ZilyoClient.Keys.latitude]
         
         self.requestParameters[ZilyoClient.Keys.longitude] = ZilyoClient.sharedInstance().tempRequestParameters[ZilyoClient.Keys.longitude]
-        self.requestParameters[ZilyoClient.Keys.guests] = 1
-        self.requestParameters[ZilyoClient.Keys.checkIn] = checkIn
-        self.requestParameters[ZilyoClient.Keys.checkOut] = checkOut
+        self.requestParameters[ZilyoClient.Keys.guests] = ZilyoClient.sharedInstance().tempRequestParameters[ZilyoClient.Keys.guests]
+        self.requestParameters[ZilyoClient.Keys.checkIn] = ZilyoClient.sharedInstance().tempRequestParameters[ZilyoClient.Keys.checkIn]?.timeIntervalSince1970
+        self.requestParameters[ZilyoClient.Keys.checkOut] = ZilyoClient.sharedInstance().tempRequestParameters[ZilyoClient.Keys.checkIn]?.timeIntervalSince1970
         self.requestParameters[ZilyoClient.Keys.page] = 1
 
         

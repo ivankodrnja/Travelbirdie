@@ -33,7 +33,7 @@ class SearchHelper : NSObject {
     
     struct Constants {
         
-        static let Location = "Location"
+        static let Location = "Destination"
         static let NumberOfGuests = "Number of guests"
         static let CheckIn = "Check In"
         static let CheckOut = "Check Out"
