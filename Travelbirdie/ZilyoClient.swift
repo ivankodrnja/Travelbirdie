@@ -22,6 +22,9 @@ class ZilyoClient: NSObject {
     
     var apartmentDict : [ApartmentInformation] = [ApartmentInformation]()
     
+    // dictionary that will temporarily hold request parameters
+    var tempRequestParameters = [String : AnyObject]()
+    
     // MARK: - Shared Instance
     
     class func sharedInstance() -> ZilyoClient {
@@ -60,10 +63,10 @@ class ZilyoClient: NSObject {
     }
     
     
-    func getRentals(locationLat: Double, locationLon: Double, guestsNumber : Int = 1, checkIn : NSTimeInterval, checkOut : NSTimeInterval, completionHandler: (result: [ApartmentInformation]?, error: NSError?) -> Void) {
+    func getRentals(locationLat: Double, locationLon: Double, guestsNumber : Int = 1, checkIn : NSTimeInterval, checkOut : NSTimeInterval, page : Int = 1, completionHandler: (result: [ApartmentInformation]?, error: NSError?) -> Void) {
         
         /* 1. Set the parameters */
-        let methodParameters = [ZilyoClient.Keys.latitude : locationLat, ZilyoClient.Keys.longitude : locationLon, ZilyoClient.Keys.guests : guestsNumber, ZilyoClient.Keys.checkIn : checkIn, ZilyoClient.Keys.checkOut : checkOut]
+        let methodParameters = [ZilyoClient.Keys.latitude : locationLat, ZilyoClient.Keys.longitude : locationLon, ZilyoClient.Keys.guests : guestsNumber, ZilyoClient.Keys.checkIn : checkIn, ZilyoClient.Keys.checkOut : checkOut, ZilyoClient.Keys.page : page]
         
 
         
@@ -130,6 +133,8 @@ class ZilyoClient: NSObject {
         /* 7. Start the request */
         task.resume()
     }
+    
+    
     
     // MARK: - All purpose task method for images
     

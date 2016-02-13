@@ -38,6 +38,13 @@
 	<dict>
 		<key>NSExceptionDomains</key>
 		<dict>
+			<key>airbnb.com</key>
+			<dict>
+				<key>NSIncludesSubdomains</key>
+				<string></string>
+				<key>NSExceptionAllowsInsecureHTTPLoads</key>
+				<string></string>
+			</dict>
 			<key>homeaway.com</key>
 			<dict>
 				<key>NSExceptionAllowsInsecureHTTPLoads</key>
@@ -51,6 +58,13 @@
 				<true/>
 				<key>NSIncludesSubdomains</key>
 				<true/>
+			</dict>
+			<key>bedycasa.com</key>
+			<dict>
+				<key>NSIncludesSubdomains</key>
+				<string></string>
+				<key>NSExceptionAllowsInsecureHTTPLoads</key>
+				<string></string>
 			</dict>
 		</dict>
 	</dict>

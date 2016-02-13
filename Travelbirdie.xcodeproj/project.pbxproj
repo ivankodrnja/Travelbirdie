@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		832D15211C00CD660001AAA7 /* Blurable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 832D15201C00CD660001AAA7 /* Blurable.swift */; };
+		17D2B4CAD961EEC96C533C83 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FD2A8DCEE6A3008A16FAD0E0 /* libPods.a */; };
 		832D15241C0117BF0001AAA7 /* SearchHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 832D15231C0117BF0001AAA7 /* SearchHelper.swift */; };
 		832D15261C01D0340001AAA7 /* ResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 832D15251C01D0340001AAA7 /* ResultsViewController.swift */; };
 		832D15281C01E27D0001AAA7 /* ZilyoClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 832D15271C01E27D0001AAA7 /* ZilyoClient.swift */; };
@@ -20,6 +20,7 @@
 		8354E03C1BD3CB5E003593B8 /* TravelbirdieTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8354E03B1BD3CB5E003593B8 /* TravelbirdieTests.swift */; };
 		8354E0471BD3CB5E003593B8 /* TravelbirdieUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8354E0461BD3CB5E003593B8 /* TravelbirdieUITests.swift */; };
 		83874B201C39718D007ED9C5 /* SearchResultViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83874B1F1C39718D007ED9C5 /* SearchResultViewCell.xib */; };
+		83B468111C6DA59C00500763 /* PlacesSearchResultsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83B468101C6DA59C00500763 /* PlacesSearchResultsController.swift */; };
 		83BC3D281C3806E5006CDB8E /* TaskCancelingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83BC3D271C3806E5006CDB8E /* TaskCancelingTableViewCell.swift */; };
 		83D5B82C1C390D4400AD1D1F /* SearchResultViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D5B82B1C390D4400AD1D1F /* SearchResultViewCell.swift */; };
 		83EF17001C0CEFA3002819A7 /* ApartmentInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83EF16FF1C0CEFA3002819A7 /* ApartmentInformation.swift */; };
@@ -56,7 +57,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		832D15201C00CD660001AAA7 /* Blurable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Blurable.swift; sourceTree = "<group>"; };
+		1071DD97E31198EECC9319F6 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		2A0A8238FC8C93BA95CBAF5F /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		832D15231C0117BF0001AAA7 /* SearchHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchHelper.swift; sourceTree = "<group>"; };
 		832D15251C01D0340001AAA7 /* ResultsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResultsViewController.swift; sourceTree = "<group>"; };
 		832D15271C01E27D0001AAA7 /* ZilyoClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZilyoClient.swift; sourceTree = "<group>"; };
@@ -75,9 +77,11 @@
 		8354E0461BD3CB5E003593B8 /* TravelbirdieUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TravelbirdieUITests.swift; sourceTree = "<group>"; };
 		8354E0481BD3CB5E003593B8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		83874B1F1C39718D007ED9C5 /* SearchResultViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SearchResultViewCell.xib; sourceTree = "<group>"; };
+		83B468101C6DA59C00500763 /* PlacesSearchResultsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlacesSearchResultsController.swift; sourceTree = "<group>"; };
 		83BC3D271C3806E5006CDB8E /* TaskCancelingTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskCancelingTableViewCell.swift; sourceTree = "<group>"; };
 		83D5B82B1C390D4400AD1D1F /* SearchResultViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchResultViewCell.swift; sourceTree = "<group>"; };
 		83EF16FF1C0CEFA3002819A7 /* ApartmentInformation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApartmentInformation.swift; sourceTree = "<group>"; };
+		FD2A8DCEE6A3008A16FAD0E0 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,6 +89,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				17D2B4CAD961EEC96C533C83 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -105,6 +110,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		33B0C5DBBCD458F94DA127AA /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				2A0A8238FC8C93BA95CBAF5F /* Pods.debug.xcconfig */,
+				1071DD97E31198EECC9319F6 /* Pods.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		832D15221C00E18B0001AAA7 /* Search */ = {
 			isa = PBXGroup;
 			children = (
@@ -120,6 +134,8 @@
 				8354E03A1BD3CB5E003593B8 /* TravelbirdieTests */,
 				8354E0451BD3CB5E003593B8 /* TravelbirdieUITests */,
 				8354E0241BD3CB5D003593B8 /* Products */,
+				33B0C5DBBCD458F94DA127AA /* Pods */,
+				D42A98612D76512E0878BA09 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -176,7 +192,6 @@
 		8354E0551BD3CBBE003593B8 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				832D15201C00CD660001AAA7 /* Blurable.swift */,
 				83D5B82B1C390D4400AD1D1F /* SearchResultViewCell.swift */,
 				83874B1F1C39718D007ED9C5 /* SearchResultViewCell.xib */,
 			);
@@ -188,6 +203,7 @@
 			children = (
 				8354E0281BD3CB5D003593B8 /* TravelbirdieSearchViewController.swift */,
 				832D15251C01D0340001AAA7 /* ResultsViewController.swift */,
+				83B468101C6DA59C00500763 /* PlacesSearchResultsController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -213,6 +229,14 @@
 			name = Zilyo;
 			sourceTree = "<group>";
 		};
+		D42A98612D76512E0878BA09 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				FD2A8DCEE6A3008A16FAD0E0 /* libPods.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -220,10 +244,13 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 8354E04B1BD3CB5E003593B8 /* Build configuration list for PBXNativeTarget "Travelbirdie" */;
 			buildPhases = (
+				F8ACFFE13EB4BF987D953020 /* Check Pods Manifest.lock */,
 				8354E01F1BD3CB5D003593B8 /* Sources */,
 				8354E0201BD3CB5D003593B8 /* Frameworks */,
 				8354E0211BD3CB5D003593B8 /* Resources */,
 				83EF16F91C09FD3E002819A7 /* Embed Frameworks */,
+				6FE01A7C8AD9EF5B67422622 /* Embed Pods Frameworks */,
+				BA3756CFC93CADEEB621B813 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -341,14 +368,62 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		6FE01A7C8AD9EF5B67422622 /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		BA3756CFC93CADEEB621B813 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		F8ACFFE13EB4BF987D953020 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		8354E01F1BD3CB5D003593B8 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				83B468111C6DA59C00500763 /* PlacesSearchResultsController.swift in Sources */,
 				8354E0291BD3CB5D003593B8 /* TravelbirdieSearchViewController.swift in Sources */,
 				832D152A1C021BD50001AAA7 /* ZilyoConstants.swift in Sources */,
-				832D15211C00CD660001AAA7 /* Blurable.swift in Sources */,
 				83D5B82C1C390D4400AD1D1F /* SearchResultViewCell.swift in Sources */,
 				83BC3D281C3806E5006CDB8E /* TaskCancelingTableViewCell.swift in Sources */,
 				8354E0271BD3CB5D003593B8 /* AppDelegate.swift in Sources */,
@@ -493,6 +568,7 @@
 		};
 		8354E04C1BD3CB5E003593B8 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2A0A8238FC8C93BA95CBAF5F /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -508,6 +584,7 @@
 		};
 		8354E04D1BD3CB5E003593B8 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1071DD97E31198EECC9319F6 /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";

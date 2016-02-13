@@ -23,11 +23,14 @@ class TravelbirdieSearchViewController: UIViewController, UITableViewDelegate, U
     
     // variable thata will use to enable / disable search row in the column
     var searchTapped : Bool = false
-
+    
+    // dictionary that will hold request parameters
+    var requestParameters = [String : AnyObject]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        
         checkOutDate = NSCalendar.currentCalendar().dateByAddingUnit(
             .Day,
             value: 1,
@@ -52,7 +55,7 @@ class TravelbirdieSearchViewController: UIViewController, UITableViewDelegate, U
         // Dispose of any resources that can be recreated.
     }
 
-    
+
     
    // MARK: - Table delegate methods
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -110,7 +113,9 @@ class TravelbirdieSearchViewController: UIViewController, UITableViewDelegate, U
         switch(indexPath.row){
         // select location
         case 0:
-            break
+            let placesSearchController = PlacesSearchResultsController()
+            self.presentViewController(placesSearchController, animated: true, completion: nil)
+            
         // select number of guests
         case 1:
             break
@@ -148,6 +153,7 @@ class TravelbirdieSearchViewController: UIViewController, UITableViewDelegate, U
         }
 
     }
+ 
     
     // MARK: - Helper functions
     
@@ -164,11 +170,6 @@ class TravelbirdieSearchViewController: UIViewController, UITableViewDelegate, U
         // prevent user from submiting twice
         self.searchTapped = true
         
-        
-        
-        let locationLat = 45.3400805
-        let locationLon = 14.3096924
-        
         let date = NSDate().timeIntervalSince1970
         
         print(date)
@@ -176,11 +177,21 @@ class TravelbirdieSearchViewController: UIViewController, UITableViewDelegate, U
         let checkIn = date
         let checkOut = date + 86400
         
-        ZilyoClient.sharedInstance().getRentals(locationLat, locationLon: locationLon, checkIn: checkIn, checkOut: checkOut){(result, error) in
+        self.requestParameters[ZilyoClient.Keys.latitude] = ZilyoClient.sharedInstance().tempRequestParameters[ZilyoClient.Keys.latitude]
+        
+        self.requestParameters[ZilyoClient.Keys.longitude] = ZilyoClient.sharedInstance().tempRequestParameters[ZilyoClient.Keys.longitude]
+        self.requestParameters[ZilyoClient.Keys.guests] = 1
+        self.requestParameters[ZilyoClient.Keys.checkIn] = checkIn
+        self.requestParameters[ZilyoClient.Keys.checkOut] = checkOut
+        self.requestParameters[ZilyoClient.Keys.page] = 1
+
+        
+        ZilyoClient.sharedInstance().getRentals(self.requestParameters[ZilyoClient.Keys.latitude]! as! Double, locationLon: self.requestParameters[ZilyoClient.Keys.longitude]! as! Double, guestsNumber: self.requestParameters[ZilyoClient.Keys.guests]! as! Int, checkIn: self.requestParameters[ZilyoClient.Keys.checkIn]! as! NSTimeInterval, checkOut: self.requestParameters[ZilyoClient.Keys.checkOut]! as! NSTimeInterval, page: 1){(result, error) in
             
             
             if error == nil {
                 //print(result)
+                controller.requestParameters = self.requestParameters
                 dispatch_async(dispatch_get_main_queue()) {
                     
                     //controller.result = result!
@@ -190,8 +201,6 @@ class TravelbirdieSearchViewController: UIViewController, UITableViewDelegate, U
                     self.searchTapped = false
                 }
             }
-
-            
         }
     }
     

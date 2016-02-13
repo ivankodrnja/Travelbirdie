@@ -10,11 +10,22 @@ import UIKit
 
 class ResultsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource{
     
+    @IBOutlet weak var tableView: UITableView!
     
-   // var result : [ApartmentInformation]?
+
+    var requestParameters = [String : AnyObject]()
+    
+    // handle auto downoad of subsequent apartments
+    var populatingApartments = false
+    // next page to show is 2
+    var currentPage = 2
+    
+    // we will use these two count variables to check the last page of results, when these two variables match, we won't make additional network calls as this means we've hit the last page of results
+    var currentCountOfApartments : Int!
+    var totalCountOfApartments : Int!
     
     override func viewDidLoad() {
-        
+
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -56,8 +67,10 @@ class ResultsViewController: UIViewController, UITableViewDelegate, UITableViewD
                 
                 if let error = error {
                     print("Title download error: \(error.localizedDescription)")
+                    dispatch_async(dispatch_get_main_queue()) {
                     // show placeholder image
                     cell.apartmentImageView.image = UIImage(named: "noImage")
+                    }
                 }
                 
                 if let data = data {
@@ -116,12 +129,61 @@ class ResultsViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        /*
-        let app = UIApplication.sharedApplication()
-        app.openURL(NSURL(string: ParseClient.sharedInstance().studentsDict[indexPath.row].mediaUrl!)!)
-        */
+
         
         
     }
     
+    func scrollViewDidScroll(scrollView: UIScrollView) {
+        
+        if scrollView.contentOffset.y + view.frame.size.height > scrollView.contentSize.height * 0.8 { // Loads more apartments once the user has scrolled 80% of the view
+            searchRentals()
+            
+        }
+
+        
+    }
+    
+    func searchRentals() {
+        // Loads apartments in the "currentPage" and uses "populatingApartments" as a flag to avoid loading the next page while you are still loading the current page
+        if populatingApartments {
+            return
+        }
+        if let ttlCountOfApartments = self.totalCountOfApartments {
+            if (currentCountOfApartments == ttlCountOfApartments){
+                return
+            }
+            
+        }
+        
+        populatingApartments = true
+
+        
+        ZilyoClient.sharedInstance().getRentals(self.requestParameters[ZilyoClient.Keys.latitude]! as! Double, locationLon: self.requestParameters[ZilyoClient.Keys.longitude] as! Double, guestsNumber: self.requestParameters[ZilyoClient.Keys.guests]! as! Int, checkIn: self.requestParameters[ZilyoClient.Keys.checkIn]! as! NSTimeInterval, checkOut: self.requestParameters[ZilyoClient.Keys.checkOut]! as! NSTimeInterval, page: self.currentPage){(result, error) in
+            
+            
+            if error == nil {
+                // Store the current number of apartments before adding any new batch
+                self.currentCountOfApartments = ZilyoClient.sharedInstance().apartmentDict.count
+                print("currentCountOfApartments count:\(self.currentCountOfApartments)\n")
+                
+                print("Current page:\(self.currentPage)\n")
+                ZilyoClient.sharedInstance().apartmentDict += result!
+                
+                self.totalCountOfApartments = ZilyoClient.sharedInstance().apartmentDict.count 
+                print("totalCountOfApartments count:\(self.totalCountOfApartments)\n")
+
+                dispatch_async(dispatch_get_main_queue()) {
+                    
+                    self.populatingApartments = false
+                    self.tableView.reloadData()
+                    
+                    self.currentPage++
+                }
+            }
+
+            
+        }
+
+    }
 }

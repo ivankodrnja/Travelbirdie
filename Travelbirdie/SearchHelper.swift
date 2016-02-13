@@ -10,6 +10,14 @@ import Foundation
 
 class SearchHelper : NSObject {
     
+    /* Shared Session */
+    var session: NSURLSession
+    
+    override init() {
+        session = NSURLSession.sharedSession()
+        super.init()
+    }
+    
     // MARK: - Shared Instance
     
     class func sharedInstance() -> SearchHelper {

@@ -22,7 +22,8 @@ extension ZilyoClient {
         static let guests = "guests"
         static let checkIn = "stimestamp"
         static let checkOut = "etimestamp"
-        
+        static let page = "page"
+        static let location = "location"
     }
     
     struct JSONResponseKeys {
