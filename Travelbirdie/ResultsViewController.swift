@@ -45,6 +45,9 @@ class ResultsViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         let cell = tableView.dequeueReusableCellWithIdentifier(cellReuseIdentifier)! as! SearchResultViewCell
 
+        // make table cell separators stretch throught the screen width, in Storyboard separator insets of the table view nd the cell have also set to 0
+        cell.preservesSuperviewLayoutMargins = false
+        cell.layoutMargins = UIEdgeInsetsZero
 
         
         let apartment = ZilyoClient.sharedInstance().apartmentDict[indexPath.row]
@@ -133,6 +136,24 @@ class ResultsViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         
     }
+    
+    
+    /* MAKE SPACING BETWEEN THE CELLS
+    func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+        cell.contentView.backgroundColor = UIColor.clearColor()
+        
+        let whiteRoundedView : UIView = UIView(frame: CGRectMake(0, 10, self.view.frame.size.width, (self.view.frame.size.height) - 20))
+        
+        whiteRoundedView.layer.backgroundColor = CGColorCreate(CGColorSpaceCreateDeviceRGB(), [1.0, 1.0, 1.0, 1.0])
+        whiteRoundedView.layer.masksToBounds = false
+        whiteRoundedView.layer.cornerRadius = 2.0
+        whiteRoundedView.layer.shadowOffset = CGSizeMake(-1, 1)
+        whiteRoundedView.layer.shadowOpacity = 0.2
+        
+        cell.contentView.addSubview(whiteRoundedView)
+        cell.contentView.sendSubviewToBack(whiteRoundedView)
+    }
+    */
     
     func scrollViewDidScroll(scrollView: UIScrollView) {
         

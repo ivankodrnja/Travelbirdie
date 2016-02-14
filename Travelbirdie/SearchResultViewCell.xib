@@ -119,6 +119,7 @@
                     <constraint firstItem="S4P-Ho-HWO" firstAttribute="top" secondItem="q0R-fW-Uib" secondAttribute="bottom" constant="2" id="xBE-Ey-ui0"/>
                 </constraints>
             </tableViewCellContentView>
+            <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
             <connections>
                 <outlet property="apartmentImageView" destination="OTM-Wm-xaj" id="C69-qw-RM3"/>
                 <outlet property="apartmentNameLabel" destination="rFq-a5-z0t" id="sqa-Kn-O6f"/>

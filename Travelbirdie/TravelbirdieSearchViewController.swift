@@ -32,7 +32,7 @@ class TravelbirdieSearchViewController: UIViewController, UITableViewDelegate, U
         // Do any additional setup after loading the view, typically from a nib.
 
         // set default values for the search query
-        ZilyoClient.sharedInstance().tempRequestParameters[ZilyoClient.Keys.location] = "unknown"
+        ZilyoClient.sharedInstance().tempRequestParameters[ZilyoClient.Keys.location] = SearchHelper.Constants.Unknown
         ZilyoClient.sharedInstance().tempRequestParameters[ZilyoClient.Keys.guests] = 1
         ZilyoClient.sharedInstance().tempRequestParameters[ZilyoClient.Keys.checkIn] = NSDate()
         // checkout is tomorrow
@@ -70,6 +70,9 @@ class TravelbirdieSearchViewController: UIViewController, UITableViewDelegate, U
         /* Get cell type */
         let cellReuseIdentifier = "SearchCell"
         let cell = tableView.dequeueReusableCellWithIdentifier(cellReuseIdentifier)! as UITableViewCell
+        // make table cell separators stretch throught the screen width, in Storyboard separator insets of the table view nd the cell have also set to 0
+        cell.preservesSuperviewLayoutMargins = false
+        cell.layoutMargins = UIEdgeInsetsZero
         
         // set static cells
         switch(indexPath.row){
@@ -89,7 +92,7 @@ class TravelbirdieSearchViewController: UIViewController, UITableViewDelegate, U
             let string = dateFormatter.stringFromDate(ZilyoClient.sharedInstance().tempRequestParameters[ZilyoClient.Keys.checkIn]! as! NSDate)
             
             cell.textLabel?.text = SearchHelper.Constants.CheckIn + ": " + string
-            cell.imageView?.image = UIImage(named: "Pin")
+            cell.imageView?.image = UIImage(named: "Calendar")
             cell.selectionStyle = UITableViewCellSelectionStyle.None
             
         case 3:
@@ -98,7 +101,7 @@ class TravelbirdieSearchViewController: UIViewController, UITableViewDelegate, U
             let string = dateFormatter.stringFromDate(ZilyoClient.sharedInstance().tempRequestParameters[ZilyoClient.Keys.checkOut]! as! NSDate)
             
             cell.textLabel?.text = SearchHelper.Constants.CheckOut + ": " + string
-            cell.imageView?.image = UIImage(named: "Pin")
+            cell.imageView?.image = UIImage(named: "Calendar")
             cell.selectionStyle = UITableViewCellSelectionStyle.None
             
         case 4:
@@ -177,17 +180,6 @@ class TravelbirdieSearchViewController: UIViewController, UITableViewDelegate, U
     
     
     func searchRentals() {
-        
-        // let the user know something is going on under the hood
-        self.tableViewContainer.alpha = 0.5
-        self.backgroundImage.alpha = 0.5
-        self.activityIndicator.startAnimating()
-        
-        let controller = storyboard!.instantiateViewControllerWithIdentifier("ResultsViewController") as! ResultsViewController
-        
-        // prevent user from submiting twice
-        self.searchTapped = true
-        
 
         self.requestParameters[ZilyoClient.Keys.latitude] = ZilyoClient.sharedInstance().tempRequestParameters[ZilyoClient.Keys.latitude]
         
@@ -196,23 +188,39 @@ class TravelbirdieSearchViewController: UIViewController, UITableViewDelegate, U
         self.requestParameters[ZilyoClient.Keys.checkIn] = ZilyoClient.sharedInstance().tempRequestParameters[ZilyoClient.Keys.checkIn]?.timeIntervalSince1970
         self.requestParameters[ZilyoClient.Keys.checkOut] = ZilyoClient.sharedInstance().tempRequestParameters[ZilyoClient.Keys.checkIn]?.timeIntervalSince1970
         self.requestParameters[ZilyoClient.Keys.page] = 1
-
         
-        ZilyoClient.sharedInstance().getRentals(self.requestParameters[ZilyoClient.Keys.latitude]! as! Double, locationLon: self.requestParameters[ZilyoClient.Keys.longitude]! as! Double, guestsNumber: self.requestParameters[ZilyoClient.Keys.guests]! as! Int, checkIn: self.requestParameters[ZilyoClient.Keys.checkIn]! as! NSTimeInterval, checkOut: self.requestParameters[ZilyoClient.Keys.checkOut]! as! NSTimeInterval, page: 1){(result, error) in
+        // don't make a network request if destination isn't set
+        if(self.requestParameters[ZilyoClient.Keys.latitude] == nil || self.requestParameters[ZilyoClient.Keys.longitude] == nil){
+            self.showAlertView(SearchHelper.Constants.ChooseDestination)
+        } else {
+            // let the user know something is going on under the hood
+            self.tableViewContainer.alpha = 0.5
+            self.backgroundImage.alpha = 0.5
+            self.activityIndicator.startAnimating()
+            
+            let controller = storyboard!.instantiateViewControllerWithIdentifier("ResultsViewController") as! ResultsViewController
+            
+            // prevent user from submiting twice
+            self.searchTapped = true
             
             
-            if error == nil {
-                //print(result)
-                controller.requestParameters = self.requestParameters
-                dispatch_async(dispatch_get_main_queue()) {
-                    
-                    //controller.result = result!
-                    ZilyoClient.sharedInstance().apartmentDict = result!
-                    self.navigationController!.pushViewController(controller, animated: true)
-                    // search row is enabled again
-                    self.searchTapped = false
+            ZilyoClient.sharedInstance().getRentals(self.requestParameters[ZilyoClient.Keys.latitude]! as! Double, locationLon: self.requestParameters[ZilyoClient.Keys.longitude]! as! Double, guestsNumber: self.requestParameters[ZilyoClient.Keys.guests]! as! Int, checkIn: self.requestParameters[ZilyoClient.Keys.checkIn]! as! NSTimeInterval, checkOut: self.requestParameters[ZilyoClient.Keys.checkOut]! as! NSTimeInterval, page: 1){(result, error) in
+                
+                
+                if error == nil {
+                    //print(result)
+                    controller.requestParameters = self.requestParameters
+                    dispatch_async(dispatch_get_main_queue()) {
+                        
+                        //controller.result = result!
+                        ZilyoClient.sharedInstance().apartmentDict = result!
+                        self.navigationController!.pushViewController(controller, animated: true)
+                        // search row is enabled again
+                        self.searchTapped = false
+                    }
                 }
             }
+            
         }
     }
     
@@ -278,5 +286,22 @@ class TravelbirdieSearchViewController: UIViewController, UITableViewDelegate, U
     func recognizecheckOutDate(sender: UIDatePicker) {
         self.checkOutDate = sender.date
     }
-
+    
+    // MARK: - Helpers
+    
+    func showAlertView(errorMessage: String?) {
+        
+        let alertController = UIAlertController(title: nil, message: errorMessage!, preferredStyle: .Alert)
+        
+        let cancelAction = UIAlertAction(title: "Dismiss", style: .Cancel) {(action) in
+            
+            
+        }
+        alertController.addAction(cancelAction)
+        
+        self.presentViewController(alertController, animated: true){
+            
+        }
+        
+    }
 }

@@ -92,39 +92,45 @@ class PlacesSearchResultsController: UITableViewController, UISearchBarDelegate 
 
     override func tableView(tableView: UITableView,
         didSelectRowAtIndexPath indexPath: NSIndexPath){
-            // 1
-            
-            // 2
+
             let correctedAddress:String! = self.searchResults[indexPath.row].stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.symbolCharacterSet())
-            let url = NSURL(string: "https://maps.googleapis.com/maps/api/geocode/json?address=\(correctedAddress)&sensor=false")
             
-            let task = NSURLSession.sharedSession().dataTaskWithURL(url!) { (data, response, error) -> Void in
-                // 3
-                do {
-                    if data != nil{
-                        let dic = try NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.MutableLeaves) as!  NSDictionary
-                        
-                        let lat = dic["results"]?.valueForKey("geometry")?.valueForKey("location")?.valueForKey("lat")?.objectAtIndex(0) as! Double
-                        let lon = dic["results"]?.valueForKey("geometry")?.valueForKey("location")?.valueForKey("lng")?.objectAtIndex(0) as! Double
-                        // 4
-                        print("Latitude:\(lat); Longitude:\(lon)")
-                        ZilyoClient.sharedInstance().tempRequestParameters[ZilyoClient.Keys.location] = self.searchResults[indexPath.row] 
-                        ZilyoClient.sharedInstance().tempRequestParameters[ZilyoClient.Keys.latitude] = lat
-                        ZilyoClient.sharedInstance().tempRequestParameters[ZilyoClient.Keys.longitude] = lon
-                        print("Travelbirdie Location:\(ZilyoClient.sharedInstance().tempRequestParameters[ZilyoClient.Keys.location]!); Latitude:\(ZilyoClient.sharedInstance().tempRequestParameters[ZilyoClient.Keys.latitude]!) Longitude:\(ZilyoClient.sharedInstance().tempRequestParameters[ZilyoClient.Keys.longitude]!)")
-                        
-                    }
+            SearchHelper.sharedInstance().getDestinationDetails(correctedAddress){(result, error) in
+                
+                if error == nil {
+                    ZilyoClient.sharedInstance().tempRequestParameters[ZilyoClient.Keys.location] = self.searchResults[indexPath.row]
+                    ZilyoClient.sharedInstance().tempRequestParameters[ZilyoClient.Keys.latitude] = result!["lat"]
+                    ZilyoClient.sharedInstance().tempRequestParameters[ZilyoClient.Keys.longitude] = result!["lon"]
                     
-                }catch {
-                    print("Error")
+                    print("Travelbirdie Location:\(ZilyoClient.sharedInstance().tempRequestParameters[ZilyoClient.Keys.location]!); Latitude:\(ZilyoClient.sharedInstance().tempRequestParameters[ZilyoClient.Keys.latitude]!) Longitude:\(ZilyoClient.sharedInstance().tempRequestParameters[ZilyoClient.Keys.longitude]!)")
+                    self.dismissViewControllerAnimated(true, completion: nil)
+                    self.dismissViewControllerAnimated(true, completion: nil)
+                    
+                } else {
+                    self.showAlertView(SearchHelper.Constants.PleaseRetry)
                 }
-                self.dismissViewControllerAnimated(true, completion: nil)
-                self.dismissViewControllerAnimated(true, completion: nil)
+
             }
-            // 5
-            task.resume()
+            
             
     }
     
+    // MARK: - Helpers
+    
+    func showAlertView(errorMessage: String?) {
+        
+        let alertController = UIAlertController(title: nil, message: errorMessage!, preferredStyle: .Alert)
+        
+        let cancelAction = UIAlertAction(title: "Dismiss", style: .Cancel) {(action) in
+            
+            
+        }
+        alertController.addAction(cancelAction)
+        
+        self.presentViewController(alertController, animated: true){
+            
+        }
+        
+    }
 
 }
