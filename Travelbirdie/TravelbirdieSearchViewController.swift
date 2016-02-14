@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TravelbirdieSearchViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class TravelbirdieSearchViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIPickerViewDataSource, UIPickerViewDelegate {
 
     @IBOutlet weak var backgroundImage: UIImageView!
     //checkin date picker
@@ -18,6 +18,12 @@ class TravelbirdieSearchViewController: UIViewController, UITableViewDelegate, U
     @IBOutlet weak var checkOutDatePickerContainerView: UIView!
     @IBOutlet weak var checkOutDateSelectionPicker: UIDatePicker!
     
+    // guests picker
+    @IBOutlet weak var guestsPickerContainerView: UIView!
+    @IBOutlet weak var guestsSelectionPicker: UIPickerView!
+    
+    //var pickerDataSource = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15"]
+    var pickerDataSource = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
     @IBOutlet var containerView: UIView!
     @IBOutlet weak var tableViewContainer: UITableView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
@@ -42,6 +48,8 @@ class TravelbirdieSearchViewController: UIViewController, UITableViewDelegate, U
             value: 1,
             toDate: ZilyoClient.sharedInstance().tempRequestParameters[ZilyoClient.Keys.checkIn] as! NSDate,
             options: [])!
+        
+
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -56,6 +64,10 @@ class TravelbirdieSearchViewController: UIViewController, UITableViewDelegate, U
         self.backgroundImage.alpha = 1.0
         activityIndicator.hidesWhenStopped = true
         activityIndicator.stopAnimating()
+        
+        self.datePickerContainerView.hidden = true
+        self.checkOutDatePickerContainerView.hidden = true
+        self.guestsPickerContainerView.hidden = true
     }
     
     override func didReceiveMemoryWarning() {
@@ -81,12 +93,12 @@ class TravelbirdieSearchViewController: UIViewController, UITableViewDelegate, U
             cell.textLabel?.text = SearchHelper.Constants.Location + ": " + (ZilyoClient.sharedInstance().tempRequestParameters[ZilyoClient.Keys.location] as! String)
             cell.imageView?.image = UIImage(named: "Pin")
             cell.selectionStyle = UITableViewCellSelectionStyle.None
-            
+            cell.backgroundColor = UIColor(white: 1, alpha: 0.7)
         case 1:
             cell.textLabel?.text = SearchHelper.Constants.NumberOfGuests + ": " + String(ZilyoClient.sharedInstance().tempRequestParameters[ZilyoClient.Keys.guests]!)
             cell.imageView?.image = UIImage(named: "Guests")
             cell.selectionStyle = UITableViewCellSelectionStyle.None
-            
+            cell.backgroundColor = UIColor(white: 1, alpha: 0.7)
         case 2:
             let dateFormatter = NSDateFormatter()
             dateFormatter.dateFormat = "dd-MMM-yyyy"
@@ -95,7 +107,7 @@ class TravelbirdieSearchViewController: UIViewController, UITableViewDelegate, U
             cell.textLabel?.text = SearchHelper.Constants.CheckIn + ": " + string
             cell.imageView?.image = UIImage(named: "Calendar")
             cell.selectionStyle = UITableViewCellSelectionStyle.None
-            
+            cell.backgroundColor = UIColor(white: 1, alpha: 0.7)
         case 3:
             let dateFormatter = NSDateFormatter()
             dateFormatter.dateFormat = "dd-MMM-yyyy"
@@ -104,7 +116,7 @@ class TravelbirdieSearchViewController: UIViewController, UITableViewDelegate, U
             cell.textLabel?.text = SearchHelper.Constants.CheckOut + ": " + string
             cell.imageView?.image = UIImage(named: "Calendar")
             cell.selectionStyle = UITableViewCellSelectionStyle.None
-            
+            cell.backgroundColor = UIColor(white: 1, alpha: 0.7)
         case 4:
             cell.accessoryType = UITableViewCellAccessoryType.None
             cell.backgroundColor = UIColor.orangeColor()
@@ -140,7 +152,13 @@ class TravelbirdieSearchViewController: UIViewController, UITableViewDelegate, U
             self.presentViewController(placesSearchController, animated: true, completion: nil)
         // select number of guests
         case 1:
-            break
+            if(searchTapped){
+                return
+            } else {
+                self.getNumberOfGuests()
+                
+                
+            }
         // select check in date
         case 2:
             if(searchTapped){
@@ -259,9 +277,9 @@ class TravelbirdieSearchViewController: UIViewController, UITableViewDelegate, U
         UIView.animateWithDuration(0.4, animations: {
            
             self.datePickerContainerView.frame = CGRectMake(self.view.frame.minX, self.view.frame.maxY, self.view.frame.width, self.datePickerContainerView.frame.height)
-            self.datePickerContainerView.hidden = true
+            
         })
-        
+        //self.datePickerContainerView.hidden = true
     }
     
     func getCheckOutDate(){
@@ -297,11 +315,65 @@ class TravelbirdieSearchViewController: UIViewController, UITableViewDelegate, U
         UIView.animateWithDuration(0.4, animations: {
             
             self.checkOutDatePickerContainerView.frame = CGRectMake(self.view.frame.minX, self.view.frame.maxY, self.view.frame.width, self.checkOutDatePickerContainerView.frame.height)
-            self.checkOutDatePickerContainerView.hidden = true
+            
+        })
+       // self.checkOutDatePickerContainerView.hidden = true
+    }
+    
+    
+    func getNumberOfGuests(){
+        
+        // put the date picker outside of the view
+        var frame: CGRect = self.guestsPickerContainerView.frame
+        frame.origin.y = self.view.frame.size.height
+        self.guestsPickerContainerView.frame = frame
+        
+        UIView.animateWithDuration(0.4, animations: {
+            
+            // manage the appearance of the date picker
+            self.guestsPickerContainerView.hidden = false
+            self.tabBarController?.tabBar.hidden = true
+            
+            var frame: CGRect = self.guestsPickerContainerView.frame
+            frame.origin.y = self.view.frame.size.height - frame.size.height
+            self.guestsPickerContainerView.frame = frame
+
+            
+            self.guestsSelectionPicker.hidden = false
+            
         })
         
     }
     
+    func dismissGuestsPicker() {
+        
+        UIView.animateWithDuration(0.4, animations: {
+            
+            self.guestsPickerContainerView.frame = CGRectMake(self.view.frame.minX, self.view.frame.maxY, self.view.frame.width, self.guestsPickerContainerView.frame.height)
+            
+        })
+//        self.guestsPickerContainerView.hidden = true
+    }
+    
+    func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
+    return 1
+    }
+    
+    func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return pickerDataSource.count;
+    }
+    
+    func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return String(format:"%d", pickerDataSource[row])
+    }
+    
+    func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        ZilyoClient.sharedInstance().tempRequestParameters[ZilyoClient.Keys.guests] = self.pickerDataSource[row]
+        // make sure table cells have an updated content
+        tableViewContainer.reloadData()
+        self.dismissGuestsPicker()
+    }
+
     // MARK: - Helpers
     
     func showAlertView(errorMessage: String?) {
