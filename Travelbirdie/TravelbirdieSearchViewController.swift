@@ -11,15 +11,16 @@ import UIKit
 class TravelbirdieSearchViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     @IBOutlet weak var backgroundImage: UIImageView!
+    //checkin date picker
+    @IBOutlet weak var datePickerContainerView: UIView!
     @IBOutlet weak var dateSelectionPicker: UIDatePicker!
+    //checkout date picker
+    @IBOutlet weak var checkOutDatePickerContainerView: UIView!
+    @IBOutlet weak var checkOutDateSelectionPicker: UIDatePicker!
     
     @IBOutlet var containerView: UIView!
-    @IBOutlet weak var datePickerContainerView: UIView!
     @IBOutlet weak var tableViewContainer: UITableView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
-    // it will be used in UIDatePicker
-    var checkInDate : NSDate = NSDate()
-    var checkOutDate : NSDate?
     
     // variable thata will use to enable / disable search row in the column
     var searchTapped : Bool = false
@@ -145,7 +146,7 @@ class TravelbirdieSearchViewController: UIViewController, UITableViewDelegate, U
             if(searchTapped){
                 return
             } else {
-                self.getDate("checkInDate")
+                self.getCheckInDate()
             
  
             }
@@ -155,7 +156,7 @@ class TravelbirdieSearchViewController: UIViewController, UITableViewDelegate, U
             if(searchTapped){
                 return
             } else {
-                self.getDate("checkOutDate")
+                self.getCheckOutDate()
 
             }
             
@@ -224,7 +225,7 @@ class TravelbirdieSearchViewController: UIViewController, UITableViewDelegate, U
         }
     }
     
-    func getDate(type: String){
+    func getCheckInDate(){
         
         // put the date picker outside of the view
         var frame: CGRect = self.datePickerContainerView.frame
@@ -240,51 +241,65 @@ class TravelbirdieSearchViewController: UIViewController, UITableViewDelegate, U
             var frame: CGRect = self.datePickerContainerView.frame
             frame.origin.y = self.view.frame.size.height - frame.size.height
             self.datePickerContainerView.frame = frame
-
+            self.dateSelectionPicker.minimumDate = (ZilyoClient.sharedInstance().tempRequestParameters[ZilyoClient.Keys.checkIn]! as! NSDate)
+            self.dateSelectionPicker.maximumDate = (ZilyoClient.sharedInstance().tempRequestParameters[ZilyoClient.Keys.checkOut]! as! NSDate)
+            
             self.dateSelectionPicker.hidden = false
-            
-            
-            // date picker behavior depending on the type
-            if(type=="checkInDate"){
-                self.dateSelectionPicker.minimumDate = self.checkInDate
-                self.dateSelectionPicker.addTarget(self, action: "recognizecheckInDate:", forControlEvents: UIControlEvents.AllEvents)
-                
-            } else if (type=="checkOutDate"){
-                self.dateSelectionPicker.minimumDate = self.checkOutDate
-                self.dateSelectionPicker.addTarget(self, action: "recognizecheckOutDate:", forControlEvents: UIControlEvents.AllEvents)
-            }
-            
-
-            
-      
             
         })
         
     }
     
-    @IBAction func dismissPicker(sender: AnyObject) {
+    @IBAction func dismissCheckInPicker(sender: AnyObject) {
+        
+        ZilyoClient.sharedInstance().tempRequestParameters[ZilyoClient.Keys.checkIn] = self.dateSelectionPicker.date
+        // make sure table cells have an updated content
+        self.tableViewContainer.reloadData()
+        
         UIView.animateWithDuration(0.4, animations: {
            
             self.datePickerContainerView.frame = CGRectMake(self.view.frame.minX, self.view.frame.maxY, self.view.frame.width, self.datePickerContainerView.frame.height)
-            
-            let dateFormatter = NSDateFormatter()
-            
-            dateFormatter.dateFormat = "dd/MM/yyyy"
-
-            //print (dateFormatter.stringFromDate(self.dateSelectionPicker.date))
-            print("CheckIn:\(self.checkInDate)")
-            print("CheckOut:\(self.checkOutDate!)")
-            
+            self.datePickerContainerView.hidden = true
         })
         
     }
     
-    func recognizecheckInDate(sender: UIDatePicker) {
-        self.checkInDate = sender.date
+    func getCheckOutDate(){
+        
+        // put the date picker outside of the view
+        var frame: CGRect = self.checkOutDatePickerContainerView.frame
+        frame.origin.y = self.view.frame.size.height
+        self.checkOutDatePickerContainerView.frame = frame
+        
+        UIView.animateWithDuration(0.4, animations: {
+            
+            // manage the appearance of the date picker
+            self.checkOutDatePickerContainerView.hidden = false
+            self.tabBarController?.tabBar.hidden = true
+            
+            var frame: CGRect = self.checkOutDatePickerContainerView.frame
+            frame.origin.y = self.view.frame.size.height - frame.size.height
+            self.checkOutDatePickerContainerView.frame = frame
+            self.checkOutDateSelectionPicker.minimumDate = ((ZilyoClient.sharedInstance().tempRequestParameters[ZilyoClient.Keys.checkOut]!) as! NSDate)
+            
+            self.checkOutDateSelectionPicker.hidden = false
+            
+        })
+        
     }
-    
-    func recognizecheckOutDate(sender: UIDatePicker) {
-        self.checkOutDate = sender.date
+
+    @IBAction func dismissCheckOutPicker(sender: AnyObject) {
+        
+        ZilyoClient.sharedInstance().tempRequestParameters[ZilyoClient.Keys.checkOut] = self.checkOutDateSelectionPicker.date
+        // make sure table cells have an updated content
+        self.tableViewContainer.reloadData()
+        
+        UIView.animateWithDuration(0.4, animations: {
+            
+            self.checkOutDatePickerContainerView.frame = CGRectMake(self.view.frame.minX, self.view.frame.maxY, self.view.frame.width, self.checkOutDatePickerContainerView.frame.height)
+            self.checkOutDatePickerContainerView.hidden = true
+        })
+        
     }
     
     // MARK: - Helpers

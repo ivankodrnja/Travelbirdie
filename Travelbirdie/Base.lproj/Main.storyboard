@@ -93,7 +93,7 @@
                                         </constraints>
                                         <state key="normal" title="Done"/>
                                         <connections>
-                                            <action selector="dismissPicker:" destination="8tJ-li-9D4" eventType="touchUpInside" id="LgW-Tz-LoT"/>
+                                            <action selector="dismissCheckInPicker:" destination="8tJ-li-9D4" eventType="touchUpInside" id="43H-gV-Eak"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -107,14 +107,51 @@
                                     <constraint firstAttribute="trailing" secondItem="h3m-Rd-QOc" secondAttribute="trailing" id="bip-Xe-txh"/>
                                 </constraints>
                             </view>
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="J9p-C4-udk" userLabel="CheckOutDatePicker Container View">
+                                <rect key="frame" x="0.0" y="360" width="600" height="240"/>
+                                <subviews>
+                                    <datePicker hidden="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="iXE-qC-F0Y" userLabel="CheckOut Date Selection Picker">
+                                        <rect key="frame" x="0.0" y="20" width="600" height="220"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="220" id="zxi-bv-nat"/>
+                                        </constraints>
+                                        <date key="date" timeIntervalSinceReferenceDate="473625278.09745198">
+                                            <!--2016-01-04 18:34:38 +0000-->
+                                        </date>
+                                    </datePicker>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VHC-aJ-fEE">
+                                        <rect key="frame" x="538" y="10" width="54" height="31"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="31" id="LDv-k4-rlg"/>
+                                            <constraint firstAttribute="width" constant="54" id="yev-Mj-6Vc"/>
+                                        </constraints>
+                                        <state key="normal" title="Done"/>
+                                        <connections>
+                                            <action selector="dismissCheckOutPicker:" destination="8tJ-li-9D4" eventType="touchUpInside" id="eK7-Aa-BPi"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="VHC-aJ-fEE" secondAttribute="trailing" constant="8" id="5IG-bt-kab"/>
+                                    <constraint firstAttribute="bottom" secondItem="iXE-qC-F0Y" secondAttribute="bottom" id="5yt-BP-wZl"/>
+                                    <constraint firstItem="iXE-qC-F0Y" firstAttribute="leading" secondItem="J9p-C4-udk" secondAttribute="leading" id="8oW-QG-nWN"/>
+                                    <constraint firstAttribute="height" constant="240" id="NU4-s5-0bw"/>
+                                    <constraint firstItem="VHC-aJ-fEE" firstAttribute="top" secondItem="J9p-C4-udk" secondAttribute="top" constant="10" id="hGf-xa-cX8"/>
+                                    <constraint firstAttribute="trailing" secondItem="iXE-qC-F0Y" secondAttribute="trailing" id="tlv-M5-q7A"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="Lgx-b7-6S6" firstAttribute="top" secondItem="rbZ-pb-ejp" secondAttribute="bottom" constant="112" id="5zB-46-Frv"/>
                             <constraint firstAttribute="trailing" secondItem="NyL-P8-D2z" secondAttribute="trailing" id="8Yc-Cn-U4f"/>
+                            <constraint firstAttribute="bottom" secondItem="J9p-C4-udk" secondAttribute="bottom" id="Dhr-N3-6wF"/>
                             <constraint firstItem="woA-VN-ixn" firstAttribute="top" secondItem="rbZ-pb-ejp" secondAttribute="bottom" id="JlP-B0-VE0"/>
                             <constraint firstItem="Lgx-b7-6S6" firstAttribute="leading" secondItem="B9D-uh-UDB" secondAttribute="leading" constant="20" id="ONF-sN-9HZ"/>
+                            <constraint firstAttribute="trailing" secondItem="J9p-C4-udk" secondAttribute="trailing" id="QI6-iq-mTN"/>
                             <constraint firstItem="L4L-cc-d0T" firstAttribute="centerY" secondItem="Lgx-b7-6S6" secondAttribute="centerY" id="TEg-Wo-SvS"/>
+                            <constraint firstItem="J9p-C4-udk" firstAttribute="leading" secondItem="B9D-uh-UDB" secondAttribute="leading" id="Ucc-jm-JjP"/>
                             <constraint firstItem="woA-VN-ixn" firstAttribute="leading" secondItem="B9D-uh-UDB" secondAttribute="leading" id="bBp-ul-cd0"/>
                             <constraint firstItem="L4L-cc-d0T" firstAttribute="centerX" secondItem="Lgx-b7-6S6" secondAttribute="centerX" id="bc8-cn-Lqg"/>
                             <constraint firstAttribute="trailing" secondItem="woA-VN-ixn" secondAttribute="trailing" id="hRO-qU-8cr"/>
@@ -128,6 +165,8 @@
                     <connections>
                         <outlet property="activityIndicator" destination="L4L-cc-d0T" id="Qw9-kJ-kMU"/>
                         <outlet property="backgroundImage" destination="woA-VN-ixn" id="MBs-A6-dTf"/>
+                        <outlet property="checkOutDatePickerContainerView" destination="J9p-C4-udk" id="R7G-mG-IWC"/>
+                        <outlet property="checkOutDateSelectionPicker" destination="iXE-qC-F0Y" id="Qvh-K2-Bva"/>
                         <outlet property="containerView" destination="B9D-uh-UDB" id="j2Q-XF-CZD"/>
                         <outlet property="datePickerContainerView" destination="NyL-P8-D2z" id="1Lw-uJ-RTQ"/>
                         <outlet property="dateSelectionPicker" destination="h3m-Rd-QOc" id="JuV-Rz-vXe"/>
