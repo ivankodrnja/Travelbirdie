@@ -53,7 +53,7 @@ class TravelbirdieSearchViewController: UIViewController, UITableViewDelegate, U
     }
     
     override func viewDidAppear(animated: Bool) {
-        navigationController?.hidesBarsOnSwipe = false
+        self.navigationController?.hidesBarsOnSwipe = false
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -231,7 +231,7 @@ class TravelbirdieSearchViewController: UIViewController, UITableViewDelegate, U
                     controller.requestParameters = self.requestParameters
                     dispatch_async(dispatch_get_main_queue()) {
                         
-                        //controller.result = result!
+
                         ZilyoClient.sharedInstance().apartmentDict = result!
                         self.navigationController!.pushViewController(controller, animated: true)
                         // search row is enabled again

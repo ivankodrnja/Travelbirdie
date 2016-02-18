@@ -24,13 +24,23 @@ class ResultsViewController: UIViewController, UITableViewDelegate, UITableViewD
     var currentCountOfApartments : Int!
     var totalCountOfApartments : Int!
     
+    // will serve for caching images
+    var cache:NSCache!
+    
     override func viewDidLoad() {
+        // initialize cache
+        self.cache = NSCache()
+    }
+
+    
+    override func viewWillAppear(animated: Bool) {
+
+        self.navigationController?.hidesBarsOnSwipe = true
+        self.navigationController?.navigationBar.tintColor = UIColor.blackColor()
 
     }
-    
-    override func viewDidAppear(animated: Bool) {
-        navigationController?.hidesBarsOnSwipe = true
-    }
+
+
     
     // MARK: - Table delegate methods
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -45,7 +55,7 @@ class ResultsViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         let cell = tableView.dequeueReusableCellWithIdentifier(cellReuseIdentifier)! as! SearchResultViewCell
 
-        // make table cell separators stretch throught the screen width, in Storyboard separator insets of the table view nd the cell have also set to 0
+        // make table cell separators stretch throught the screen width, in Storyboard separator insets of the table view and the cell have also set to 0
         cell.preservesSuperviewLayoutMargins = false
         cell.layoutMargins = UIEdgeInsetsZero
 
@@ -58,40 +68,50 @@ class ResultsViewController: UIViewController, UITableViewDelegate, UITableViewD
         // default placeholder image
         cell.apartmentImageView.image = UIImage(named: "noImage")
         
-        // get the first object in array of photos
-        var photo = apartment.photos![0]
-        // get the large image from the first object in photos array
-        let largePhotoUrl = photo ["large"]
-        
-        if let titleImageUrl = largePhotoUrl {
-           
-            // Start the task that will eventually download the image
-            let task = ZilyoClient.sharedInstance().taskForImageWithSize(titleImageUrl as! String) { data, error in
-                
-                if let error = error {
-                    print("Title download error: \(error.localizedDescription)")
-                    dispatch_async(dispatch_get_main_queue()) {
-                    // show placeholder image
-                    cell.apartmentImageView.image = UIImage(named: "noImage")
-                    }
-                }
-                
-                if let data = data {
-                    // Create the image
-                    let image = UIImage(data: data)
+        // first check if the image is cached
+        if(self.cache.objectForKey(indexPath.row) != nil){
+            cell.apartmentImageView.image = self.cache.objectForKey(indexPath.row) as? UIImage
+        } else {
+            // if the image is not cached download it
+            // get the first object in array of photos
+            var photo = apartment.photos![0]
+            // get the large image from the first object in photos array
+            let largePhotoUrl = photo ["large"]
+            
+            if let titleImageUrl = largePhotoUrl {
+               
+                // Start the task that will eventually download the image
+                let task = ZilyoClient.sharedInstance().taskForImageWithSize(titleImageUrl as! String) { data, error in
                     
-                    // update the cell later, on the main thread
-                    dispatch_async(dispatch_get_main_queue()) {
-                        cell.apartmentImageView.image = image
+                    if let error = error {
+                        print("Title download error: \(error.localizedDescription) url:\(titleImageUrl)")
+                    }
+                    
+                    // no error ocurred, show the image
+                    if let data = data {
+                        // update the cell on the main thread
+                        dispatch_async(dispatch_get_main_queue()) {
+                            // check whether the cell is visible on screen before updating the image
+                            if let updateCell : SearchResultViewCell = (tableView.cellForRowAtIndexPath(indexPath)) as? SearchResultViewCell{
+                                
+                                // create the image, show it and cache it
+                                let image:UIImage!  = UIImage(data: data)
+                            
+                                if let secureImage = image {
+                                    updateCell.apartmentImageView?.image = secureImage
+                                    self.cache.setObject(secureImage, forKey: indexPath.row)
+                                }
+                                
+                            }
+                        }
                     }
                 }
+                
+                // This is the custom property on this cell. See TaskCancelingTableViewCell.swift for details.
+                cell.taskToCancelifCellIsReused = task
+                
             }
             
-            // This is the custom property on this cell. See TaskCancelingTableViewCell.swift for details.
-            cell.taskToCancelifCellIsReused = task
-            
-        } else {
-            cell.apartmentImageView.image = UIImage(named: "noImage")
         }
         //***** end of setting the apartment image *****//
         
@@ -110,7 +130,7 @@ class ResultsViewController: UIViewController, UITableViewDelegate, UITableViewD
         //***** set the apartment location *****//
         cell.locationLabel.text = apartment.location!["city"] as? String
         
-        //***** set the number of people that sleep *****//
+        //***** set the the daily price *****//
         let dailyPrice = apartment.price!["nightly"] as? Int
         cell.dailyPriceLabel.text = "\(dailyPrice!)"
         
@@ -132,8 +152,13 @@ class ResultsViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-
+       
+        let controller = storyboard!.instantiateViewControllerWithIdentifier("DetailViewController") as! DetailViewController
         
+        
+        let apartment = ZilyoClient.sharedInstance().apartmentDict[indexPath.row]
+        controller.apartment = apartment
+        self.navigationController!.pushViewController(controller, animated: true)
         
     }
     
@@ -176,12 +201,9 @@ class ResultsViewController: UIViewController, UITableViewDelegate, UITableViewD
             }
             
         }
-        
         populatingApartments = true
-
         
         ZilyoClient.sharedInstance().getRentals(self.requestParameters[ZilyoClient.Keys.latitude]! as! Double, locationLon: self.requestParameters[ZilyoClient.Keys.longitude] as! Double, guestsNumber: self.requestParameters[ZilyoClient.Keys.guests]! as! Int, checkIn: self.requestParameters[ZilyoClient.Keys.checkIn]! as! NSTimeInterval, checkOut: self.requestParameters[ZilyoClient.Keys.checkOut]! as! NSTimeInterval, page: self.currentPage){(result, error) in
-            
             
             if error == nil {
                 // Store the current number of apartments before adding any new batch
@@ -202,9 +224,9 @@ class ResultsViewController: UIViewController, UITableViewDelegate, UITableViewD
                     self.currentPage++
                 }
             }
-
-            
         }
 
     }
 }
+
+

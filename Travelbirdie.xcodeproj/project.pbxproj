@@ -24,6 +24,7 @@
 		83BC3D281C3806E5006CDB8E /* TaskCancelingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83BC3D271C3806E5006CDB8E /* TaskCancelingTableViewCell.swift */; };
 		83D5B82C1C390D4400AD1D1F /* SearchResultViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D5B82B1C390D4400AD1D1F /* SearchResultViewCell.swift */; };
 		83EF17001C0CEFA3002819A7 /* ApartmentInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83EF16FF1C0CEFA3002819A7 /* ApartmentInformation.swift */; };
+		83F0581C1C719E12002B3F1C /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83F0581B1C719E12002B3F1C /* DetailViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -81,6 +82,7 @@
 		83BC3D271C3806E5006CDB8E /* TaskCancelingTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskCancelingTableViewCell.swift; sourceTree = "<group>"; };
 		83D5B82B1C390D4400AD1D1F /* SearchResultViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchResultViewCell.swift; sourceTree = "<group>"; };
 		83EF16FF1C0CEFA3002819A7 /* ApartmentInformation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApartmentInformation.swift; sourceTree = "<group>"; };
+		83F0581B1C719E12002B3F1C /* DetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		FD2A8DCEE6A3008A16FAD0E0 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -204,6 +206,7 @@
 				8354E0281BD3CB5D003593B8 /* TravelbirdieSearchViewController.swift */,
 				832D15251C01D0340001AAA7 /* ResultsViewController.swift */,
 				83B468101C6DA59C00500763 /* PlacesSearchResultsController.swift */,
+				83F0581B1C719E12002B3F1C /* DetailViewController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -421,6 +424,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				83F0581C1C719E12002B3F1C /* DetailViewController.swift in Sources */,
 				83B468111C6DA59C00500763 /* PlacesSearchResultsController.swift in Sources */,
 				8354E0291BD3CB5D003593B8 /* TravelbirdieSearchViewController.swift in Sources */,
 				832D152A1C021BD50001AAA7 /* ZilyoConstants.swift in Sources */,

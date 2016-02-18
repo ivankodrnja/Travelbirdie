@@ -29,12 +29,12 @@ class PlacesSearchResultsController: UITableViewController, UISearchBarDelegate 
        self.searchController.searchBar.becomeFirstResponder()
         
     }
-    /*
-    override func viewDidAppear(animated: Bool) {
+    
+    override func viewWillAppear(animated: Bool) {
         self.searchController.searchBar.becomeFirstResponder()
         
     }
-*/
+
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
