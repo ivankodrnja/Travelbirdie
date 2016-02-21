@@ -83,7 +83,7 @@ class TravelbirdieSearchViewController: UIViewController, UITableViewDelegate, U
         /* Get cell type */
         let cellReuseIdentifier = "SearchCell"
         let cell = tableView.dequeueReusableCellWithIdentifier(cellReuseIdentifier)! as UITableViewCell
-        // make table cell separators stretch throught the screen width, in Storyboard separator insets of the table view nd the cell have also set to 0
+        // make table cell separators stretch throught the screen width, in Storyboard separator insets of the table view and the cell have also set to 0
         cell.preservesSuperviewLayoutMargins = false
         cell.layoutMargins = UIEdgeInsetsZero
         
@@ -317,7 +317,14 @@ class TravelbirdieSearchViewController: UIViewController, UITableViewDelegate, U
             self.checkOutDatePickerContainerView.frame = CGRectMake(self.view.frame.minX, self.view.frame.maxY, self.view.frame.width, self.checkOutDatePickerContainerView.frame.height)
             
         })
+        /*
+       // self.dateSelectionPicker.removeTarget(self, action:
+            "recognizecheckInDate:", forControlEvents: UIControlEvents.AllEvents)
+        //self.dateSelectionPicker.removeTarget(self, action:
+            "recognizecheckOutDate:", forControlEvents: UIControlEvents.AllEvents)
+        //self.dateSelectionPicker.removeTarget(self, action: nil, forControlEvents: UIControlEvents.AllEvents)
        // self.checkOutDatePickerContainerView.hidden = true
+*/
     }
     
     

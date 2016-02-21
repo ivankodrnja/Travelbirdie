@@ -46,6 +46,7 @@ class SearchHelper : NSObject {
         static let SearchRentals = "SEARCH RENTALS"
         static let ChooseDestination = "Please choose a destination"
         static let PleaseRetry = "Please retry!"
+        static let BookNow = "BOOK NOW"
     }
     
     func getDestinationDetails(correctedAddress : String, completionHandler: (result: [String : AnyObject]?, error: NSError?) -> Void) {

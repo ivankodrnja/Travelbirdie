@@ -152,12 +152,15 @@ class ResultsViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-       
-        let controller = storyboard!.instantiateViewControllerWithIdentifier("DetailViewController") as! DetailViewController
-        
+
+        let controller = storyboard!.instantiateViewControllerWithIdentifier("ApartmentDetailViewController") as! ApartmentDetailTableViewController
         
         let apartment = ZilyoClient.sharedInstance().apartmentDict[indexPath.row]
+        // set apartment object in the detail VC
         controller.apartment = apartment
+        // set the first image to show in the detail VC
+        controller.firstImage = (self.cache.objectForKey(indexPath.row) as? UIImage)!
+        
         self.navigationController!.pushViewController(controller, animated: true)
         
     }

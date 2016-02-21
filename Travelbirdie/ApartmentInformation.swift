@@ -13,7 +13,7 @@ struct ApartmentInformation {
     var amenities: [[String : AnyObject]]?
     var attr: [String : AnyObject]?
     var id: String?
-    var latLng: [String]?
+    var latLng: [Double]?
     var priceRange: [[String : AnyObject]]?
     var photos: [[String : AnyObject]]?
     var location: [String : AnyObject]?
@@ -29,7 +29,7 @@ struct ApartmentInformation {
         amenities = dictionary[ZilyoClient.JSONResponseKeys.Amenities] as? [[String : AnyObject]]
         attr = dictionary[ZilyoClient.JSONResponseKeys.Attr] as? [String : AnyObject]
         id = dictionary[ZilyoClient.JSONResponseKeys.Id] as? String
-        latLng = dictionary[ZilyoClient.JSONResponseKeys.LatLng] as? [String]
+        latLng = dictionary[ZilyoClient.JSONResponseKeys.LatLng] as? [Double]
         priceRange = dictionary[ZilyoClient.JSONResponseKeys.PriceRange] as? [[String : AnyObject]]
         photos = dictionary[ZilyoClient.JSONResponseKeys.Photos] as? [[String : AnyObject]]
         location = dictionary[ZilyoClient.JSONResponseKeys.Location] as? [String : AnyObject]
