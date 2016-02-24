@@ -15,7 +15,10 @@ class ApartmentDetailTableViewController: UITableViewController {
     // image array that will store urls for all apartment images
     var imageArray = [String]()
     // it will store the first image of the apartment, it will be set from the results view controller upon selecting a cell there
-    var firstImage = UIImage()
+    var firstImage : UIImage!
+    
+    // check if images have been loaded in the images slider cell
+    var loadImages : Bool = true
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -83,15 +86,36 @@ class ApartmentDetailTableViewController: UITableViewController {
             switch(indexPath.row){
             // image slider
             case 0:
-                let cell = tableView.dequeueReusableCellWithIdentifier("ImageSliderCell", forIndexPath: indexPath)
+                let cell = tableView.dequeueReusableCellWithIdentifier("ImageSliderCell", forIndexPath: indexPath) as! ImageSliderCell
                 // make table cell separators stretch throught the screen width
                 cell.preservesSuperviewLayoutMargins = false
                 cell.layoutMargins = UIEdgeInsetsZero
                 cell.separatorInset = UIEdgeInsetsZero
                 
-                cell.imageView?.image = self.firstImage
+                
+                // load images only the first time cellappears
+                if loadImages {
+                    var urlCount = 0
+                    // cache downloaded images nd use Auk image slideshow library from https://github.com/evgenyneu/Auk
+                    Moa.settings.cache.requestCachePolicy = .ReturnCacheDataElseLoad
+                    for imageUrl in imageArray {
+                        urlCount++
+                        cell.scrollView.auk.settings.placeholderImage = UIImage(named: "noImage")
+                        
+                        if urlCount == 1 {
+                            
+                            if let firstImage = self.firstImage {
+                                cell.scrollView.auk.show(image: firstImage)
+                            }
+                            continue
+                        }
+                        cell.scrollView.auk.show(url: imageUrl)
+                    }
+                    loadImages = false
+                }
                 
                 return cell
+                
             // labels cell
             case 1:
                 let cell = tableView.dequeueReusableCellWithIdentifier("LabelCell", forIndexPath: indexPath) as! LabelTableViewCell
@@ -217,20 +241,24 @@ class ApartmentDetailTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         switch(indexPath.section){
         // first section contains image slider, labels cell and book cell
-        /*
         case 0:
             switch(indexPath.row){
                 // description
             case 0:
-                cell.textLabel?.text = apartment!.attr!["description"] as? String
-                return cell
+                return
                 // amentites labels cell
-            default:
-                cell.textLabel?.text = "Amenities (\(apartment!.amenities!.count))"
-                return cell
+            case 1:
+                return
                 
+            default:
+                let controller = storyboard!.instantiateViewControllerWithIdentifier("BookingViewController") as! BookingViewController
+                
+                // set description text in detail controller
+                controller.urlString = apartment!.provider!["url"] as? String
+                print(apartment!.provider!["url"])
+                self.navigationController!.pushViewController(controller, animated: true)
             }
-        */
+        
             // second section contains description and amenities
         case 1:
             

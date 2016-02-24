@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		17D2B4CAD961EEC96C533C83 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FD2A8DCEE6A3008A16FAD0E0 /* libPods.a */; };
+		8305758C1C7AD69C00AB0A11 /* AukDistrib.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8305758B1C7AD69C00AB0A11 /* AukDistrib.swift */; };
+		8305758E1C7AD81200AB0A11 /* MoaDistrib.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8305758D1C7AD81200AB0A11 /* MoaDistrib.swift */; };
+		830575901C7AD8C700AB0A11 /* ImageSliderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8305758F1C7AD8C700AB0A11 /* ImageSliderCell.swift */; };
+		8329C6561C7A15BD007A7E7E /* BookingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8329C6551C7A15BD007A7E7E /* BookingViewController.swift */; };
 		832D15241C0117BF0001AAA7 /* SearchHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 832D15231C0117BF0001AAA7 /* SearchHelper.swift */; };
 		832D15261C01D0340001AAA7 /* ResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 832D15251C01D0340001AAA7 /* ResultsViewController.swift */; };
 		832D15281C01E27D0001AAA7 /* ZilyoClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 832D15271C01E27D0001AAA7 /* ZilyoClient.swift */; };
@@ -63,6 +67,10 @@
 /* Begin PBXFileReference section */
 		1071DD97E31198EECC9319F6 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		2A0A8238FC8C93BA95CBAF5F /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		8305758B1C7AD69C00AB0A11 /* AukDistrib.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AukDistrib.swift; sourceTree = "<group>"; };
+		8305758D1C7AD81200AB0A11 /* MoaDistrib.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoaDistrib.swift; sourceTree = "<group>"; };
+		8305758F1C7AD8C700AB0A11 /* ImageSliderCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageSliderCell.swift; sourceTree = "<group>"; };
+		8329C6551C7A15BD007A7E7E /* BookingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookingViewController.swift; sourceTree = "<group>"; };
 		832D15231C0117BF0001AAA7 /* SearchHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchHelper.swift; sourceTree = "<group>"; };
 		832D15251C01D0340001AAA7 /* ResultsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResultsViewController.swift; sourceTree = "<group>"; };
 		832D15271C01E27D0001AAA7 /* ZilyoClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZilyoClient.swift; sourceTree = "<group>"; };
@@ -193,6 +201,8 @@
 				832D15221C00E18B0001AAA7 /* Search */,
 				8354E0581BD3CC82003593B8 /* Zilyo */,
 				83BC3D271C3806E5006CDB8E /* TaskCancelingTableViewCell.swift */,
+				8305758B1C7AD69C00AB0A11 /* AukDistrib.swift */,
+				8305758D1C7AD81200AB0A11 /* MoaDistrib.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -204,6 +214,7 @@
 				83874B1F1C39718D007ED9C5 /* SearchResultViewCell.xib */,
 				83F058281C791705002B3F1C /* LabelTableViewCell.swift */,
 				83F0582A1C791A2A002B3F1C /* MapTableViewCell.swift */,
+				8305758F1C7AD8C700AB0A11 /* ImageSliderCell.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -216,6 +227,7 @@
 				83B468101C6DA59C00500763 /* PlacesSearchResultsController.swift */,
 				83F058201C783BE0002B3F1C /* ApartmentDetailTableViewController.swift */,
 				8357DDD01C79F4F60008958A /* DescriptionDetailViewController.swift */,
+				8329C6551C7A15BD007A7E7E /* BookingViewController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -434,10 +446,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				83B468111C6DA59C00500763 /* PlacesSearchResultsController.swift in Sources */,
+				8305758E1C7AD81200AB0A11 /* MoaDistrib.swift in Sources */,
 				8354E0291BD3CB5D003593B8 /* TravelbirdieSearchViewController.swift in Sources */,
 				832D152A1C021BD50001AAA7 /* ZilyoConstants.swift in Sources */,
 				83D5B82C1C390D4400AD1D1F /* SearchResultViewCell.swift in Sources */,
 				83F058211C783BE0002B3F1C /* ApartmentDetailTableViewController.swift in Sources */,
+				830575901C7AD8C700AB0A11 /* ImageSliderCell.swift in Sources */,
 				83BC3D281C3806E5006CDB8E /* TaskCancelingTableViewCell.swift in Sources */,
 				8354E0271BD3CB5D003593B8 /* AppDelegate.swift in Sources */,
 				832D15261C01D0340001AAA7 /* ResultsViewController.swift in Sources */,
@@ -446,6 +460,8 @@
 				8357DDD11C79F4F60008958A /* DescriptionDetailViewController.swift in Sources */,
 				83F058291C791705002B3F1C /* LabelTableViewCell.swift in Sources */,
 				832D15241C0117BF0001AAA7 /* SearchHelper.swift in Sources */,
+				8305758C1C7AD69C00AB0A11 /* AukDistrib.swift in Sources */,
+				8329C6561C7A15BD007A7E7E /* BookingViewController.swift in Sources */,
 				83EF17001C0CEFA3002819A7 /* ApartmentInformation.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

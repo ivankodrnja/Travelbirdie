@@ -259,13 +259,13 @@
         <!--Apartment Detail Table View Controller-->
         <scene sceneID="7yG-La-KgL">
             <objects>
-                <tableViewController storyboardIdentifier="ApartmentDetailViewController" id="eE6-eE-5Wv" customClass="ApartmentDetailTableViewController" customModule="Travelbirdie" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="ApartmentDetailViewController" automaticallyAdjustsScrollViewInsets="NO" id="eE6-eE-5Wv" customClass="ApartmentDetailTableViewController" customModule="Travelbirdie" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="MWd-dV-xa7">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ImageSliderCell" rowHeight="230" id="OYw-Gp-v32">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ImageSliderCell" rowHeight="230" id="OYw-Gp-v32" customClass="ImageSliderCell" customModule="Travelbirdie" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="600" height="230"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="OYw-Gp-v32" id="rWU-Pa-s8x">
@@ -274,15 +274,21 @@
                                     <subviews>
                                         <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="P26-Ab-0he">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="229"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="229" id="w1j-Rr-0Wh"/>
+                                            </constraints>
                                         </scrollView>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="P26-Ab-0he" firstAttribute="leading" secondItem="rWU-Pa-s8x" secondAttribute="leading" id="9Ga-00-KPK"/>
-                                        <constraint firstItem="P26-Ab-0he" firstAttribute="top" secondItem="rWU-Pa-s8x" secondAttribute="top" id="Qkr-i2-uJW"/>
-                                        <constraint firstAttribute="trailing" secondItem="P26-Ab-0he" secondAttribute="trailing" id="SwG-6K-YAy"/>
-                                        <constraint firstAttribute="bottom" secondItem="P26-Ab-0he" secondAttribute="bottom" id="hnC-hT-CoA"/>
+                                        <constraint firstItem="P26-Ab-0he" firstAttribute="leading" secondItem="rWU-Pa-s8x" secondAttribute="leadingMargin" constant="-8" id="b5f-bk-cyJ"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="P26-Ab-0he" secondAttribute="bottom" constant="-8" id="gZm-HV-20k"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="P26-Ab-0he" secondAttribute="trailing" constant="-8" id="hxY-bY-oPu"/>
+                                        <constraint firstItem="P26-Ab-0he" firstAttribute="top" secondItem="rWU-Pa-s8x" secondAttribute="topMargin" constant="-8" id="jCd-aH-0R9"/>
                                     </constraints>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="scrollView" destination="P26-Ab-0he" id="kfL-kP-B6C"/>
+                                </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="LabelCell" rowHeight="90" id="My0-b4-ZcN" customClass="LabelTableViewCell" customModule="Travelbirdie" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="258" width="600" height="90"/>
@@ -439,10 +445,53 @@
                             <outlet property="delegate" destination="eE6-eE-5Wv" id="fjO-Dq-0PL"/>
                         </connections>
                     </tableView>
+                    <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CAA-7O-ACf" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3226" y="554"/>
+        </scene>
+        <!--Booking View Controller-->
+        <scene sceneID="Ld4-KQ-wkl">
+            <objects>
+                <viewController storyboardIdentifier="BookingViewController" id="wbD-fM-zFJ" customClass="BookingViewController" customModule="Travelbirdie" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="cpt-mL-i1X"/>
+                        <viewControllerLayoutGuide type="bottom" id="T8W-YF-7En"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="PLQ-k3-uLE">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CiE-6I-SbS">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="deviceRGB"/>
+                                <connections>
+                                    <outlet property="delegate" destination="wbD-fM-zFJ" id="qz2-U5-x6w"/>
+                                </connections>
+                            </webView>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="eOf-sS-JVX">
+                                <rect key="frame" x="290" y="290" width="20" height="20"/>
+                            </activityIndicatorView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="eOf-sS-JVX" firstAttribute="centerX" secondItem="CiE-6I-SbS" secondAttribute="centerX" id="3bG-Kf-uc9"/>
+                            <constraint firstItem="T8W-YF-7En" firstAttribute="top" secondItem="CiE-6I-SbS" secondAttribute="bottom" id="3bj-Es-Nca"/>
+                            <constraint firstItem="CiE-6I-SbS" firstAttribute="leading" secondItem="PLQ-k3-uLE" secondAttribute="leadingMargin" constant="-20" id="9d1-vh-hah"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="CiE-6I-SbS" secondAttribute="trailing" constant="-20" id="QJb-QE-KIh"/>
+                            <constraint firstItem="eOf-sS-JVX" firstAttribute="centerY" secondItem="CiE-6I-SbS" secondAttribute="centerY" id="k6U-Re-9QA"/>
+                            <constraint firstItem="CiE-6I-SbS" firstAttribute="top" secondItem="PLQ-k3-uLE" secondAttribute="topMargin" id="uGm-Rt-Cpr"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="activityIndicator" destination="eOf-sS-JVX" id="nzM-hy-e0i"/>
+                        <outlet property="webView" destination="CiE-6I-SbS" id="Say-iw-fOl"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="zwh-X6-ATc" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3913" y="553"/>
         </scene>
         <!--Description Detail View Controller-->
         <scene sceneID="RfY-57-ABQ">
@@ -456,7 +505,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Oqh-AA-2Tp">
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="scaleToFill" editable="NO" textAlignment="justified" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Oqh-AA-2Tp">
                                 <rect key="frame" x="0.0" y="20" width="600" height="580"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
@@ -472,13 +521,14 @@
                             <constraint firstItem="yFY-CA-lcR" firstAttribute="top" secondItem="Oqh-AA-2Tp" secondAttribute="bottom" id="pZ4-si-iaW"/>
                         </constraints>
                     </view>
+                    <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
                     <connections>
                         <outlet property="textView" destination="Oqh-AA-2Tp" id="zxs-xW-0jy"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="URg-Cc-G7M" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3917" y="554"/>
+            <point key="canvasLocation" x="3914" y="1214"/>
         </scene>
         <!--Detail View Controller-->
         <scene sceneID="E5g-2Q-IgU">
