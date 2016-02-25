@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="9525" systemVersion="14F1021" minimumToolsVersion="Xcode 7.0">
+    <entity name="Amenity" syncable="YES">
+        <attribute name="list" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="apartment" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Apartment" inverseName="amenities" inverseEntity="Apartment" syncable="YES"/>
+    </entity>
+    <entity name="Apartment" syncable="YES">
+        <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="latitude" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="longitude" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <relationship name="amenities" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="Amenity" inverseName="apartment" inverseEntity="Amenity" syncable="YES"/>
+        <relationship name="attributes" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="Attribute" inverseName="apartment" inverseEntity="Attribute" syncable="YES"/>
+        <relationship name="photos" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="Photo" inverseName="apartment" inverseEntity="Photo" syncable="YES"/>
+        <relationship name="prices" toMany="YES" deletionRule="Cascade" destinationEntity="Price" inverseName="apartment" inverseEntity="Price" syncable="YES"/>
+    </entity>
+    <entity name="Attribute" syncable="YES">
+        <attribute name="bathrooms" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="bedrooms" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="desc" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="occupancy" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <relationship name="apartment" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Apartment" inverseName="attributes" inverseEntity="Apartment" syncable="YES"/>
+    </entity>
+    <entity name="Photo" syncable="YES">
+        <attribute name="path" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="apartment" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Apartment" inverseName="photos" inverseEntity="Apartment" syncable="YES"/>
+    </entity>
+    <entity name="Price" syncable="YES">
+        <attribute name="monthly" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="nightly" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="weekendNight" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="weekly" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <relationship name="apartment" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Apartment" inverseName="prices" inverseEntity="Apartment" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="Amenity" positionX="-18" positionY="36" width="128" height="75"/>
+        <element name="Apartment" positionX="-63" positionY="-18" width="128" height="150"/>
+        <element name="Attribute" positionX="0" positionY="45" width="128" height="120"/>
+        <element name="Photo" positionX="-54" positionY="0" width="128" height="75"/>
+        <element name="Price" positionX="-36" positionY="9" width="128" height="120"/>
+    </elements>
+</model>

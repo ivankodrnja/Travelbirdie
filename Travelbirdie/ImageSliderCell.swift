@@ -11,6 +11,9 @@ import UIKit
 class ImageSliderCell: UITableViewCell {
 
     @IBOutlet weak var scrollView: UIScrollView!
+    @IBOutlet weak var priceFromLabel: UILabel!
+    @IBAction func addApartmentToFavorites(sender: AnyObject) {
+    }
 
     
     override func awakeFromNib() {

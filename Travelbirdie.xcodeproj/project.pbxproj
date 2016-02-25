@@ -27,6 +27,9 @@
 		83874B201C39718D007ED9C5 /* SearchResultViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83874B1F1C39718D007ED9C5 /* SearchResultViewCell.xib */; };
 		83B468111C6DA59C00500763 /* PlacesSearchResultsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83B468101C6DA59C00500763 /* PlacesSearchResultsController.swift */; };
 		83BC3D281C3806E5006CDB8E /* TaskCancelingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83BC3D271C3806E5006CDB8E /* TaskCancelingTableViewCell.swift */; };
+		83CA92AE1C7EC4DC003698B6 /* CoreDataStackManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83CA92AD1C7EC4DC003698B6 /* CoreDataStackManager.swift */; };
+		83CA92B21C7EC635003698B6 /* FavoritesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83CA92B11C7EC635003698B6 /* FavoritesViewController.swift */; };
+		83CA92B51C7ECBB7003698B6 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 83CA92B31C7ECBB7003698B6 /* Model.xcdatamodeld */; };
 		83D5B82C1C390D4400AD1D1F /* SearchResultViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D5B82B1C390D4400AD1D1F /* SearchResultViewCell.swift */; };
 		83EF17001C0CEFA3002819A7 /* ApartmentInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83EF16FF1C0CEFA3002819A7 /* ApartmentInformation.swift */; };
 		83F058211C783BE0002B3F1C /* ApartmentDetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83F058201C783BE0002B3F1C /* ApartmentDetailTableViewController.swift */; };
@@ -92,6 +95,9 @@
 		83874B1F1C39718D007ED9C5 /* SearchResultViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SearchResultViewCell.xib; sourceTree = "<group>"; };
 		83B468101C6DA59C00500763 /* PlacesSearchResultsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlacesSearchResultsController.swift; sourceTree = "<group>"; };
 		83BC3D271C3806E5006CDB8E /* TaskCancelingTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskCancelingTableViewCell.swift; sourceTree = "<group>"; };
+		83CA92AD1C7EC4DC003698B6 /* CoreDataStackManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataStackManager.swift; sourceTree = "<group>"; };
+		83CA92B11C7EC635003698B6 /* FavoritesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavoritesViewController.swift; sourceTree = "<group>"; };
+		83CA92B41C7ECBB7003698B6 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		83D5B82B1C390D4400AD1D1F /* SearchResultViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchResultViewCell.swift; sourceTree = "<group>"; };
 		83EF16FF1C0CEFA3002819A7 /* ApartmentInformation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApartmentInformation.swift; sourceTree = "<group>"; };
 		83F058201C783BE0002B3F1C /* ApartmentDetailTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApartmentDetailTableViewController.swift; sourceTree = "<group>"; };
@@ -200,9 +206,11 @@
 			children = (
 				832D15221C00E18B0001AAA7 /* Search */,
 				8354E0581BD3CC82003593B8 /* Zilyo */,
+				83CA92AD1C7EC4DC003698B6 /* CoreDataStackManager.swift */,
 				83BC3D271C3806E5006CDB8E /* TaskCancelingTableViewCell.swift */,
 				8305758B1C7AD69C00AB0A11 /* AukDistrib.swift */,
 				8305758D1C7AD81200AB0A11 /* MoaDistrib.swift */,
+				83CA92B31C7ECBB7003698B6 /* Model.xcdatamodeld */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -228,6 +236,7 @@
 				83F058201C783BE0002B3F1C /* ApartmentDetailTableViewController.swift */,
 				8357DDD01C79F4F60008958A /* DescriptionDetailViewController.swift */,
 				8329C6551C7A15BD007A7E7E /* BookingViewController.swift */,
+				83CA92B11C7EC635003698B6 /* FavoritesViewController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -458,10 +467,13 @@
 				832D15281C01E27D0001AAA7 /* ZilyoClient.swift in Sources */,
 				83F0582B1C791A2A002B3F1C /* MapTableViewCell.swift in Sources */,
 				8357DDD11C79F4F60008958A /* DescriptionDetailViewController.swift in Sources */,
+				83CA92AE1C7EC4DC003698B6 /* CoreDataStackManager.swift in Sources */,
 				83F058291C791705002B3F1C /* LabelTableViewCell.swift in Sources */,
 				832D15241C0117BF0001AAA7 /* SearchHelper.swift in Sources */,
 				8305758C1C7AD69C00AB0A11 /* AukDistrib.swift in Sources */,
+				83CA92B51C7ECBB7003698B6 /* Model.xcdatamodeld in Sources */,
 				8329C6561C7A15BD007A7E7E /* BookingViewController.swift in Sources */,
+				83CA92B21C7EC635003698B6 /* FavoritesViewController.swift in Sources */,
 				83EF17001C0CEFA3002819A7 /* ApartmentInformation.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -718,6 +730,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		83CA92B31C7ECBB7003698B6 /* Model.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				83CA92B41C7ECBB7003698B6 /* Model.xcdatamodel */,
+			);
+			currentVersion = 83CA92B41C7ECBB7003698B6 /* Model.xcdatamodel */;
+			path = Model.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 8354E01B1BD3CB5D003593B8 /* Project object */;
 }

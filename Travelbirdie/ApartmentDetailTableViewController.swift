@@ -50,7 +50,7 @@ class ApartmentDetailTableViewController: UITableViewController {
         // different sections have different number of rows
         switch(section){
         case 0:
-            return 3 // image slider, labels cell and book cell
+            return 4 // image slider, add to favorites, labels cell and book cell
         case 1:
            return 2 // description and amenities
         case 2:
@@ -92,11 +92,14 @@ class ApartmentDetailTableViewController: UITableViewController {
                 cell.layoutMargins = UIEdgeInsetsZero
                 cell.separatorInset = UIEdgeInsetsZero
                 
+                if let nightlyPrice = apartment!.price!["nightly"] as? Int {
+                    cell.priceFromLabel.text = "$ \(nightlyPrice)+"
+                }
                 
                 // load images only the first time cellappears
                 if loadImages {
                     var urlCount = 0
-                    // cache downloaded images nd use Auk image slideshow library from https://github.com/evgenyneu/Auk
+                    // cache downloaded images and use Auk image slideshow library from https://github.com/evgenyneu/Auk
                     Moa.settings.cache.requestCachePolicy = .ReturnCacheDataElseLoad
                     for imageUrl in imageArray {
                         urlCount++
@@ -115,9 +118,20 @@ class ApartmentDetailTableViewController: UITableViewController {
                 }
                 
                 return cell
-                
-            // labels cell
+            // add to favorites
             case 1:
+                let cell = tableView.dequeueReusableCellWithIdentifier("FavoritesCell", forIndexPath: indexPath)
+                cell.accessoryType = UITableViewCellAccessoryType.None
+                cell.backgroundColor = UIColor.grayColor()
+                cell.textLabel?.textAlignment = .Center
+                cell.textLabel!.font = UIFont.boldSystemFontOfSize(20)
+                cell.textLabel?.textColor = UIColor.whiteColor()
+                cell.textLabel?.text = "Add to Favorites"
+                cell.selectionStyle = UITableViewCellSelectionStyle.None
+                
+                return cell
+            // labels cell
+            case 2:
                 let cell = tableView.dequeueReusableCellWithIdentifier("LabelCell", forIndexPath: indexPath) as! LabelTableViewCell
 
                 // make table cell separators stretch throught the screen width
@@ -141,7 +155,7 @@ class ApartmentDetailTableViewController: UITableViewController {
                 
             // booking cell
             default:
-                let cell = tableView.dequeueReusableCellWithIdentifier("BookCell", forIndexPath: indexPath)
+                let cell = tableView.dequeueReusableCellWithIdentifier("BookCell", forIndexPath: indexPath) 
                 
                 cell.accessoryType = UITableViewCellAccessoryType.None
                 cell.backgroundColor = UIColor.orangeColor()
@@ -243,11 +257,15 @@ class ApartmentDetailTableViewController: UITableViewController {
         // first section contains image slider, labels cell and book cell
         case 0:
             switch(indexPath.row){
-                // description
+                // image slider
             case 0:
                 return
-                // amentites labels cell
+                // add to favorites
             case 1:
+                return
+                
+                // amentites labels cell
+            case 2:
                 return
                 
             default:
