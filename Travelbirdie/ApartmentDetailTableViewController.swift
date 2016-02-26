@@ -8,6 +8,7 @@
 
 import UIKit
 import MapKit
+import CoreData
 
 class ApartmentDetailTableViewController: UITableViewController {
 
@@ -37,6 +38,12 @@ class ApartmentDetailTableViewController: UITableViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    // MARK: - Core Data Convenience
+    
+    var sharedContext: NSManagedObjectContext {
+        return CoreDataStackManager.sharedInstance().managedObjectContext
     }
 
     // MARK: - Table view data source
@@ -95,16 +102,16 @@ class ApartmentDetailTableViewController: UITableViewController {
                 if let nightlyPrice = apartment!.price!["nightly"] as? Int {
                     cell.priceFromLabel.text = "$ \(nightlyPrice)+"
                 }
-                
-                // load images only the first time cellappears
+
+                // load images only the first time cell appears
                 if loadImages {
                     var urlCount = 0
                     // cache downloaded images and use Auk image slideshow library from https://github.com/evgenyneu/Auk
                     Moa.settings.cache.requestCachePolicy = .ReturnCacheDataElseLoad
                     for imageUrl in imageArray {
                         urlCount++
-                        cell.scrollView.auk.settings.placeholderImage = UIImage(named: "noImage")
-                        
+                        cell.scrollView.auk.settings.placeholderImage = UIImage(named: "loadingImage")
+                        cell.scrollView.auk.settings.errorImage = UIImage(named: "noImage")
                         if urlCount == 1 {
                             
                             if let firstImage = self.firstImage {
@@ -262,7 +269,16 @@ class ApartmentDetailTableViewController: UITableViewController {
                 return
                 // add to favorites
             case 1:
-                return
+                // save to favorites list using Core Data
+                let aptDict: [String : AnyObject] = [ZilyoClient.JSONResponseKeys.Id : (self.apartment?.id)!, ZilyoClient.JSONResponseKeys.LatLng : (self.apartment?.latLng)!]
+                
+                
+                let apt = Apartment(dictionary: aptDict, context: self.sharedContext)
+                
+                print(apt)
+                
+                
+       
                 
                 // amentites labels cell
             case 2:

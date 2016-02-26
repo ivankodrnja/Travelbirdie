@@ -66,7 +66,7 @@ class ResultsViewController: UIViewController, UITableViewDelegate, UITableViewD
         cell.apartmentImageView.clipsToBounds = true
         
         // default placeholder image
-        cell.apartmentImageView.image = UIImage(named: "noImage")
+        cell.apartmentImageView.image = UIImage(named: "loadingImage")
         
         // first check if the image is cached
         if(self.cache.objectForKey(indexPath.row) != nil){
@@ -76,7 +76,7 @@ class ResultsViewController: UIViewController, UITableViewDelegate, UITableViewD
             // get the first object in array of photos
             var photo = apartment.photos![0]
             // get the large image from the first object in photos array
-            let largePhotoUrl = photo ["large"]
+            let largePhotoUrl = photo["large"]
             
             if let titleImageUrl = largePhotoUrl {
                
@@ -85,6 +85,9 @@ class ResultsViewController: UIViewController, UITableViewDelegate, UITableViewD
                     
                     if let error = error {
                         print("Title download error: \(error.localizedDescription) url:\(titleImageUrl)")
+                        dispatch_async(dispatch_get_main_queue()) {
+                            cell.apartmentImageView.image = UIImage(named: "noImage")
+                        }
                     }
                     
                     // no error ocurred, show the image

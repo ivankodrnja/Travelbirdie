@@ -13,27 +13,20 @@ import GoogleMaps
 class PlacesSearchResultsController: UITableViewController, UISearchBarDelegate {
 
     var searchResults = [String]()
-    var searchController : UISearchController!
+    //var searchController : UISearchController!
     
+    @IBOutlet weak var searchController: UISearchBar!
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.contentInset = UIEdgeInsets(top: 20, left: 0, bottom: 0, right: 0)
-        // Uncomment the following line to preserve selection between presentations
-        self.tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "cellIdentifier")
         
-       self.searchController = UISearchController(searchResultsController: nil)
-       self.searchController.searchBar.delegate = self
-       self.searchController.dimsBackgroundDuringPresentation = false
-       //self.searchController.searchBar.sizeToFit()
-       self.tableView.tableHeaderView = self.searchController.searchBar
-       self.searchController.searchBar.becomeFirstResponder()
+        //let topHeight = UIApplication.sharedApplication().statusBarFrame.size.height
+       // tableView.contentInset = UIEdgeInsets(top: topHeight, left: 0, bottom: 0, right: 0)
+        self.edgesForExtendedLayout = UIRectEdge.None
         
+        self.searchController.becomeFirstResponder()
+        self.searchController.delegate = self
     }
     
-    override func viewWillAppear(animated: Bool) {
-        self.searchController.searchBar.becomeFirstResponder()
-        
-    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -48,6 +41,8 @@ class PlacesSearchResultsController: UITableViewController, UISearchBarDelegate 
     func searchBar(searchBar: UISearchBar,
         textDidChange searchText: String){
             
+            self.view.alpha = 0.5
+            
             let placesClient = GMSPlacesClient()
             placesClient.autocompleteQuery(searchText, bounds: nil, filter: nil) { (results, error:NSError?) -> Void in
                 self.searchResults.removeAll()
@@ -59,6 +54,7 @@ class PlacesSearchResultsController: UITableViewController, UISearchBarDelegate 
                         self.searchResults.append(result.attributedFullText.string)
                     }
                 }
+                self.view.alpha = 1
                 self.reloadDataWithArray(self.searchResults)
             }
     }

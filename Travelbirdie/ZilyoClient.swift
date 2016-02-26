@@ -36,6 +36,12 @@ class ZilyoClient: NSObject {
         return Singleton.sharedInstance
     }
     
+    // MARK: - Shared Image Cache
+    
+    struct Caches {
+        static let imageCache = ImageCache()
+    }
+    
     // URL Encoding a dictionary into a parameter string
     
     class func escapedParameters(parameters: [String : AnyObject]) -> String {

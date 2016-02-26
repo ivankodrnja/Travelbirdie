@@ -22,7 +22,6 @@ class TravelbirdieSearchViewController: UIViewController, UITableViewDelegate, U
     @IBOutlet weak var guestsPickerContainerView: UIView!
     @IBOutlet weak var guestsSelectionPicker: UIPickerView!
     
-    //var pickerDataSource = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15"]
     var pickerDataSource = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
     @IBOutlet var containerView: UIView!
     @IBOutlet weak var tableViewContainer: UITableView!
@@ -148,8 +147,14 @@ class TravelbirdieSearchViewController: UIViewController, UITableViewDelegate, U
         switch(indexPath.row){
         // select location
         case 0:
+            
+            let controller = storyboard!.instantiateViewControllerWithIdentifier("PlacesSearchResultsController") as! PlacesSearchResultsController
+            self.presentViewController(controller, animated: true, completion: nil)
+            
+            /*
             let placesSearchController = PlacesSearchResultsController()
             self.presentViewController(placesSearchController, animated: true, completion: nil)
+            */
         // select number of guests
         case 1:
             if(searchTapped){
