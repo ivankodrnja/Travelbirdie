@@ -23,12 +23,14 @@ class Amenity : NSManagedObject {
         let entity =  NSEntityDescription.entityForName("Amenity", inManagedObjectContext: context)!
         super.init(entity: entity,insertIntoManagedObjectContext: context)
         
+        /*
         for amenity in dictionary[ZilyoClient.JSONResponseKeys.Amenities] as! [[String : AnyObject]] {
             let amenityText = amenity["text"] as! String
             list += "\(amenityText) "
 
         }
-
+        */
+        list = dictionary["text"] as! String
     }
     
     

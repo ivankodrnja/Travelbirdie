@@ -10,17 +10,20 @@ import UIKit
 import GoogleMaps
 
 
-class PlacesSearchResultsController: UITableViewController, UISearchBarDelegate {
+class PlacesSearchResultsController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
 
+    @IBOutlet weak var tableView: UITableView!
     var searchResults = [String]()
-    //var searchController : UISearchController!
     
     @IBOutlet weak var searchController: UISearchBar!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //let topHeight = UIApplication.sharedApplication().statusBarFrame.size.height
-       // tableView.contentInset = UIEdgeInsets(top: topHeight, left: 0, bottom: 0, right: 0)
+        activityIndicator.hidden = true
+        
         self.edgesForExtendedLayout = UIRectEdge.None
         
         self.searchController.becomeFirstResponder()
@@ -42,6 +45,7 @@ class PlacesSearchResultsController: UITableViewController, UISearchBarDelegate 
         textDidChange searchText: String){
             
             self.view.alpha = 0.5
+            self.activityIndicator.startAnimating()
             
             let placesClient = GMSPlacesClient()
             placesClient.autocompleteQuery(searchText, bounds: nil, filter: nil) { (results, error:NSError?) -> Void in
@@ -55,6 +59,9 @@ class PlacesSearchResultsController: UITableViewController, UISearchBarDelegate 
                     }
                 }
                 self.view.alpha = 1
+                self.activityIndicator.hidesWhenStopped = true
+                self.activityIndicator.stopAnimating()
+                
                 self.reloadDataWithArray(self.searchResults)
             }
     }
@@ -67,18 +74,18 @@ class PlacesSearchResultsController: UITableViewController, UISearchBarDelegate 
     
     // MARK: - Table view data source
 
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
 
         return 1
     }
 
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
         return self.searchResults.count
     }
 
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("cellIdentifier", forIndexPath: indexPath)
         
         cell.textLabel?.text = self.searchResults[indexPath.row]
@@ -86,7 +93,7 @@ class PlacesSearchResultsController: UITableViewController, UISearchBarDelegate 
     }
     
 
-    override func tableView(tableView: UITableView,
+    func tableView(tableView: UITableView,
         didSelectRowAtIndexPath indexPath: NSIndexPath){
 
             let correctedAddress:String! = self.searchResults[indexPath.row].stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.symbolCharacterSet())

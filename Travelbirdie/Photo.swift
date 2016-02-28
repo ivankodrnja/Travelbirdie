@@ -24,18 +24,8 @@ class Photo : NSManagedObject {
 
         super.init(entity: entity,insertIntoManagedObjectContext: context)
         
-        path = dictionary[ZilyoClient.JSONResponseKeys.Photos]!["large"] as! String
+        path = dictionary["large"] as! String
         
     }
     
-    var image: UIImage? {
-        
-        get {
-            return ZilyoClient.Caches.imageCache.imageWithIdentifier(path)
-        }
-        
-        set {
-            ZilyoClient.Caches.imageCache.storeImage(newValue, withIdentifier: path)
-        }
-    }
 }

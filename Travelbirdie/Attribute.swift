@@ -27,10 +27,10 @@ class Attribute : NSManagedObject {
     
         super.init(entity: entity,insertIntoManagedObjectContext: context)
         
-        bathrooms = dictionary[ZilyoClient.JSONResponseKeys.Attr]!["bedrooms"] as! Int
-        bedrooms = dictionary[ZilyoClient.JSONResponseKeys.Attr]!["bathrooms"] as! Int
-        occupancy = dictionary[ZilyoClient.JSONResponseKeys.Attr]!["occupancy"] as! Int
-        desc = dictionary[ZilyoClient.JSONResponseKeys.Attr]!["description"] as! String
+        bathrooms = dictionary["bedrooms"] as! Int
+        bedrooms = dictionary["bathrooms"] as! Int
+        occupancy = dictionary["occupancy"] as! Int
+        desc = dictionary["description"] as! String
     }
     
     

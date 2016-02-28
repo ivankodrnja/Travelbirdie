@@ -45,13 +45,10 @@ class ResultsViewController: UIViewController, UITableViewDelegate, UITableViewD
     // MARK: - Table delegate methods
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        
-        
         /* Get cell type */
         let cellReuseIdentifier = "SearchResultViewCell"
         
         tableView.registerNib(UINib(nibName: "SearchResultViewCell", bundle: nil), forCellReuseIdentifier: cellReuseIdentifier)
-        
         
         let cell = tableView.dequeueReusableCellWithIdentifier(cellReuseIdentifier)! as! SearchResultViewCell
 

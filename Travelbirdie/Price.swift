@@ -28,10 +28,10 @@ class Price : NSManagedObject {
         
         super.init(entity: entity,insertIntoManagedObjectContext: context)
         
-        nightly = dictionary[ZilyoClient.JSONResponseKeys.Price]!["nightly"] as! Int
-        weekendNight = dictionary[ZilyoClient.JSONResponseKeys.Price]!["weekend"] as! Int
-        weekly = dictionary[ZilyoClient.JSONResponseKeys.Price]!["weekly"] as! Int
-        monthly = dictionary[ZilyoClient.JSONResponseKeys.Price]!["monthly"] as! Int
+        nightly = dictionary["nightly"] as! Int
+        weekendNight = dictionary["weekend"] as! Int
+        weekly = dictionary["weekly"] as! Int
+        monthly = dictionary["monthly"] as! Int
     }
     
     

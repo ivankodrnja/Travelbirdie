@@ -1,8 +1,8 @@
 //
-//  ApartmentDetailTableViewController.swift
+//  FavoriteApartmentDetailViewController.swift
 //  Travelbirdie
 //
-//  Created by Ivan Kodrnja on 20/02/16.
+//  Created by Ivan Kodrnja on 27/02/16.
 //  Copyright © 2016 Ivan Kodrnja. All rights reserved.
 //
 
@@ -10,9 +10,9 @@ import UIKit
 import MapKit
 import CoreData
 
-class ApartmentDetailTableViewController: UITableViewController {
-
-    var apartment : ApartmentInformation?
+class FavoriteApartmentDetailViewController: UITableViewController {
+    
+    var apartment : Apartment?
     // image array that will store urls for all apartment images
     var imageArray = [String]()
     // it will store the first image of the apartment, it will be set from the results view controller upon selecting a cell there
@@ -21,12 +21,6 @@ class ApartmentDetailTableViewController: UITableViewController {
     // check if images have been loaded in the images slider cell
     var loadImages : Bool = true
     
-    // it will store list of favorite apartments
-    var favoriteApartments : [Apartment]?
-    
-    // will serve to check if it is already in the favorites list
-    var isFavorite: Bool = false
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -34,19 +28,16 @@ class ApartmentDetailTableViewController: UITableViewController {
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 44
         
-        // make an array of urls of large apartment photos
-        for anImage in apartment!.photos! {
-            let largeImageUrl = anImage["large"] as! String
-            imageArray.append(largeImageUrl)
-        }
-        
-        favoriteApartments = checkIsFavorite()
-        
-        if favoriteApartments?.count > 0 {
-            isFavorite = true
-        }
-    }
 
+        
+        // make an array of urls of large apartment photos
+        for anImage in (apartment?.photos)! {
+            imageArray.append(anImage.path)
+        }
+        
+
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -58,23 +49,12 @@ class ApartmentDetailTableViewController: UITableViewController {
         return CoreDataStackManager.sharedInstance().managedObjectContext
     }
     
-    func checkIsFavorite() -> [Apartment] {
-        let fetchRequest = NSFetchRequest(entityName: "Apartment")
-        fetchRequest.predicate = NSPredicate(format: "id == %@", (apartment?.id)!)
-        do {
-            return try sharedContext.executeFetchRequest(fetchRequest) as! [Apartment]
-        } catch let error as NSError {
-            print("Error in fetchAllActors(): \(error)")
-            return [Apartment]()
-        }
-    }
-
     // MARK: - Table view data source
-
+    
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 4
     }
-
+    
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         // different sections have different number of rows
@@ -82,7 +62,7 @@ class ApartmentDetailTableViewController: UITableViewController {
         case 0:
             return 4 // image slider, add to favorites, labels cell and book cell
         case 1:
-           return 2 // description and amenities
+            return 2 // description and amenities
         case 2:
             return 1 // map cell
         default:
@@ -90,7 +70,7 @@ class ApartmentDetailTableViewController: UITableViewController {
         }
         
     }
-
+    
     override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         // different sections have different number of rows
         switch(section){
@@ -104,17 +84,17 @@ class ApartmentDetailTableViewController: UITableViewController {
             return ""
         }
     }
-
+    
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         // cell type depends on section and a row inside the section
         switch(indexPath.section){
-        // first section contains image slider, labels cell and book cell
+            // first section contains image slider, labels cell and book cell
         case 0:
             
             switch(indexPath.row){
-            // image slider
+                // image slider
             case 0:
                 let cell = tableView.dequeueReusableCellWithIdentifier("ImageSliderCell", forIndexPath: indexPath) as! ImageSliderCell
                 // make table cell separators stretch throught the screen width
@@ -122,10 +102,8 @@ class ApartmentDetailTableViewController: UITableViewController {
                 cell.layoutMargins = UIEdgeInsetsZero
                 cell.separatorInset = UIEdgeInsetsZero
                 
-                if let nightlyPrice = apartment!.price!["nightly"] as? Int {
-                    cell.priceFromLabel.text = "$ \(nightlyPrice)+"
-                }
-
+                cell.priceFromLabel.text = "$ \(apartment!.prices[0].nightly)+"
+                
                 // load images only the first time cell appears
                 if loadImages {
                     var urlCount = 0
@@ -148,7 +126,7 @@ class ApartmentDetailTableViewController: UITableViewController {
                 }
                 
                 return cell
-            // add to favorites
+                // add to favorites
             case 1:
                 let cell = tableView.dequeueReusableCellWithIdentifier("FavoritesCell", forIndexPath: indexPath)
                 cell.accessoryType = UITableViewCellAccessoryType.None
@@ -156,40 +134,35 @@ class ApartmentDetailTableViewController: UITableViewController {
                 cell.textLabel?.textAlignment = .Center
                 cell.textLabel!.font = UIFont.boldSystemFontOfSize(20)
                 cell.textLabel?.textColor = UIColor.whiteColor()
-                if isFavorite {
-                    cell.textLabel?.text = "Added to Favorites"
-                } else {
-                    cell.textLabel?.text = "Add to Favorites"
-                }
+                cell.textLabel?.text = "Remove from Favorites"
                 cell.selectionStyle = UITableViewCellSelectionStyle.None
                 
                 return cell
-            // labels cell
+                // labels cell
             case 2:
                 let cell = tableView.dequeueReusableCellWithIdentifier("LabelCell", forIndexPath: indexPath) as! LabelTableViewCell
-
+                
                 // make table cell separators stretch throught the screen width
                 cell.preservesSuperviewLayoutMargins = false
                 cell.layoutMargins = UIEdgeInsetsZero
                 cell.separatorInset = UIEdgeInsetsZero
-
                 
-                if let bedroomsNumber = apartment!.attr!["bedrooms"] as? Int {
-                    cell.bedroomCount?.text = "\(bedroomsNumber)"
-                }
-                if let bathroomsNumber = apartment!.attr!["bathrooms"] as? Int {
+                
+                let bedroomsNumber = apartment!.attributes[0].bedrooms
+                cell.bedroomCount?.text = "\(bedroomsNumber)"
+                
+                let bathroomsNumber = apartment!.attributes[0].bathrooms
                     cell.bathroomCount?.text = "\(bathroomsNumber)"
-                }
                 
-                if let sleepsNumber = apartment!.attr!["occupancy"] as? Int {
-                    cell.sleepsCount?.text = "\(sleepsNumber)"
-                }
+                let sleepsNumber = apartment!.attributes[0].occupancy
+                cell.sleepsCount?.text = "\(sleepsNumber)"
+                
                 
                 return cell
                 
-            // booking cell
+                // booking cell
             default:
-                let cell = tableView.dequeueReusableCellWithIdentifier("BookCell", forIndexPath: indexPath) 
+                let cell = tableView.dequeueReusableCellWithIdentifier("BookCell", forIndexPath: indexPath)
                 
                 cell.accessoryType = UITableViewCellAccessoryType.None
                 cell.backgroundColor = UIColor.orangeColor()
@@ -203,7 +176,7 @@ class ApartmentDetailTableViewController: UITableViewController {
                 return cell
                 
             }
-        // second section contains description and amenities
+            // second section contains description and amenities
         case 1:
             let cell = tableView.dequeueReusableCellWithIdentifier("DescriptionCell", forIndexPath: indexPath)
             cell.accessoryType = .DisclosureIndicator
@@ -213,22 +186,22 @@ class ApartmentDetailTableViewController: UITableViewController {
             cell.separatorInset = UIEdgeInsetsZero
             
             switch(indexPath.row){
-            // description
+                // description
             case 0:
-                cell.textLabel?.text = apartment!.attr!["description"] as? String
+                cell.textLabel?.text = apartment!.attributes[0].desc
                 return cell
-            // amentites labels cell
+                // amentites labels cell
             default:
-                cell.textLabel?.text = "Amenities (\(apartment!.amenities!.count))"
+                cell.textLabel?.text = "Amenities (\(apartment!.amenities.count))"
                 return cell
-
+                
             }
-        // third section contains the map
+            // third section contains the map
         case 2:
             let cell = tableView.dequeueReusableCellWithIdentifier("MapCell", forIndexPath: indexPath) as! MapTableViewCell
             cell.mapView.mapType = .Satellite
             
-            let location = CLLocationCoordinate2D(latitude: apartment!.latLng![0], longitude: apartment!.latLng![1])
+            let location = CLLocationCoordinate2D(latitude: apartment!.latitude, longitude: apartment!.longitude)
             
             let span = MKCoordinateSpanMake(0.03, 0.03)
             let region = MKCoordinateRegion(center: location, span: span)
@@ -239,10 +212,10 @@ class ApartmentDetailTableViewController: UITableViewController {
             annotation.coordinate = location
             
             cell.mapView.addAnnotation(annotation)
-
+            
             return cell
-        
-        // fourth section contains the rental rates: nightly, weekend night, weekly, monthly
+            
+            // fourth section contains the rental rates: nightly, weekend night, weekly, monthly
         default:
             let cell = UITableViewCell(style: .Value1, reuseIdentifier: "RentalRatesCell")
             cell.detailTextLabel?.textColor = UIColor.blackColor()
@@ -254,41 +227,40 @@ class ApartmentDetailTableViewController: UITableViewController {
             
             // each of 4 rows shows different price type
             switch(indexPath.row){
-            // nightly or daily price
+                // nightly or daily price
             case 0:
-                if let nightlyPrice = apartment!.price!["nightly"] as? Int {
-                    cell.textLabel?.text = "Nightly"
-                    cell.detailTextLabel?.text = "$ \(nightlyPrice)"
-                }
-            // weekend night price
+                let nightlyPrice = apartment!.prices[0].nightly
+                cell.textLabel?.text = "Nightly"
+                cell.detailTextLabel?.text = "$ \(nightlyPrice)"
+    
+                // weekend night price
             case 1:
-                if let weekendPrice = apartment!.price!["weekend"] as? Int {
-                    cell.textLabel?.text = "Weekend night"
-                    cell.detailTextLabel?.text = "$ \(weekendPrice)"
-                }
+                let weekendPrice = apartment!.prices[0].weekendNight
+                cell.textLabel?.text = "Weekend night"
+                cell.detailTextLabel?.text = "$ \(weekendPrice)"
+            
             case 2:
-                if let weeklyPrice = apartment!.price!["weekly"] as? Int {
-                    cell.textLabel?.text = "Weekly"
-                    cell.detailTextLabel?.text = "$ \(weeklyPrice)"
-                }
+                let weeklyPrice = apartment!.prices[0].weekly
+                cell.textLabel?.text = "Weekly"
+                cell.detailTextLabel?.text = "$ \(weeklyPrice)"
+
             default:
-                if let monthlyPrice = apartment!.price!["monthly"] as? Int {
-                    cell.textLabel?.text = "Monthly"
-                    cell.detailTextLabel?.text = "$ \(monthlyPrice)"
-                }
+                let monthlyPrice = apartment!.prices[0].monthly
+                cell.textLabel?.text = "Monthly"
+                cell.detailTextLabel?.text = "$ \(monthlyPrice)"
                 
             }
             return cell
-
+            
         }
         
         
         
     }
-
+    
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         switch(indexPath.section){
-        // first section contains image slider, labels cell and book cell
+            // first section contains image slider, labels cell and book cell
         case 0:
             switch(indexPath.row){
                 // image slider
@@ -296,43 +268,13 @@ class ApartmentDetailTableViewController: UITableViewController {
                 return
                 // add to favorites
             case 1:
-                // save to favorites list using Core Data only if already isn't added to favorites list
-                if !isFavorite {
-                    // prepare a dictionary to save as an Apartment object
-                    let aptDict: [String : AnyObject] = [ZilyoClient.JSONResponseKeys.Id : (self.apartment?.id)!, ZilyoClient.JSONResponseKeys.LatLng : (self.apartment?.latLng)!, ZilyoClient.JSONResponseKeys.Location : (self.apartment?.location)!, ZilyoClient.JSONResponseKeys.Attr : (self.apartment?.attr)!, ZilyoClient.JSONResponseKeys.Provider : (self.apartment?.provider)!]
-                    let apt = Apartment(dictionary: aptDict, context: self.sharedContext)
-                    
-                    // add amenities
-                    for amenity in apartment!.amenities! {
-                        let anAmenity = Amenity(dictionary: amenity, context: self.sharedContext)
-                        anAmenity.apartment = apt
-                    }
-                    
-                    
-                    // add prices
-                    let pricesDict = apartment?.price
-                    let price = Price(dictionary: pricesDict!, context: self.sharedContext)
-                    price.apartment = apt
-                    
-                    // add attributes
-                    let attributesDict = apartment?.attr
-                    let attribute = Attribute(dictionary: attributesDict!, context: self.sharedContext)
-                    attribute.apartment = apt
-                    
-                    // add photo urls
-                    for anImage in apartment!.photos! {
-                        let photo = Photo(dictionary: anImage, context: self.sharedContext)
-                        photo.apartment = apt
-                    }
-                    
-                    // save the apartment data
-                    CoreDataStackManager.sharedInstance().saveContext()
-                    
-                    isFavorite = true
-                    tableView.reloadData()
-                }
+                // delete apartment from the favorites list
+                self.sharedContext.deleteObject(apartment!)
                 
+                // save the apartment data
+                CoreDataStackManager.sharedInstance().saveContext()
                 
+                self.navigationController?.popViewControllerAnimated(true)
                 
                 // amentites labels cell
             case 2:
@@ -342,33 +284,34 @@ class ApartmentDetailTableViewController: UITableViewController {
                 let controller = storyboard!.instantiateViewControllerWithIdentifier("BookingViewController") as! BookingViewController
                 
                 // set description text in detail controller
-                controller.urlString = apartment!.provider!["url"] as? String
+                controller.urlString = apartment?.providerUrl
+                
                 self.navigationController!.pushViewController(controller, animated: true)
             }
-        
+            
             // second section contains description and amenities
         case 1:
             
             switch(indexPath.row){
-            // description
+                // description
             case 0:
-
+                
                 let controller = storyboard!.instantiateViewControllerWithIdentifier("DescriptionDetailViewController") as! DescriptionDetailViewController
                 
                 // set description text in detail controller
-                controller.descriptionText = apartment!.attr!["description"] as? String
+                controller.descriptionText = apartment!.attributes[0].desc
                 // set title text in detail controller
                 controller.titleText = "Description"
                 
                 self.navigationController!.pushViewController(controller, animated: true)
                 
-            // amentites labels cell
+                // amentites labels cell
             default:
                 let controller = storyboard!.instantiateViewControllerWithIdentifier("DescriptionDetailViewController") as! DescriptionDetailViewController
                 
                 var amenitiesArray = String()
-                for amenity in apartment!.amenities! {
-                    let amenityText = amenity["text"] as! String
+                for amenity in (apartment?.amenities)! {
+                    let amenityText = amenity.list 
                     amenitiesArray += "\(amenityText) "
                 }
                 
@@ -385,5 +328,6 @@ class ApartmentDetailTableViewController: UITableViewController {
             return
         }
     }
-
+    
 }
+

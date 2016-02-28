@@ -15,6 +15,9 @@ class Apartment : NSManagedObject {
     
     // 3. We are promoting these four from simple properties, to Core Data attributes
     @NSManaged var id: String
+    @NSManaged var location: String
+    @NSManaged var name: String
+    @NSManaged var providerUrl: String
     @NSManaged var latitude: Double
     @NSManaged var longitude: Double
     @NSManaged var amenities: [Amenity]
@@ -50,6 +53,9 @@ class Apartment : NSManagedObject {
         // After the Core Data work has been taken care of we can init the properties from the
         // dictionary. This works in the same way that it did before we started on Core Data
         id = dictionary[ZilyoClient.JSONResponseKeys.Id] as! String
+        location = dictionary[ZilyoClient.JSONResponseKeys.Location]!["city"] as! String
+        name = dictionary[ZilyoClient.JSONResponseKeys.Attr]!["heading"] as! String
+        providerUrl = dictionary[ZilyoClient.JSONResponseKeys.Provider]!["url"] as! String
         latitude = dictionary[ZilyoClient.JSONResponseKeys.LatLng]![0] as! Double
         longitude = dictionary[ZilyoClient.JSONResponseKeys.LatLng]![1] as! Double
     }

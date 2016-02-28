@@ -210,12 +210,24 @@ class TravelbirdieSearchViewController: UIViewController, UITableViewDelegate, U
         self.requestParameters[ZilyoClient.Keys.longitude] = ZilyoClient.sharedInstance().tempRequestParameters[ZilyoClient.Keys.longitude]
         self.requestParameters[ZilyoClient.Keys.guests] = ZilyoClient.sharedInstance().tempRequestParameters[ZilyoClient.Keys.guests]
         self.requestParameters[ZilyoClient.Keys.checkIn] = ZilyoClient.sharedInstance().tempRequestParameters[ZilyoClient.Keys.checkIn]?.timeIntervalSince1970
-        self.requestParameters[ZilyoClient.Keys.checkOut] = ZilyoClient.sharedInstance().tempRequestParameters[ZilyoClient.Keys.checkIn]?.timeIntervalSince1970
+        self.requestParameters[ZilyoClient.Keys.checkOut] = ZilyoClient.sharedInstance().tempRequestParameters[ZilyoClient.Keys.checkOut]?.timeIntervalSince1970
         self.requestParameters[ZilyoClient.Keys.page] = 1
         
         // don't make a network request if destination isn't set
         if(self.requestParameters[ZilyoClient.Keys.latitude] == nil || self.requestParameters[ZilyoClient.Keys.longitude] == nil){
             self.showAlertView(SearchHelper.Constants.ChooseDestination)
+        } else if (self.requestParameters[ZilyoClient.Keys.checkIn] as! NSTimeInterval > self.requestParameters[ZilyoClient.Keys.checkOut] as! NSTimeInterval) {
+            // check if check in and check out dates are correct
+            self.showAlertView("Check In must be before Check Out")
+            
+        } else if ((self.requestParameters[ZilyoClient.Keys.checkOut] as! NSTimeInterval) < (self.requestParameters[ZilyoClient.Keys.checkIn] as! NSTimeInterval)) {
+            // check if check in and check out dates are correct
+            self.showAlertView("Check Out must be after Check In")
+            
+        } else if (self.requestParameters[ZilyoClient.Keys.checkOut] as! NSTimeInterval == self.requestParameters[ZilyoClient.Keys.checkIn] as! NSTimeInterval) {
+            // check if check in and check out dates are correct
+            self.showAlertView("Check Out must be after Check In")
+        
         } else {
             // let the user know something is going on under the hood
             self.tableViewContainer.alpha = 0.5
@@ -236,15 +248,26 @@ class TravelbirdieSearchViewController: UIViewController, UITableViewDelegate, U
                     controller.requestParameters = self.requestParameters
                     dispatch_async(dispatch_get_main_queue()) {
                         
+                        if result?.count == 0 {
+                            self.showAlertView("No rentals found, please refine your search!")
+                            self.searchTapped = false
+                            
+                            self.tableViewContainer.alpha = 1.0
+                            self.backgroundImage.alpha = 1.0
+                            self.activityIndicator.hidesWhenStopped = true
+                            self.activityIndicator.stopAnimating()
+                            
+                        } else {
 
-                        ZilyoClient.sharedInstance().apartmentDict = result!
-                        self.navigationController!.pushViewController(controller, animated: true)
-                        // search row is enabled again
-                        self.searchTapped = false
+                            ZilyoClient.sharedInstance().apartmentDict = result!
+                            self.navigationController!.pushViewController(controller, animated: true)
+                            // search row is enabled again
+                            self.searchTapped = false
+                        }
                     }
                 }
             }
-            
+        
         }
     }
     
@@ -264,8 +287,9 @@ class TravelbirdieSearchViewController: UIViewController, UITableViewDelegate, U
             var frame: CGRect = self.datePickerContainerView.frame
             frame.origin.y = self.view.frame.size.height - frame.size.height
             self.datePickerContainerView.frame = frame
-            self.dateSelectionPicker.minimumDate = (ZilyoClient.sharedInstance().tempRequestParameters[ZilyoClient.Keys.checkIn]! as! NSDate)
-            self.dateSelectionPicker.maximumDate = (ZilyoClient.sharedInstance().tempRequestParameters[ZilyoClient.Keys.checkOut]! as! NSDate)
+            self.dateSelectionPicker.minimumDate = NSDate()
+            //self.dateSelectionPicker.minimumDate = (ZilyoClient.sharedInstance().tempRequestParameters[ZilyoClient.Keys.checkIn]! as! NSDate)
+            //self.dateSelectionPicker.maximumDate = (ZilyoClient.sharedInstance().tempRequestParameters[ZilyoClient.Keys.checkOut]! as! NSDate)
             
             self.dateSelectionPicker.hidden = false
             
@@ -303,7 +327,7 @@ class TravelbirdieSearchViewController: UIViewController, UITableViewDelegate, U
             var frame: CGRect = self.checkOutDatePickerContainerView.frame
             frame.origin.y = self.view.frame.size.height - frame.size.height
             self.checkOutDatePickerContainerView.frame = frame
-            self.checkOutDateSelectionPicker.minimumDate = ((ZilyoClient.sharedInstance().tempRequestParameters[ZilyoClient.Keys.checkOut]!) as! NSDate)
+            //self.checkOutDateSelectionPicker.minimumDate = ((ZilyoClient.sharedInstance().tempRequestParameters[ZilyoClient.Keys.checkOut]!) as! NSDate)
             
             self.checkOutDateSelectionPicker.hidden = false
             
@@ -322,14 +346,7 @@ class TravelbirdieSearchViewController: UIViewController, UITableViewDelegate, U
             self.checkOutDatePickerContainerView.frame = CGRectMake(self.view.frame.minX, self.view.frame.maxY, self.view.frame.width, self.checkOutDatePickerContainerView.frame.height)
             
         })
-        /*
-       // self.dateSelectionPicker.removeTarget(self, action:
-            "recognizecheckInDate:", forControlEvents: UIControlEvents.AllEvents)
-        //self.dateSelectionPicker.removeTarget(self, action:
-            "recognizecheckOutDate:", forControlEvents: UIControlEvents.AllEvents)
-        //self.dateSelectionPicker.removeTarget(self, action: nil, forControlEvents: UIControlEvents.AllEvents)
-       // self.checkOutDatePickerContainerView.hidden = true
-*/
+
     }
     
     

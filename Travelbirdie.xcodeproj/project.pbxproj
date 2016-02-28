@@ -35,7 +35,7 @@
 		83CA92BD1C7F722B003698B6 /* Attribute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83CA92BC1C7F722B003698B6 /* Attribute.swift */; };
 		83CA92BF1C7F75D8003698B6 /* Price.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83CA92BE1C7F75D8003698B6 /* Price.swift */; };
 		83CA92C11C7F7720003698B6 /* Photo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83CA92C01C7F7720003698B6 /* Photo.swift */; };
-		83CA92C31C7F7A71003698B6 /* ImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83CA92C21C7F7A71003698B6 /* ImageCache.swift */; };
+		83CA92C71C81F56B003698B6 /* FavoriteApartmentDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83CA92C61C81F56B003698B6 /* FavoriteApartmentDetailViewController.swift */; };
 		83D5B82C1C390D4400AD1D1F /* SearchResultViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D5B82B1C390D4400AD1D1F /* SearchResultViewCell.swift */; };
 		83EF17001C0CEFA3002819A7 /* ApartmentInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83EF16FF1C0CEFA3002819A7 /* ApartmentInformation.swift */; };
 		83F058211C783BE0002B3F1C /* ApartmentDetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83F058201C783BE0002B3F1C /* ApartmentDetailTableViewController.swift */; };
@@ -109,7 +109,7 @@
 		83CA92BC1C7F722B003698B6 /* Attribute.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Attribute.swift; sourceTree = "<group>"; };
 		83CA92BE1C7F75D8003698B6 /* Price.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Price.swift; sourceTree = "<group>"; };
 		83CA92C01C7F7720003698B6 /* Photo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Photo.swift; sourceTree = "<group>"; };
-		83CA92C21C7F7A71003698B6 /* ImageCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageCache.swift; sourceTree = "<group>"; };
+		83CA92C61C81F56B003698B6 /* FavoriteApartmentDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavoriteApartmentDetailViewController.swift; sourceTree = "<group>"; };
 		83D5B82B1C390D4400AD1D1F /* SearchResultViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchResultViewCell.swift; sourceTree = "<group>"; };
 		83EF16FF1C0CEFA3002819A7 /* ApartmentInformation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApartmentInformation.swift; sourceTree = "<group>"; };
 		83F058201C783BE0002B3F1C /* ApartmentDetailTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApartmentDetailTableViewController.swift; sourceTree = "<group>"; };
@@ -242,13 +242,8 @@
 		8354E0561BD3CBCF003593B8 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				8354E0281BD3CB5D003593B8 /* TravelbirdieSearchViewController.swift */,
-				832D15251C01D0340001AAA7 /* ResultsViewController.swift */,
-				83B468101C6DA59C00500763 /* PlacesSearchResultsController.swift */,
-				83F058201C783BE0002B3F1C /* ApartmentDetailTableViewController.swift */,
-				8357DDD01C79F4F60008958A /* DescriptionDetailViewController.swift */,
-				8329C6551C7A15BD007A7E7E /* BookingViewController.swift */,
-				83CA92B11C7EC635003698B6 /* FavoritesViewController.swift */,
+				83CA92C51C80F514003698B6 /* Favorites */,
+				83CA92C41C80F4E7003698B6 /* Search */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -275,9 +270,30 @@
 				83CA92BC1C7F722B003698B6 /* Attribute.swift */,
 				83CA92BE1C7F75D8003698B6 /* Price.swift */,
 				83CA92C01C7F7720003698B6 /* Photo.swift */,
-				83CA92C21C7F7A71003698B6 /* ImageCache.swift */,
 			);
 			name = Zilyo;
+			sourceTree = "<group>";
+		};
+		83CA92C41C80F4E7003698B6 /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				8354E0281BD3CB5D003593B8 /* TravelbirdieSearchViewController.swift */,
+				832D15251C01D0340001AAA7 /* ResultsViewController.swift */,
+				83B468101C6DA59C00500763 /* PlacesSearchResultsController.swift */,
+				83F058201C783BE0002B3F1C /* ApartmentDetailTableViewController.swift */,
+				8357DDD01C79F4F60008958A /* DescriptionDetailViewController.swift */,
+				8329C6551C7A15BD007A7E7E /* BookingViewController.swift */,
+			);
+			name = Search;
+			sourceTree = "<group>";
+		};
+		83CA92C51C80F514003698B6 /* Favorites */ = {
+			isa = PBXGroup;
+			children = (
+				83CA92B11C7EC635003698B6 /* FavoritesViewController.swift */,
+				83CA92C61C81F56B003698B6 /* FavoriteApartmentDetailViewController.swift */,
+			);
+			name = Favorites;
 			sourceTree = "<group>";
 		};
 		D42A98612D76512E0878BA09 /* Frameworks */ = {
@@ -484,7 +500,7 @@
 				830575901C7AD8C700AB0A11 /* ImageSliderCell.swift in Sources */,
 				83BC3D281C3806E5006CDB8E /* TaskCancelingTableViewCell.swift in Sources */,
 				8354E0271BD3CB5D003593B8 /* AppDelegate.swift in Sources */,
-				83CA92C31C7F7A71003698B6 /* ImageCache.swift in Sources */,
+				83CA92C71C81F56B003698B6 /* FavoriteApartmentDetailViewController.swift in Sources */,
 				832D15261C01D0340001AAA7 /* ResultsViewController.swift in Sources */,
 				832D15281C01E27D0001AAA7 /* ZilyoClient.swift in Sources */,
 				83F0582B1C791A2A002B3F1C /* MapTableViewCell.swift in Sources */,

@@ -24,6 +24,7 @@ class ZilyoClient: NSObject {
     
     // dictionary that will temporarily hold request parameters
     var tempRequestParameters = [String : AnyObject]()
+
     
     // MARK: - Shared Instance
     
@@ -36,11 +37,6 @@ class ZilyoClient: NSObject {
         return Singleton.sharedInstance
     }
     
-    // MARK: - Shared Image Cache
-    
-    struct Caches {
-        static let imageCache = ImageCache()
-    }
     
     // URL Encoding a dictionary into a parameter string
     
