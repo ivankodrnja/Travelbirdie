@@ -175,9 +175,6 @@ class FavoritesViewController: UIViewController, UITableViewDelegate, UITableVie
                 // check for previously cached images at indexPath.row
                 if(self.cache.objectForKey(newIndexPath!.row) != nil){
                     self.cache.removeObjectForKey((newIndexPath?.row)!)
-                    
-                } else if (self.cache.objectForKey(indexPath!.row) != nil){
-                    self.cache.removeObjectForKey((indexPath?.row)!)
                 }
                 tableView.insertRowsAtIndexPaths([newIndexPath!], withRowAnimation: .Fade)
     
