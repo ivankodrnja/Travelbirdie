@@ -17,10 +17,10 @@
         <relationship name="prices" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="Price" inverseName="apartment" inverseEntity="Price" syncable="YES"/>
     </entity>
     <entity name="Attribute" representedClassName=".Attribute" syncable="YES">
-        <attribute name="bathrooms" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
-        <attribute name="bedrooms" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="bathrooms" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="bedrooms" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="desc" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="occupancy" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="occupancy" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <relationship name="apartment" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Apartment" inverseName="attributes" inverseEntity="Apartment" syncable="YES"/>
     </entity>
     <entity name="Photo" representedClassName=".Photo" syncable="YES">
@@ -28,10 +28,10 @@
         <relationship name="apartment" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Apartment" inverseName="photos" inverseEntity="Apartment" syncable="YES"/>
     </entity>
     <entity name="Price" representedClassName=".Price" syncable="YES">
-        <attribute name="monthly" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
-        <attribute name="nightly" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
-        <attribute name="weekendNight" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
-        <attribute name="weekly" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="monthly" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="nightly" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="weekendNight" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="weekly" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <relationship name="apartment" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Apartment" inverseName="prices" inverseEntity="Apartment" syncable="YES"/>
     </entity>
     <elements>
