@@ -12,7 +12,7 @@ class ResultsViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     @IBOutlet weak var tableView: UITableView!
     
-
+    
     var requestParameters = [String : AnyObject]()
     
     // handle auto downoad of subsequent apartments
@@ -31,16 +31,16 @@ class ResultsViewController: UIViewController, UITableViewDelegate, UITableViewD
         // initialize cache
         self.cache = NSCache()
     }
-
+    
     
     override func viewWillAppear(animated: Bool) {
-
+        
         self.navigationController?.hidesBarsOnSwipe = true
         self.navigationController?.navigationBar.tintColor = UIColor.blackColor()
-
+        
     }
-
-
+    
+    
     
     // MARK: - Table delegate methods
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -51,11 +51,11 @@ class ResultsViewController: UIViewController, UITableViewDelegate, UITableViewD
         tableView.registerNib(UINib(nibName: "SearchResultViewCell", bundle: nil), forCellReuseIdentifier: cellReuseIdentifier)
         
         let cell = tableView.dequeueReusableCellWithIdentifier(cellReuseIdentifier)! as! SearchResultViewCell
-
+        
         // make table cell separators stretch throught the screen width, in Storyboard separator insets of the table view and the cell have also set to 0
         cell.preservesSuperviewLayoutMargins = false
         cell.layoutMargins = UIEdgeInsetsZero
-
+        
         
         let apartment = ZilyoClient.sharedInstance().apartmentDict[indexPath.row]
         
@@ -76,7 +76,7 @@ class ResultsViewController: UIViewController, UITableViewDelegate, UITableViewD
             let largePhotoUrl = photo["large"]
             
             if let titleImageUrl = largePhotoUrl {
-               
+                
                 // Start the task that will eventually download the image
                 let task = ZilyoClient.sharedInstance().taskForImageWithSize(titleImageUrl as! String) { data, error in
                     
@@ -96,7 +96,7 @@ class ResultsViewController: UIViewController, UITableViewDelegate, UITableViewD
                                 
                                 // create the image, show it and cache it
                                 let image:UIImage!  = UIImage(data: data)
-                            
+                                
                                 if let secureImage = image {
                                     updateCell.apartmentImageView?.image = secureImage
                                     self.cache.setObject(secureImage, forKey: indexPath.row)
@@ -148,18 +148,21 @@ class ResultsViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return ZilyoClient.sharedInstance().apartmentDict.count
-
+        
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-
+        
         let controller = storyboard!.instantiateViewControllerWithIdentifier("ApartmentDetailViewController") as! ApartmentDetailTableViewController
         
         let apartment = ZilyoClient.sharedInstance().apartmentDict[indexPath.row]
         // set apartment object in the detail VC
         controller.apartment = apartment
         // set the first image to show in the detail VC
-        controller.firstImage = (self.cache.objectForKey(indexPath.row) as? UIImage)!
+        if(self.cache.objectForKey(indexPath.row) != nil){
+            controller.firstImage = (self.cache.objectForKey(indexPath.row) as? UIImage)!
+        }
+        
         
         self.navigationController!.pushViewController(controller, animated: true)
         
@@ -168,18 +171,18 @@ class ResultsViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     /* MAKE SPACING BETWEEN THE CELLS
     func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
-        cell.contentView.backgroundColor = UIColor.clearColor()
-        
-        let whiteRoundedView : UIView = UIView(frame: CGRectMake(0, 10, self.view.frame.size.width, (self.view.frame.size.height) - 20))
-        
-        whiteRoundedView.layer.backgroundColor = CGColorCreate(CGColorSpaceCreateDeviceRGB(), [1.0, 1.0, 1.0, 1.0])
-        whiteRoundedView.layer.masksToBounds = false
-        whiteRoundedView.layer.cornerRadius = 2.0
-        whiteRoundedView.layer.shadowOffset = CGSizeMake(-1, 1)
-        whiteRoundedView.layer.shadowOpacity = 0.2
-        
-        cell.contentView.addSubview(whiteRoundedView)
-        cell.contentView.sendSubviewToBack(whiteRoundedView)
+    cell.contentView.backgroundColor = UIColor.clearColor()
+    
+    let whiteRoundedView : UIView = UIView(frame: CGRectMake(0, 10, self.view.frame.size.width, (self.view.frame.size.height) - 20))
+    
+    whiteRoundedView.layer.backgroundColor = CGColorCreate(CGColorSpaceCreateDeviceRGB(), [1.0, 1.0, 1.0, 1.0])
+    whiteRoundedView.layer.masksToBounds = false
+    whiteRoundedView.layer.cornerRadius = 2.0
+    whiteRoundedView.layer.shadowOffset = CGSizeMake(-1, 1)
+    whiteRoundedView.layer.shadowOpacity = 0.2
+    
+    cell.contentView.addSubview(whiteRoundedView)
+    cell.contentView.sendSubviewToBack(whiteRoundedView)
     }
     */
     
@@ -189,7 +192,7 @@ class ResultsViewController: UIViewController, UITableViewDelegate, UITableViewD
             searchRentals()
             
         }
-
+        
         
     }
     
@@ -216,9 +219,9 @@ class ResultsViewController: UIViewController, UITableViewDelegate, UITableViewD
                 print("Current page:\(self.currentPage)\n")
                 ZilyoClient.sharedInstance().apartmentDict += result!
                 
-                self.totalCountOfApartments = ZilyoClient.sharedInstance().apartmentDict.count 
+                self.totalCountOfApartments = ZilyoClient.sharedInstance().apartmentDict.count
                 print("totalCountOfApartments count:\(self.totalCountOfApartments)\n")
-
+                
                 dispatch_async(dispatch_get_main_queue()) {
                     
                     self.populatingApartments = false
@@ -226,10 +229,32 @@ class ResultsViewController: UIViewController, UITableViewDelegate, UITableViewD
                     
                     self.currentPage++
                 }
+            } else {
+                dispatch_async(dispatch_get_main_queue()) {
+                    // Error, e.g. the internet connection is offline
+                    print("Error in ResultsViewController: \(error?.localizedDescription)")
+                    self.showAlertView(error?.localizedDescription)
+                }
             }
         }
-
+        
+    }
+    
+    // MARK: - Helpers
+    
+    func showAlertView(errorMessage: String?) {
+        
+        let alertController = UIAlertController(title: nil, message: errorMessage!, preferredStyle: .Alert)
+        
+        let cancelAction = UIAlertAction(title: "Dismiss", style: .Cancel) {(action) in
+            
+            
+        }
+        alertController.addAction(cancelAction)
+        
+        self.presentViewController(alertController, animated: true){
+            
+        }
+        
     }
 }
-
-

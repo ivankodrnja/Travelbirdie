@@ -11,7 +11,7 @@ import GoogleMaps
 
 
 class PlacesSearchResultsController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
-
+    
     @IBOutlet weak var tableView: UITableView!
     var searchResults = [String]()
     
@@ -30,7 +30,7 @@ class PlacesSearchResultsController: UIViewController, UITableViewDelegate, UITa
         self.searchController.delegate = self
     }
     
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -46,13 +46,27 @@ class PlacesSearchResultsController: UIViewController, UITableViewDelegate, UITa
             
             self.view.alpha = 0.5
             self.activityIndicator.startAnimating()
+            activityIndicator.hidden = false
             
             let placesClient = GMSPlacesClient()
             placesClient.autocompleteQuery(searchText, bounds: nil, filter: nil) { (results, error:NSError?) -> Void in
                 self.searchResults.removeAll()
+                
+                if error != nil {
+                    dispatch_async(dispatch_get_main_queue()) {
+                        self.view.alpha = 1
+                        self.activityIndicator.hidesWhenStopped = true
+                        self.activityIndicator.stopAnimating()
+                        // Error, e.g. the internet connection is offline
+                        print("Error in PlacesSearchResultsController: \(error?.localizedDescription)")
+                        self.showAlertView(error?.localizedDescription)
+                    }
+                }
+                
                 if results == nil {
                     return
                 }
+                
                 for result in results!{
                     if let result = result as? GMSAutocompletePrediction{
                         self.searchResults.append(result.attributedFullText.string)
@@ -63,27 +77,30 @@ class PlacesSearchResultsController: UIViewController, UITableViewDelegate, UITa
                 self.activityIndicator.stopAnimating()
                 
                 self.reloadDataWithArray(self.searchResults)
+                
+                
+                
             }
     }
-
+    
     func searchBarCancelButtonClicked(searchBar: UISearchBar) {
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
-
+    
     
     // MARK: - Table view data source
-
+    
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-
+        
         return 1
     }
-
+    
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
         return self.searchResults.count
     }
-
+    
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("cellIdentifier", forIndexPath: indexPath)
@@ -92,10 +109,10 @@ class PlacesSearchResultsController: UIViewController, UITableViewDelegate, UITa
         return cell
     }
     
-
+    
     func tableView(tableView: UITableView,
         didSelectRowAtIndexPath indexPath: NSIndexPath){
-
+            
             let correctedAddress:String! = self.searchResults[indexPath.row].stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.symbolCharacterSet())
             
             SearchHelper.sharedInstance().getDestinationDetails(correctedAddress){(result, error) in
@@ -112,7 +129,7 @@ class PlacesSearchResultsController: UIViewController, UITableViewDelegate, UITa
                 } else {
                     self.showAlertView(SearchHelper.Constants.PleaseRetry)
                 }
-
+                
             }
             
             
@@ -135,5 +152,5 @@ class PlacesSearchResultsController: UIViewController, UITableViewDelegate, UITa
         }
         
     }
-
+    
 }

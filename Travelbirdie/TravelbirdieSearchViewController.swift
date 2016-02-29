@@ -9,7 +9,7 @@
 import UIKit
 
 class TravelbirdieSearchViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIPickerViewDataSource, UIPickerViewDelegate {
-
+    
     @IBOutlet weak var backgroundImage: UIImageView!
     //checkin date picker
     @IBOutlet weak var datePickerContainerView: UIView!
@@ -36,7 +36,7 @@ class TravelbirdieSearchViewController: UIViewController, UITableViewDelegate, U
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-
+        
         // set default values for the search query
         ZilyoClient.sharedInstance().tempRequestParameters[ZilyoClient.Keys.location] = SearchHelper.Constants.Unknown
         ZilyoClient.sharedInstance().tempRequestParameters[ZilyoClient.Keys.guests] = 1
@@ -48,7 +48,7 @@ class TravelbirdieSearchViewController: UIViewController, UITableViewDelegate, U
             toDate: ZilyoClient.sharedInstance().tempRequestParameters[ZilyoClient.Keys.checkIn] as! NSDate,
             options: [])!
         
-
+        
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -73,10 +73,10 @@ class TravelbirdieSearchViewController: UIViewController, UITableViewDelegate, U
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
-
     
-   // MARK: - Table delegate methods
+    
+    
+    // MARK: - Table delegate methods
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         /* Get cell type */
@@ -126,7 +126,7 @@ class TravelbirdieSearchViewController: UIViewController, UITableViewDelegate, U
             cell.selectionStyle = UITableViewCellSelectionStyle.None
             
         default:
-             break
+            break
         }
         
         return cell
@@ -143,9 +143,9 @@ class TravelbirdieSearchViewController: UIViewController, UITableViewDelegate, U
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-
+        
         switch(indexPath.row){
-        // select location
+            // select location
         case 0:
             
             let controller = storyboard!.instantiateViewControllerWithIdentifier("PlacesSearchResultsController") as! PlacesSearchResultsController
@@ -155,7 +155,7 @@ class TravelbirdieSearchViewController: UIViewController, UITableViewDelegate, U
             let placesSearchController = PlacesSearchResultsController()
             self.presentViewController(placesSearchController, animated: true, completion: nil)
             */
-        // select number of guests
+            // select number of guests
         case 1:
             if(searchTapped){
                 return
@@ -164,23 +164,23 @@ class TravelbirdieSearchViewController: UIViewController, UITableViewDelegate, U
                 
                 
             }
-        // select check in date
+            // select check in date
         case 2:
             if(searchTapped){
                 return
             } else {
                 self.getCheckInDate()
-            
- 
+                
+                
             }
             
-        // select check out date
+            // select check out date
         case 3:
             if(searchTapped){
                 return
             } else {
                 self.getCheckOutDate()
-
+                
             }
             
             
@@ -196,15 +196,15 @@ class TravelbirdieSearchViewController: UIViewController, UITableViewDelegate, U
         default:
             break
         }
-
+        
     }
- 
+    
     
     // MARK: - Helper functions
     
     
     func searchRentals() {
-
+        
         self.requestParameters[ZilyoClient.Keys.latitude] = ZilyoClient.sharedInstance().tempRequestParameters[ZilyoClient.Keys.latitude]
         
         self.requestParameters[ZilyoClient.Keys.longitude] = ZilyoClient.sharedInstance().tempRequestParameters[ZilyoClient.Keys.longitude]
@@ -227,7 +227,7 @@ class TravelbirdieSearchViewController: UIViewController, UITableViewDelegate, U
         } else if (self.requestParameters[ZilyoClient.Keys.checkOut] as! NSTimeInterval == self.requestParameters[ZilyoClient.Keys.checkIn] as! NSTimeInterval) {
             // check if check in and check out dates are correct
             self.showAlertView("Check Out must be after Check In")
-        
+            
         } else {
             // let the user know something is going on under the hood
             self.tableViewContainer.alpha = 0.5
@@ -258,16 +258,28 @@ class TravelbirdieSearchViewController: UIViewController, UITableViewDelegate, U
                             self.activityIndicator.stopAnimating()
                             
                         } else {
-
+                            
                             ZilyoClient.sharedInstance().apartmentDict = result!
                             self.navigationController!.pushViewController(controller, animated: true)
                             // search row is enabled again
                             self.searchTapped = false
                         }
                     }
+                } else {
+                    // Inform user on the main thread about errors, e.g. the internet connection is offline
+                    dispatch_async(dispatch_get_main_queue()) {
+                        self.searchTapped = false
+                        self.tableViewContainer.alpha = 1.0
+                        self.backgroundImage.alpha = 1.0
+                        self.activityIndicator.hidesWhenStopped = true
+                        self.activityIndicator.stopAnimating()
+                        
+                        print("Error in TravelbirdieSearchController: \(error?.localizedDescription)")
+                        self.showAlertView(error?.localizedDescription)
+                    }
                 }
             }
-        
+            
         }
     }
     
@@ -304,7 +316,7 @@ class TravelbirdieSearchViewController: UIViewController, UITableViewDelegate, U
         self.tableViewContainer.reloadData()
         
         UIView.animateWithDuration(0.4, animations: {
-           
+            
             self.datePickerContainerView.frame = CGRectMake(self.view.frame.minX, self.view.frame.maxY, self.view.frame.width, self.datePickerContainerView.frame.height)
             
         })
@@ -334,7 +346,7 @@ class TravelbirdieSearchViewController: UIViewController, UITableViewDelegate, U
         })
         
     }
-
+    
     @IBAction func dismissCheckOutPicker(sender: AnyObject) {
         
         ZilyoClient.sharedInstance().tempRequestParameters[ZilyoClient.Keys.checkOut] = self.checkOutDateSelectionPicker.date
@@ -346,7 +358,7 @@ class TravelbirdieSearchViewController: UIViewController, UITableViewDelegate, U
             self.checkOutDatePickerContainerView.frame = CGRectMake(self.view.frame.minX, self.view.frame.maxY, self.view.frame.width, self.checkOutDatePickerContainerView.frame.height)
             
         })
-
+        
     }
     
     
@@ -366,7 +378,7 @@ class TravelbirdieSearchViewController: UIViewController, UITableViewDelegate, U
             var frame: CGRect = self.guestsPickerContainerView.frame
             frame.origin.y = self.view.frame.size.height - frame.size.height
             self.guestsPickerContainerView.frame = frame
-
+            
             
             self.guestsSelectionPicker.hidden = false
             
@@ -381,11 +393,11 @@ class TravelbirdieSearchViewController: UIViewController, UITableViewDelegate, U
             self.guestsPickerContainerView.frame = CGRectMake(self.view.frame.minX, self.view.frame.maxY, self.view.frame.width, self.guestsPickerContainerView.frame.height)
             
         })
-//        self.guestsPickerContainerView.hidden = true
+        //        self.guestsPickerContainerView.hidden = true
     }
     
     func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
-    return 1
+        return 1
     }
     
     func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
@@ -402,7 +414,7 @@ class TravelbirdieSearchViewController: UIViewController, UITableViewDelegate, U
         tableViewContainer.reloadData()
         self.dismissGuestsPicker()
     }
-
+    
     // MARK: - Helpers
     
     func showAlertView(errorMessage: String?) {

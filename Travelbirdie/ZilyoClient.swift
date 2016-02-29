@@ -87,7 +87,7 @@ class ZilyoClient: NSObject {
             /* GUARD: Was there an error? */
             guard (error == nil) else {
                 
-                //completionHandler(result: nil, error: error)
+                completionHandler(result: nil, error: error)
                 print("There was an error with your request: \(error)")
                 return
             }
