@@ -12,12 +12,21 @@ Travelbirdie enables you to search for vacation rentals worldwide and choose you
 Just search for the destination, location search is done using Google Maps API, define number of people, check-in and check-out dates and perform search. Zilyo API, available at http://www.mashape.com, provides data that powers the search. Travelbirdie is aggregator app and thanks to Zilyo supports these 23 suppliers: Airbnb, HomeAway, AlwaysOnVacation, ApartmentsApart, BookingPal, BedyCasa, CitiesReference, Geronimo, Gloveler, HolidayVelvet, HomeStay, HostelWorld, HouseTrip, Interhome, 9Flats, Roomorama, StopSleepGo, TheOtherHome, Travelmob, VacationRentalPeople, VaycayHero, WayToStay, and WebChalet.
 
 ## Google Maps Installation
-Google Maps API is installed using Cocoa Pods. Detailed installation steps are here https://developers.google.com/maps/documentation/ios-sdk/start. Get Cocoa Pods by running the following command from the terminal "sudo gem install cocoapods". Podfile is already present in the repository. In the directory contaning the "Podfile" run the command "pod install". After installation .xcworkspace is created. From this time onwards, you must use the .xcworkspace file to open the project.
+Google Maps API is installed using Cocoa Pods. Detailed installation steps are here https://developers.google.com/maps/documentation/ios-sdk/start. 
+#### 1. Get Cocoa Pods by running the following command from the terminal:
+``` $ sudo gem install cocoapods ```
+###" 2. Install Google Map Pod locally
+Podfile is already present in the repository. In the directory contaning the "Podfile" run the command 
+``` $ pod install ```
+After installation .xcworkspace is created. From this time onwards, you must use the .xcworkspace file to open the project in Xcode.
 
 
 ## Special notes to Udacity reviewers
 
-Google Maps API is installed using Cocoa Pods. Image gallery slider in the apartment detail view is done using Auk image slideshow library from https://github.com/evgenyneu/Auk. Booking is intended to be done on the web page of the vacation renatal provider, in the app it is done using a webview. As there is no special agreement between me and providers, like Homeaway, I'm not able to share a specific booking link for each property. Once this app goes to its commercial phase, the process of booking will be made with a better user experience.
+Search results data is intentinolly not persisted as it can happen that the user makes frequent searchs and this way he gets fresh results. Persistence is enabled in the Favorites section of the app.
+Google Maps API is installed using Cocoa Pods. 
+Image gallery slider in the apartment detail view is done using Auk image slideshow library from https://github.com/evgenyneu/Auk.
+Booking is intended to be done on the web page of the vacation renatal provider, in the app it is done using a webview. As there is no special agreement between me and providers, like Homeaway, I'm not able to share a specific booking link for each property. Once this app goes to its commercial phase, the process of booking will be made with a better user experience.
 
 ## License
 
