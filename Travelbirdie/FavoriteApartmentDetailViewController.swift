@@ -281,12 +281,22 @@ class FavoriteApartmentDetailViewController: UITableViewController {
                 return
                 
             default:
-                let controller = storyboard!.instantiateViewControllerWithIdentifier("BookingViewController") as! BookingViewController
                 
-                // set description text in detail controller
-                controller.urlString = apartment?.providerUrl
                 
-                self.navigationController!.pushViewController(controller, animated: true)
+                if Reachability.isConnectedToNetwork() == true {
+                    print("Internet connection OK")
+                    let controller = storyboard!.instantiateViewControllerWithIdentifier("BookingViewController") as! BookingViewController
+                    
+                    // set description text in detail controller
+                    controller.urlString = apartment?.providerUrl
+                    
+                    self.navigationController!.pushViewController(controller, animated: true)
+                } else {
+                    print("Internet connection FAILED")
+                    self.showAlertView("Internet connection FAILED")
+                }
+                
+
             }
             
             // second section contains description and amenities
@@ -329,5 +339,22 @@ class FavoriteApartmentDetailViewController: UITableViewController {
         }
     }
     
+    // MARK: - Helpers
+    
+    func showAlertView(errorMessage: String?) {
+        
+        let alertController = UIAlertController(title: nil, message: errorMessage!, preferredStyle: .Alert)
+        
+        let cancelAction = UIAlertAction(title: "Dismiss", style: .Cancel) {(action) in
+            
+            
+        }
+        alertController.addAction(cancelAction)
+        
+        self.presentViewController(alertController, animated: true){
+            
+        }
+        
+    }
 }
 
