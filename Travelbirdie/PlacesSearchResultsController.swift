@@ -44,6 +44,13 @@ class PlacesSearchResultsController: UIViewController, UITableViewDelegate, UITa
     func searchBar(searchBar: UISearchBar,
         textDidChange searchText: String){
             
+            // if a user deletes previous entry clear the former results and don't alert with an error
+            if searchText.isEmpty {
+                self.searchResults.removeAll()
+                self.reloadDataWithArray(self.searchResults)
+                return
+            }
+            
             self.view.alpha = 0.5
             self.activityIndicator.startAnimating()
             activityIndicator.hidden = false
@@ -53,6 +60,7 @@ class PlacesSearchResultsController: UIViewController, UITableViewDelegate, UITa
                 self.searchResults.removeAll()
                 
                 if error != nil {
+                    print(error?.localizedDescription)
                     dispatch_async(dispatch_get_main_queue()) {
                         self.view.alpha = 1
                         self.activityIndicator.hidesWhenStopped = true
