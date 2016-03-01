@@ -3,6 +3,7 @@
 //  Travelbirdie
 //  http://www.brianjcoleman.com/tutorial-check-for-internet-connection-in-swift/
 //
+//
 //  Created by Ivan Kodrnja on 01/03/16.
 //  Copyright © 2016 Ivan Kodrnja. All rights reserved.
 //
