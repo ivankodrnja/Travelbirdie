@@ -15,11 +15,12 @@ Just search for the destination, location search is done using Google Maps API, 
 Google Maps API is installed using Cocoa Pods. Detailed installation steps are here https://developers.google.com/maps/documentation/ios-sdk/start. 
 ##### 1. Get Cocoa Pods by running the following command from the terminal:
 ``` $ sudo gem install cocoapods ```
-##### 2. Install Google Map Pod locally by running the following command from the terminal:
+##### 2. Go to your project directory
+``` $ cd <path-to-project> ```
+##### 3. Install Google Map Pod locally by running the following command from the terminal:
 ``` $ pod install ```
 
-Podfile is already present in the repository. In the directory contaning the "Podfile" run the command:
-After installation .xcworkspace is created. From this time onwards, you must use the .xcworkspace file to open the project in Xcode.
+Podfile is already present in the repository. After installation .xcworkspace is created. From this time onwards, you must use the .xcworkspace file to open the project in Xcode.
 
 
 ## Special notes to Udacity reviewers
