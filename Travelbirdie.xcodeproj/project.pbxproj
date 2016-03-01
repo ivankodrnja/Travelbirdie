@@ -16,6 +16,7 @@
 		832D15261C01D0340001AAA7 /* ResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 832D15251C01D0340001AAA7 /* ResultsViewController.swift */; };
 		832D15281C01E27D0001AAA7 /* ZilyoClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 832D15271C01E27D0001AAA7 /* ZilyoClient.swift */; };
 		832D152A1C021BD50001AAA7 /* ZilyoConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 832D15291C021BD50001AAA7 /* ZilyoConstants.swift */; };
+		833678C71C85679A00AA32B3 /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833678C61C85679A00AA32B3 /* Reachability.swift */; };
 		8354E0271BD3CB5D003593B8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8354E0261BD3CB5D003593B8 /* AppDelegate.swift */; };
 		8354E0291BD3CB5D003593B8 /* TravelbirdieSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8354E0281BD3CB5D003593B8 /* TravelbirdieSearchViewController.swift */; };
 		8354E02C1BD3CB5D003593B8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8354E02A1BD3CB5D003593B8 /* Main.storyboard */; };
@@ -84,6 +85,7 @@
 		832D15251C01D0340001AAA7 /* ResultsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResultsViewController.swift; sourceTree = "<group>"; };
 		832D15271C01E27D0001AAA7 /* ZilyoClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZilyoClient.swift; sourceTree = "<group>"; };
 		832D15291C021BD50001AAA7 /* ZilyoConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZilyoConstants.swift; sourceTree = "<group>"; };
+		833678C61C85679A00AA32B3 /* Reachability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
 		8354E0231BD3CB5D003593B8 /* Travelbirdie.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Travelbirdie.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8354E0261BD3CB5D003593B8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8354E0281BD3CB5D003593B8 /* TravelbirdieSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TravelbirdieSearchViewController.swift; sourceTree = "<group>"; };
@@ -218,6 +220,7 @@
 			children = (
 				832D15221C00E18B0001AAA7 /* Search */,
 				8354E0581BD3CC82003593B8 /* Zilyo */,
+				833678C61C85679A00AA32B3 /* Reachability.swift */,
 				83CA92AD1C7EC4DC003698B6 /* CoreDataStackManager.swift */,
 				83BC3D271C3806E5006CDB8E /* TaskCancelingTableViewCell.swift */,
 				8305758B1C7AD69C00AB0A11 /* AukDistrib.swift */,
@@ -502,6 +505,7 @@
 				8354E0271BD3CB5D003593B8 /* AppDelegate.swift in Sources */,
 				83CA92C71C81F56B003698B6 /* FavoriteApartmentDetailViewController.swift in Sources */,
 				832D15261C01D0340001AAA7 /* ResultsViewController.swift in Sources */,
+				833678C71C85679A00AA32B3 /* Reachability.swift in Sources */,
 				832D15281C01E27D0001AAA7 /* ZilyoClient.swift in Sources */,
 				83F0582B1C791A2A002B3F1C /* MapTableViewCell.swift in Sources */,
 				8357DDD11C79F4F60008958A /* DescriptionDetailViewController.swift in Sources */,
