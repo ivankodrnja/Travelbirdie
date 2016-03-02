@@ -348,8 +348,8 @@ class ApartmentDetailTableViewController: UITableViewController {
                     controller.urlString = apartment!.provider!["url"] as? String
                     self.navigationController!.pushViewController(controller, animated: true)
                 } else {
-                    print("Internet connection FAILED")
-                    self.showAlertView("Internet connection FAILED")
+                    print("Internet connection not present")
+                    self.showAlertView("Internet connection not present")
                 }
                 
                 
