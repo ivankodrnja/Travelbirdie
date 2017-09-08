@@ -21,29 +21,29 @@ class BookingViewController: UIViewController, UIWebViewDelegate {
 
         // Do any additional setup after loading the view.
         self.webView.delegate = self
-        let url = NSURL(string: self.urlString!)
+        let url = URL(string: self.urlString!)
         
-        self.webView.loadRequest(NSURLRequest(URL: url!))
+        self.webView.loadRequest(URLRequest(url: url!))
         
     }
     
-    override func viewWillAppear(animated: Bool) {
-        navigationController?.navigationBarHidden = false
+    override func viewWillAppear(_ animated: Bool) {
+        navigationController?.isNavigationBarHidden = false
         self.navigationController?.hidesBarsOnSwipe = false
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         self.navigationController?.hidesBarsOnSwipe = true
     }
     
-    func webViewDidStartLoad(webView: UIWebView) {
+    func webViewDidStartLoad(_ webView: UIWebView) {
         activityIndicator.startAnimating()
-        activityIndicator.hidden = false
+        activityIndicator.isHidden = false
     }
     
-    func webViewDidFinishLoad(webView: UIWebView) {
+    func webViewDidFinishLoad(_ webView: UIWebView) {
         activityIndicator.stopAnimating()
-        activityIndicator.hidden = true
+        activityIndicator.isHidden = true
     }
 
     override func didReceiveMemoryWarning() {

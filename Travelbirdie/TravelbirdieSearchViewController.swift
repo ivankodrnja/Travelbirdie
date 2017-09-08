@@ -38,24 +38,24 @@ class TravelbirdieSearchViewController: UIViewController, UITableViewDelegate, U
         // Do any additional setup after loading the view, typically from a nib.
         
         // set default values for the search query
-        ZilyoClient.sharedInstance().tempRequestParameters[ZilyoClient.Keys.location] = SearchHelper.Constants.Unknown
-        ZilyoClient.sharedInstance().tempRequestParameters[ZilyoClient.Keys.guests] = 1
-        ZilyoClient.sharedInstance().tempRequestParameters[ZilyoClient.Keys.checkIn] = NSDate()
+        ZilyoClient.sharedInstance().tempRequestParameters[ZilyoClient.Keys.location] = SearchHelper.Constants.Unknown as AnyObject
+        ZilyoClient.sharedInstance().tempRequestParameters[ZilyoClient.Keys.guests] = 1 as AnyObject
+        ZilyoClient.sharedInstance().tempRequestParameters[ZilyoClient.Keys.checkIn] = Date() as AnyObject
         // checkout is tomorrow
-        ZilyoClient.sharedInstance().tempRequestParameters[ZilyoClient.Keys.checkOut] = NSCalendar.currentCalendar().dateByAddingUnit(
-            .Day,
+        ZilyoClient.sharedInstance().tempRequestParameters[ZilyoClient.Keys.checkOut] = (Calendar.current as NSCalendar).date(
+            byAdding: .day,
             value: 1,
-            toDate: ZilyoClient.sharedInstance().tempRequestParameters[ZilyoClient.Keys.checkIn] as! NSDate,
-            options: [])!
+            to: ZilyoClient.sharedInstance().tempRequestParameters[ZilyoClient.Keys.checkIn] as! Date,
+            options: [])! as AnyObject
         
         
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         self.navigationController?.hidesBarsOnSwipe = false
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         // make sure table cells have an updated content
         tableViewContainer.reloadData()
         
@@ -64,9 +64,9 @@ class TravelbirdieSearchViewController: UIViewController, UITableViewDelegate, U
         activityIndicator.hidesWhenStopped = true
         activityIndicator.stopAnimating()
         
-        self.datePickerContainerView.hidden = true
-        self.checkOutDatePickerContainerView.hidden = true
-        self.guestsPickerContainerView.hidden = true
+        self.datePickerContainerView.isHidden = true
+        self.checkOutDatePickerContainerView.isHidden = true
+        self.guestsPickerContainerView.isHidden = true
     }
     
     override func didReceiveMemoryWarning() {
@@ -77,53 +77,53 @@ class TravelbirdieSearchViewController: UIViewController, UITableViewDelegate, U
     
     
     // MARK: - Table delegate methods
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         /* Get cell type */
         let cellReuseIdentifier = "SearchCell"
-        let cell = tableView.dequeueReusableCellWithIdentifier(cellReuseIdentifier)! as UITableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier)! as UITableViewCell
         // make table cell separators stretch throught the screen width, in Storyboard separator insets of the table view and the cell have also set to 0
         cell.preservesSuperviewLayoutMargins = false
-        cell.layoutMargins = UIEdgeInsetsZero
+        cell.layoutMargins = UIEdgeInsets.zero
         
         // set static cells
         switch(indexPath.row){
         case 0:
             cell.textLabel?.text = SearchHelper.Constants.Location + ": " + (ZilyoClient.sharedInstance().tempRequestParameters[ZilyoClient.Keys.location] as! String)
             cell.imageView?.image = UIImage(named: "Pin")
-            cell.selectionStyle = UITableViewCellSelectionStyle.None
+            cell.selectionStyle = UITableViewCellSelectionStyle.none
             cell.backgroundColor = UIColor(white: 1, alpha: 0.7)
         case 1:
-            cell.textLabel?.text = SearchHelper.Constants.NumberOfGuests + ": " + String(ZilyoClient.sharedInstance().tempRequestParameters[ZilyoClient.Keys.guests]!)
+            cell.textLabel?.text = SearchHelper.Constants.NumberOfGuests + ": " + String(describing: ZilyoClient.sharedInstance().tempRequestParameters[ZilyoClient.Keys.guests]!)
             cell.imageView?.image = UIImage(named: "Guests")
-            cell.selectionStyle = UITableViewCellSelectionStyle.None
+            cell.selectionStyle = UITableViewCellSelectionStyle.none
             cell.backgroundColor = UIColor(white: 1, alpha: 0.7)
         case 2:
-            let dateFormatter = NSDateFormatter()
+            let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "dd-MMM-yyyy"
-            let string = dateFormatter.stringFromDate(ZilyoClient.sharedInstance().tempRequestParameters[ZilyoClient.Keys.checkIn]! as! NSDate)
+            let string = dateFormatter.string(from: ZilyoClient.sharedInstance().tempRequestParameters[ZilyoClient.Keys.checkIn]! as! Date)
             
             cell.textLabel?.text = SearchHelper.Constants.CheckIn + ": " + string
             cell.imageView?.image = UIImage(named: "Calendar")
-            cell.selectionStyle = UITableViewCellSelectionStyle.None
+            cell.selectionStyle = UITableViewCellSelectionStyle.none
             cell.backgroundColor = UIColor(white: 1, alpha: 0.7)
         case 3:
-            let dateFormatter = NSDateFormatter()
+            let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "dd-MMM-yyyy"
-            let string = dateFormatter.stringFromDate(ZilyoClient.sharedInstance().tempRequestParameters[ZilyoClient.Keys.checkOut]! as! NSDate)
+            let string = dateFormatter.string(from: ZilyoClient.sharedInstance().tempRequestParameters[ZilyoClient.Keys.checkOut]! as! Date)
             
             cell.textLabel?.text = SearchHelper.Constants.CheckOut + ": " + string
             cell.imageView?.image = UIImage(named: "Calendar")
-            cell.selectionStyle = UITableViewCellSelectionStyle.None
+            cell.selectionStyle = UITableViewCellSelectionStyle.none
             cell.backgroundColor = UIColor(white: 1, alpha: 0.7)
         case 4:
-            cell.accessoryType = UITableViewCellAccessoryType.None
-            cell.backgroundColor = UIColor.orangeColor()
-            cell.textLabel?.textAlignment = .Center
-            cell.textLabel!.font = UIFont.boldSystemFontOfSize(20)
-            cell.textLabel?.textColor = UIColor.whiteColor()
+            cell.accessoryType = UITableViewCellAccessoryType.none
+            cell.backgroundColor = UIColor.orange
+            cell.textLabel?.textAlignment = .center
+            cell.textLabel!.font = UIFont.boldSystemFont(ofSize: 20)
+            cell.textLabel?.textColor = UIColor.white
             cell.textLabel?.text = SearchHelper.Constants.SearchRentals
-            cell.selectionStyle = UITableViewCellSelectionStyle.None
+            cell.selectionStyle = UITableViewCellSelectionStyle.none
             
         default:
             break
@@ -133,23 +133,23 @@ class TravelbirdieSearchViewController: UIViewController, UITableViewDelegate, U
         
     }
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         //return ParseClient.sharedInstance().studentsDict.count
         return SearchHelper.Constants.Count
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         switch(indexPath.row){
             // select location
         case 0:
             
-            let controller = storyboard!.instantiateViewControllerWithIdentifier("PlacesSearchResultsController") as! PlacesSearchResultsController
-            self.presentViewController(controller, animated: true, completion: nil)
+            let controller = storyboard!.instantiateViewController(withIdentifier: "PlacesSearchResultsController") as! PlacesSearchResultsController
+            self.present(controller, animated: true, completion: nil)
             
             /*
             let placesSearchController = PlacesSearchResultsController()
@@ -209,22 +209,22 @@ class TravelbirdieSearchViewController: UIViewController, UITableViewDelegate, U
         
         self.requestParameters[ZilyoClient.Keys.longitude] = ZilyoClient.sharedInstance().tempRequestParameters[ZilyoClient.Keys.longitude]
         self.requestParameters[ZilyoClient.Keys.guests] = ZilyoClient.sharedInstance().tempRequestParameters[ZilyoClient.Keys.guests]
-        self.requestParameters[ZilyoClient.Keys.checkIn] = ZilyoClient.sharedInstance().tempRequestParameters[ZilyoClient.Keys.checkIn]?.timeIntervalSince1970
-        self.requestParameters[ZilyoClient.Keys.checkOut] = ZilyoClient.sharedInstance().tempRequestParameters[ZilyoClient.Keys.checkOut]?.timeIntervalSince1970
-        self.requestParameters[ZilyoClient.Keys.page] = 1
+        self.requestParameters[ZilyoClient.Keys.checkIn] = ZilyoClient.sharedInstance().tempRequestParameters[ZilyoClient.Keys.checkIn]?.timeIntervalSince1970 as AnyObject
+        self.requestParameters[ZilyoClient.Keys.checkOut] = ZilyoClient.sharedInstance().tempRequestParameters[ZilyoClient.Keys.checkOut]?.timeIntervalSince1970 as AnyObject
+        self.requestParameters[ZilyoClient.Keys.page] = 1 as AnyObject
         
         // don't make a network request if destination isn't set
         if(self.requestParameters[ZilyoClient.Keys.latitude] == nil || self.requestParameters[ZilyoClient.Keys.longitude] == nil){
             self.showAlertView(SearchHelper.Constants.ChooseDestination)
-        } else if (self.requestParameters[ZilyoClient.Keys.checkIn] as! NSTimeInterval > self.requestParameters[ZilyoClient.Keys.checkOut] as! NSTimeInterval) {
+        } else if (self.requestParameters[ZilyoClient.Keys.checkIn] as! TimeInterval > self.requestParameters[ZilyoClient.Keys.checkOut] as! TimeInterval) {
             // check if check in and check out dates are correct
             self.showAlertView("Check In must be before Check Out")
             
-        } else if ((self.requestParameters[ZilyoClient.Keys.checkOut] as! NSTimeInterval) < (self.requestParameters[ZilyoClient.Keys.checkIn] as! NSTimeInterval)) {
+        } else if ((self.requestParameters[ZilyoClient.Keys.checkOut] as! TimeInterval) < (self.requestParameters[ZilyoClient.Keys.checkIn] as! TimeInterval)) {
             // check if check in and check out dates are correct
             self.showAlertView("Check Out must be after Check In")
             
-        } else if (self.requestParameters[ZilyoClient.Keys.checkOut] as! NSTimeInterval == self.requestParameters[ZilyoClient.Keys.checkIn] as! NSTimeInterval) {
+        } else if (self.requestParameters[ZilyoClient.Keys.checkOut] as! TimeInterval == self.requestParameters[ZilyoClient.Keys.checkIn] as! TimeInterval) {
             // check if check in and check out dates are correct
             self.showAlertView("Check Out must be after Check In")
             
@@ -234,19 +234,19 @@ class TravelbirdieSearchViewController: UIViewController, UITableViewDelegate, U
             self.backgroundImage.alpha = 0.5
             self.activityIndicator.startAnimating()
             
-            let controller = storyboard!.instantiateViewControllerWithIdentifier("ResultsViewController") as! ResultsViewController
+            let controller = storyboard!.instantiateViewController(withIdentifier: "ResultsViewController") as! ResultsViewController
             
             // prevent user from submiting twice
             self.searchTapped = true
             
             
-            ZilyoClient.sharedInstance().getRentals(self.requestParameters[ZilyoClient.Keys.latitude]! as! Double, locationLon: self.requestParameters[ZilyoClient.Keys.longitude]! as! Double, guestsNumber: self.requestParameters[ZilyoClient.Keys.guests]! as! Int, checkIn: self.requestParameters[ZilyoClient.Keys.checkIn]! as! NSTimeInterval, checkOut: self.requestParameters[ZilyoClient.Keys.checkOut]! as! NSTimeInterval, page: 1){(result, error) in
+            ZilyoClient.sharedInstance().getRentals(self.requestParameters[ZilyoClient.Keys.latitude]! as! Double, locationLon: self.requestParameters[ZilyoClient.Keys.longitude]! as! Double, guestsNumber: self.requestParameters[ZilyoClient.Keys.guests]! as! Int, checkIn: self.requestParameters[ZilyoClient.Keys.checkIn]! as! TimeInterval, checkOut: self.requestParameters[ZilyoClient.Keys.checkOut]! as! TimeInterval, page: 1){(result, error) in
                 
                 
                 if error == nil {
                     //print(result)
                     controller.requestParameters = self.requestParameters
-                    dispatch_async(dispatch_get_main_queue()) {
+                    DispatchQueue.main.async {
                         
                         if result?.count == 0 {
                             self.showAlertView("No rentals found, please refine your search!")
@@ -267,14 +267,14 @@ class TravelbirdieSearchViewController: UIViewController, UITableViewDelegate, U
                     }
                 } else {
                     // Inform user on the main thread about errors, e.g. the internet connection is offline
-                    dispatch_async(dispatch_get_main_queue()) {
+                    DispatchQueue.main.async {
                         self.searchTapped = false
                         self.tableViewContainer.alpha = 1.0
                         self.backgroundImage.alpha = 1.0
                         self.activityIndicator.hidesWhenStopped = true
                         self.activityIndicator.stopAnimating()
                         
-                        print("Error in TravelbirdieSearchController: \(error?.localizedDescription)")
+                        print("Error in TravelbirdieSearchController: \(String(describing: error?.localizedDescription))")
                         self.showAlertView(error?.localizedDescription)
                     }
                 }
@@ -290,34 +290,34 @@ class TravelbirdieSearchViewController: UIViewController, UITableViewDelegate, U
         frame.origin.y = self.view.frame.size.height
         self.datePickerContainerView.frame = frame
         
-        UIView.animateWithDuration(0.4, animations: {
+        UIView.animate(withDuration: 0.4, animations: {
             
             // manage the appearance of the date picker
-            self.datePickerContainerView.hidden = false
-            self.tabBarController?.tabBar.hidden = true
+            self.datePickerContainerView.isHidden = false
+            self.tabBarController?.tabBar.isHidden = true
             
             var frame: CGRect = self.datePickerContainerView.frame
             frame.origin.y = self.view.frame.size.height - frame.size.height
             self.datePickerContainerView.frame = frame
-            self.dateSelectionPicker.minimumDate = NSDate()
+            self.dateSelectionPicker.minimumDate = Date()
             //self.dateSelectionPicker.minimumDate = (ZilyoClient.sharedInstance().tempRequestParameters[ZilyoClient.Keys.checkIn]! as! NSDate)
             //self.dateSelectionPicker.maximumDate = (ZilyoClient.sharedInstance().tempRequestParameters[ZilyoClient.Keys.checkOut]! as! NSDate)
             
-            self.dateSelectionPicker.hidden = false
+            self.dateSelectionPicker.isHidden = false
             
         })
         
     }
     
-    @IBAction func dismissCheckInPicker(sender: AnyObject) {
+    @IBAction func dismissCheckInPicker(_ sender: AnyObject) {
         
-        ZilyoClient.sharedInstance().tempRequestParameters[ZilyoClient.Keys.checkIn] = self.dateSelectionPicker.date
+        ZilyoClient.sharedInstance().tempRequestParameters[ZilyoClient.Keys.checkIn] = self.dateSelectionPicker.date as AnyObject
         // make sure table cells have an updated content
         self.tableViewContainer.reloadData()
         
-        UIView.animateWithDuration(0.4, animations: {
+        UIView.animate(withDuration: 0.4, animations: {
             
-            self.datePickerContainerView.frame = CGRectMake(self.view.frame.minX, self.view.frame.maxY, self.view.frame.width, self.datePickerContainerView.frame.height)
+            self.datePickerContainerView.frame = CGRect(x: self.view.frame.minX, y: self.view.frame.maxY, width: self.view.frame.width, height: self.datePickerContainerView.frame.height)
             
         })
         //self.datePickerContainerView.hidden = true
@@ -330,32 +330,32 @@ class TravelbirdieSearchViewController: UIViewController, UITableViewDelegate, U
         frame.origin.y = self.view.frame.size.height
         self.checkOutDatePickerContainerView.frame = frame
         
-        UIView.animateWithDuration(0.4, animations: {
+        UIView.animate(withDuration: 0.4, animations: {
             
             // manage the appearance of the date picker
-            self.checkOutDatePickerContainerView.hidden = false
-            self.tabBarController?.tabBar.hidden = true
+            self.checkOutDatePickerContainerView.isHidden = false
+            self.tabBarController?.tabBar.isHidden = true
             
             var frame: CGRect = self.checkOutDatePickerContainerView.frame
             frame.origin.y = self.view.frame.size.height - frame.size.height
             self.checkOutDatePickerContainerView.frame = frame
             //self.checkOutDateSelectionPicker.minimumDate = ((ZilyoClient.sharedInstance().tempRequestParameters[ZilyoClient.Keys.checkOut]!) as! NSDate)
             
-            self.checkOutDateSelectionPicker.hidden = false
+            self.checkOutDateSelectionPicker.isHidden = false
             
         })
         
     }
     
-    @IBAction func dismissCheckOutPicker(sender: AnyObject) {
+    @IBAction func dismissCheckOutPicker(_ sender: AnyObject) {
         
-        ZilyoClient.sharedInstance().tempRequestParameters[ZilyoClient.Keys.checkOut] = self.checkOutDateSelectionPicker.date
+        ZilyoClient.sharedInstance().tempRequestParameters[ZilyoClient.Keys.checkOut] = self.checkOutDateSelectionPicker.date as AnyObject
         // make sure table cells have an updated content
         self.tableViewContainer.reloadData()
         
-        UIView.animateWithDuration(0.4, animations: {
+        UIView.animate(withDuration: 0.4, animations: {
             
-            self.checkOutDatePickerContainerView.frame = CGRectMake(self.view.frame.minX, self.view.frame.maxY, self.view.frame.width, self.checkOutDatePickerContainerView.frame.height)
+            self.checkOutDatePickerContainerView.frame = CGRect(x: self.view.frame.minX, y: self.view.frame.maxY, width: self.view.frame.width, height: self.checkOutDatePickerContainerView.frame.height)
             
         })
         
@@ -369,18 +369,18 @@ class TravelbirdieSearchViewController: UIViewController, UITableViewDelegate, U
         frame.origin.y = self.view.frame.size.height
         self.guestsPickerContainerView.frame = frame
         
-        UIView.animateWithDuration(0.4, animations: {
+        UIView.animate(withDuration: 0.4, animations: {
             
             // manage the appearance of the date picker
-            self.guestsPickerContainerView.hidden = false
-            self.tabBarController?.tabBar.hidden = true
+            self.guestsPickerContainerView.isHidden = false
+            self.tabBarController?.tabBar.isHidden = true
             
             var frame: CGRect = self.guestsPickerContainerView.frame
             frame.origin.y = self.view.frame.size.height - frame.size.height
             self.guestsPickerContainerView.frame = frame
             
             
-            self.guestsSelectionPicker.hidden = false
+            self.guestsSelectionPicker.isHidden = false
             
         })
         
@@ -388,28 +388,28 @@ class TravelbirdieSearchViewController: UIViewController, UITableViewDelegate, U
     
     func dismissGuestsPicker() {
         
-        UIView.animateWithDuration(0.4, animations: {
+        UIView.animate(withDuration: 0.4, animations: {
             
-            self.guestsPickerContainerView.frame = CGRectMake(self.view.frame.minX, self.view.frame.maxY, self.view.frame.width, self.guestsPickerContainerView.frame.height)
+            self.guestsPickerContainerView.frame = CGRect(x: self.view.frame.minX, y: self.view.frame.maxY, width: self.view.frame.width, height: self.guestsPickerContainerView.frame.height)
             
         })
         //        self.guestsPickerContainerView.hidden = true
     }
     
-    func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
     
-    func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         return pickerDataSource.count;
     }
     
-    func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         return String(format:"%d", pickerDataSource[row])
     }
     
-    func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        ZilyoClient.sharedInstance().tempRequestParameters[ZilyoClient.Keys.guests] = self.pickerDataSource[row]
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        ZilyoClient.sharedInstance().tempRequestParameters[ZilyoClient.Keys.guests] = self.pickerDataSource[row] as AnyObject
         // make sure table cells have an updated content
         tableViewContainer.reloadData()
         self.dismissGuestsPicker()
@@ -417,17 +417,17 @@ class TravelbirdieSearchViewController: UIViewController, UITableViewDelegate, U
     
     // MARK: - Helpers
     
-    func showAlertView(errorMessage: String?) {
+    func showAlertView(_ errorMessage: String?) {
         
-        let alertController = UIAlertController(title: nil, message: errorMessage!, preferredStyle: .Alert)
+        let alertController = UIAlertController(title: nil, message: errorMessage!, preferredStyle: .alert)
         
-        let cancelAction = UIAlertAction(title: "Dismiss", style: .Cancel) {(action) in
+        let cancelAction = UIAlertAction(title: "Dismiss", style: .cancel) {(action) in
             
             
         }
         alertController.addAction(cancelAction)
         
-        self.presentViewController(alertController, animated: true){
+        self.present(alertController, animated: true){
             
         }
         

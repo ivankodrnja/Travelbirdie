@@ -25,7 +25,7 @@ class ResultsViewController: UIViewController, UITableViewDelegate, UITableViewD
     var totalCountOfApartments : Int!
     
     // will serve for caching images
-    var cache:NSCache!
+    var cache:NSCache<AnyObject, AnyObject>!
     
     override func viewDidLoad() {
         // initialize cache
@@ -33,28 +33,28 @@ class ResultsViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         
         self.navigationController?.hidesBarsOnSwipe = true
-        self.navigationController?.navigationBar.tintColor = UIColor.blackColor()
+        self.navigationController?.navigationBar.tintColor = UIColor.black
         
     }
     
     
     
     // MARK: - Table delegate methods
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         /* Get cell type */
         let cellReuseIdentifier = "SearchResultViewCell"
         
-        tableView.registerNib(UINib(nibName: "SearchResultViewCell", bundle: nil), forCellReuseIdentifier: cellReuseIdentifier)
+        tableView.register(UINib(nibName: "SearchResultViewCell", bundle: nil), forCellReuseIdentifier: cellReuseIdentifier)
         
-        let cell = tableView.dequeueReusableCellWithIdentifier(cellReuseIdentifier)! as! SearchResultViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier)! as! SearchResultViewCell
         
         // make table cell separators stretch throught the screen width, in Storyboard separator insets of the table view and the cell have also set to 0
         cell.preservesSuperviewLayoutMargins = false
-        cell.layoutMargins = UIEdgeInsetsZero
+        cell.layoutMargins = UIEdgeInsets.zero
         
         
         let apartment = ZilyoClient.sharedInstance().apartmentDict[indexPath.row]
@@ -66,8 +66,8 @@ class ResultsViewController: UIViewController, UITableViewDelegate, UITableViewD
         cell.apartmentImageView.image = UIImage(named: "loadingImage")
         
         // first check if the image is cached
-        if(self.cache.objectForKey(indexPath.row) != nil){
-            cell.apartmentImageView.image = self.cache.objectForKey(indexPath.row) as? UIImage
+        if(self.cache.object(forKey: indexPath.row as AnyObject) != nil){
+            cell.apartmentImageView.image = self.cache.object(forKey: indexPath.row as AnyObject) as? UIImage
         } else {
             // if the image is not cached download it
             // get the first object in array of photos
@@ -82,7 +82,7 @@ class ResultsViewController: UIViewController, UITableViewDelegate, UITableViewD
                     
                     if let error = error {
                         print("Title download error: \(error.localizedDescription) url:\(titleImageUrl)")
-                        dispatch_async(dispatch_get_main_queue()) {
+                        DispatchQueue.main.async {
                             cell.apartmentImageView.image = UIImage(named: "noImage")
                         }
                     }
@@ -90,16 +90,16 @@ class ResultsViewController: UIViewController, UITableViewDelegate, UITableViewD
                     // no error ocurred, show the image
                     if let data = data {
                         // update the cell on the main thread
-                        dispatch_async(dispatch_get_main_queue()) {
+                        DispatchQueue.main.async {
                             // check whether the cell is visible on screen before updating the image
-                            if let updateCell : SearchResultViewCell = (tableView.cellForRowAtIndexPath(indexPath)) as? SearchResultViewCell{
+                            if let updateCell : SearchResultViewCell = (tableView.cellForRow(at: indexPath)) as? SearchResultViewCell{
                                 
                                 // create the image, show it and cache it
                                 let image:UIImage!  = UIImage(data: data)
                                 
                                 if let secureImage = image {
                                     updateCell.apartmentImageView?.image = secureImage
-                                    self.cache.setObject(secureImage, forKey: indexPath.row)
+                                    self.cache.setObject(secureImage, forKey: indexPath.row as AnyObject)
                                 }
                                 
                             }
@@ -138,29 +138,29 @@ class ResultsViewController: UIViewController, UITableViewDelegate, UITableViewD
         
     }
     
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 350
     }
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return ZilyoClient.sharedInstance().apartmentDict.count
         
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        let controller = storyboard!.instantiateViewControllerWithIdentifier("ApartmentDetailViewController") as! ApartmentDetailTableViewController
+        let controller = storyboard!.instantiateViewController(withIdentifier: "ApartmentDetailViewController") as! ApartmentDetailTableViewController
         
         let apartment = ZilyoClient.sharedInstance().apartmentDict[indexPath.row]
         // set apartment object in the detail VC
         controller.apartment = apartment
         // set the first image to show in the detail VC
-        if(self.cache.objectForKey(indexPath.row) != nil){
-            controller.firstImage = (self.cache.objectForKey(indexPath.row) as? UIImage)!
+        if(self.cache.object(forKey: indexPath.row as AnyObject) != nil){
+            controller.firstImage = (self.cache.object(forKey: indexPath.row as AnyObject) as? UIImage)!
         }
         
         
@@ -186,7 +186,7 @@ class ResultsViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     */
     
-    func scrollViewDidScroll(scrollView: UIScrollView) {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
         
         if scrollView.contentOffset.y + view.frame.size.height > scrollView.contentSize.height * 0.8 { // Loads more apartments once the user has scrolled 80% of the view
             searchRentals()
@@ -209,7 +209,7 @@ class ResultsViewController: UIViewController, UITableViewDelegate, UITableViewD
         }
         populatingApartments = true
         
-        ZilyoClient.sharedInstance().getRentals(self.requestParameters[ZilyoClient.Keys.latitude]! as! Double, locationLon: self.requestParameters[ZilyoClient.Keys.longitude] as! Double, guestsNumber: self.requestParameters[ZilyoClient.Keys.guests]! as! Int, checkIn: self.requestParameters[ZilyoClient.Keys.checkIn]! as! NSTimeInterval, checkOut: self.requestParameters[ZilyoClient.Keys.checkOut]! as! NSTimeInterval, page: self.currentPage){(result, error) in
+        ZilyoClient.sharedInstance().getRentals(self.requestParameters[ZilyoClient.Keys.latitude]! as! Double, locationLon: self.requestParameters[ZilyoClient.Keys.longitude] as! Double, guestsNumber: self.requestParameters[ZilyoClient.Keys.guests]! as! Int, checkIn: self.requestParameters[ZilyoClient.Keys.checkIn]! as! TimeInterval, checkOut: self.requestParameters[ZilyoClient.Keys.checkOut]! as! TimeInterval, page: self.currentPage){(result, error) in
             
             if error == nil {
                 // Store the current number of apartments before adding any new batch
@@ -222,17 +222,17 @@ class ResultsViewController: UIViewController, UITableViewDelegate, UITableViewD
                 self.totalCountOfApartments = ZilyoClient.sharedInstance().apartmentDict.count
                 print("totalCountOfApartments count:\(self.totalCountOfApartments)\n")
                 
-                dispatch_async(dispatch_get_main_queue()) {
+                DispatchQueue.main.async {
                     
                     self.populatingApartments = false
                     self.tableView.reloadData()
                     
-                    self.currentPage++
+                    self.currentPage+=1
                 }
             } else {
-                dispatch_async(dispatch_get_main_queue()) {
+                DispatchQueue.main.async {
                     // Error, e.g. the internet connection is offline
-                    print("Error in ResultsViewController: \(error?.localizedDescription)")
+                    print("Error in ResultsViewController: \(String(describing: error?.localizedDescription))")
                     self.showAlertView(error?.localizedDescription)
                 }
             }
@@ -242,17 +242,17 @@ class ResultsViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     // MARK: - Helpers
     
-    func showAlertView(errorMessage: String?) {
+    func showAlertView(_ errorMessage: String?) {
         
-        let alertController = UIAlertController(title: nil, message: errorMessage!, preferredStyle: .Alert)
+        let alertController = UIAlertController(title: nil, message: errorMessage!, preferredStyle: .alert)
         
-        let cancelAction = UIAlertAction(title: "Dismiss", style: .Cancel) {(action) in
+        let cancelAction = UIAlertAction(title: "Dismiss", style: .cancel) {(action) in
             
             
         }
         alertController.addAction(cancelAction)
         
-        self.presentViewController(alertController, animated: true){
+        self.present(alertController, animated: true){
             
         }
         

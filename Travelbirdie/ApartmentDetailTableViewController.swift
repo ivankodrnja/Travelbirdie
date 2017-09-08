@@ -9,6 +9,30 @@
 import UIKit
 import MapKit
 import CoreData
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
+
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l > r
+  default:
+    return rhs < lhs
+  }
+}
+
 
 class ApartmentDetailTableViewController: UITableViewController {
 
@@ -59,10 +83,10 @@ class ApartmentDetailTableViewController: UITableViewController {
     }
     
     func checkIsFavorite() -> [Apartment] {
-        let fetchRequest = NSFetchRequest(entityName: "Apartment")
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Apartment")
         fetchRequest.predicate = NSPredicate(format: "id == %@", (apartment?.id)!)
         do {
-            return try sharedContext.executeFetchRequest(fetchRequest) as! [Apartment]
+            return try sharedContext.fetch(fetchRequest) as! [Apartment]
         } catch let error as NSError {
             print("Error in fetchAllActors(): \(error)")
             return [Apartment]()
@@ -71,11 +95,11 @@ class ApartmentDetailTableViewController: UITableViewController {
 
     // MARK: - Table view data source
 
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    override func numberOfSections(in tableView: UITableView) -> Int {
         return 4
     }
 
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         // different sections have different number of rows
         switch(section){
@@ -91,7 +115,7 @@ class ApartmentDetailTableViewController: UITableViewController {
         
     }
 
-    override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         // different sections have different number of rows
         switch(section){
         case 1:
@@ -106,7 +130,7 @@ class ApartmentDetailTableViewController: UITableViewController {
     }
 
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         // cell type depends on section and a row inside the section
         switch(indexPath.section){
@@ -116,11 +140,11 @@ class ApartmentDetailTableViewController: UITableViewController {
             switch(indexPath.row){
             // image slider
             case 0:
-                let cell = tableView.dequeueReusableCellWithIdentifier("ImageSliderCell", forIndexPath: indexPath) as! ImageSliderCell
+                let cell = tableView.dequeueReusableCell(withIdentifier: "ImageSliderCell", for: indexPath) as! ImageSliderCell
                 // make table cell separators stretch throught the screen width
                 cell.preservesSuperviewLayoutMargins = false
-                cell.layoutMargins = UIEdgeInsetsZero
-                cell.separatorInset = UIEdgeInsetsZero
+                cell.layoutMargins = UIEdgeInsets.zero
+                cell.separatorInset = UIEdgeInsets.zero
                 
                 if let nightlyPrice = apartment!.price!["nightly"] as? Int {
                     cell.priceFromLabel.text = "$ \(nightlyPrice)+"
@@ -130,9 +154,9 @@ class ApartmentDetailTableViewController: UITableViewController {
                 if loadImages {
                     var urlCount = 0
                     // cache downloaded images and use Auk image slideshow library from https://github.com/evgenyneu/Auk
-                    Moa.settings.cache.requestCachePolicy = .ReturnCacheDataElseLoad
+                    Moa.settings.cache.requestCachePolicy = .returnCacheDataElseLoad
                     for imageUrl in imageArray {
-                        urlCount++
+                        urlCount += 1
                         cell.scrollView.auk.settings.placeholderImage = UIImage(named: "loadingImage")
                         cell.scrollView.auk.settings.errorImage = UIImage(named: "noImage")
                         if urlCount == 1 {
@@ -150,28 +174,28 @@ class ApartmentDetailTableViewController: UITableViewController {
                 return cell
             // add to favorites
             case 1:
-                let cell = tableView.dequeueReusableCellWithIdentifier("FavoritesCell", forIndexPath: indexPath)
-                cell.accessoryType = UITableViewCellAccessoryType.None
-                cell.backgroundColor = UIColor.grayColor()
-                cell.textLabel?.textAlignment = .Center
-                cell.textLabel!.font = UIFont.boldSystemFontOfSize(20)
-                cell.textLabel?.textColor = UIColor.whiteColor()
+                let cell = tableView.dequeueReusableCell(withIdentifier: "FavoritesCell", for: indexPath)
+                cell.accessoryType = UITableViewCellAccessoryType.none
+                cell.backgroundColor = UIColor.gray
+                cell.textLabel?.textAlignment = .center
+                cell.textLabel!.font = UIFont.boldSystemFont(ofSize: 20)
+                cell.textLabel?.textColor = UIColor.white
                 if isFavorite {
                     cell.textLabel?.text = "Added to Favorites"
                 } else {
                     cell.textLabel?.text = "Add to Favorites"
                 }
-                cell.selectionStyle = UITableViewCellSelectionStyle.None
+                cell.selectionStyle = UITableViewCellSelectionStyle.none
                 
                 return cell
             // labels cell
             case 2:
-                let cell = tableView.dequeueReusableCellWithIdentifier("LabelCell", forIndexPath: indexPath) as! LabelTableViewCell
+                let cell = tableView.dequeueReusableCell(withIdentifier: "LabelCell", for: indexPath) as! LabelTableViewCell
 
                 // make table cell separators stretch throught the screen width
                 cell.preservesSuperviewLayoutMargins = false
-                cell.layoutMargins = UIEdgeInsetsZero
-                cell.separatorInset = UIEdgeInsetsZero
+                cell.layoutMargins = UIEdgeInsets.zero
+                cell.separatorInset = UIEdgeInsets.zero
 
                 
                 if let bedroomsNumber = apartment!.attr!["bedrooms"] as? Int {
@@ -189,15 +213,15 @@ class ApartmentDetailTableViewController: UITableViewController {
                 
             // booking cell
             default:
-                let cell = tableView.dequeueReusableCellWithIdentifier("BookCell", forIndexPath: indexPath) 
+                let cell = tableView.dequeueReusableCell(withIdentifier: "BookCell", for: indexPath) 
                 
-                cell.accessoryType = UITableViewCellAccessoryType.None
-                cell.backgroundColor = UIColor.orangeColor()
-                cell.textLabel?.textAlignment = .Center
-                cell.textLabel!.font = UIFont.boldSystemFontOfSize(20)
-                cell.textLabel?.textColor = UIColor.whiteColor()
+                cell.accessoryType = UITableViewCellAccessoryType.none
+                cell.backgroundColor = UIColor.orange
+                cell.textLabel?.textAlignment = .center
+                cell.textLabel!.font = UIFont.boldSystemFont(ofSize: 20)
+                cell.textLabel?.textColor = UIColor.white
                 cell.textLabel?.text = SearchHelper.Constants.BookNow
-                cell.selectionStyle = UITableViewCellSelectionStyle.None
+                cell.selectionStyle = UITableViewCellSelectionStyle.none
                 
                 
                 return cell
@@ -205,12 +229,12 @@ class ApartmentDetailTableViewController: UITableViewController {
             }
         // second section contains description and amenities
         case 1:
-            let cell = tableView.dequeueReusableCellWithIdentifier("DescriptionCell", forIndexPath: indexPath)
-            cell.accessoryType = .DisclosureIndicator
+            let cell = tableView.dequeueReusableCell(withIdentifier: "DescriptionCell", for: indexPath)
+            cell.accessoryType = .disclosureIndicator
             // make table cell separators stretch throught the screen width
             cell.preservesSuperviewLayoutMargins = false
-            cell.layoutMargins = UIEdgeInsetsZero
-            cell.separatorInset = UIEdgeInsetsZero
+            cell.layoutMargins = UIEdgeInsets.zero
+            cell.separatorInset = UIEdgeInsets.zero
             
             switch(indexPath.row){
             // description
@@ -225,8 +249,8 @@ class ApartmentDetailTableViewController: UITableViewController {
             }
         // third section contains the map
         case 2:
-            let cell = tableView.dequeueReusableCellWithIdentifier("MapCell", forIndexPath: indexPath) as! MapTableViewCell
-            cell.mapView.mapType = .Satellite
+            let cell = tableView.dequeueReusableCell(withIdentifier: "MapCell", for: indexPath) as! MapTableViewCell
+            cell.mapView.mapType = .satellite
             
             let location = CLLocationCoordinate2D(latitude: apartment!.latLng![0], longitude: apartment!.latLng![1])
             
@@ -244,13 +268,13 @@ class ApartmentDetailTableViewController: UITableViewController {
         
         // fourth section contains the rental rates: nightly, weekend night, weekly, monthly
         default:
-            let cell = UITableViewCell(style: .Value1, reuseIdentifier: "RentalRatesCell")
-            cell.detailTextLabel?.textColor = UIColor.blackColor()
-            cell.selectionStyle = .None
+            let cell = UITableViewCell(style: .value1, reuseIdentifier: "RentalRatesCell")
+            cell.detailTextLabel?.textColor = UIColor.black
+            cell.selectionStyle = .none
             // make table cell separators stretch throught the screen width
             cell.preservesSuperviewLayoutMargins = false
-            cell.layoutMargins = UIEdgeInsetsZero
-            cell.separatorInset = UIEdgeInsetsZero
+            cell.layoutMargins = UIEdgeInsets.zero
+            cell.separatorInset = UIEdgeInsets.zero
             
             // each of 4 rows shows different price type
             switch(indexPath.row){
@@ -286,7 +310,7 @@ class ApartmentDetailTableViewController: UITableViewController {
         
     }
 
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch(indexPath.section){
         // first section contains image slider, labels cell and book cell
         case 0:
@@ -299,7 +323,7 @@ class ApartmentDetailTableViewController: UITableViewController {
                 // save to favorites list using Core Data only if already isn't added to favorites list
                 if !isFavorite {
                     // prepare a dictionary to save as an Apartment object
-                    let aptDict: [String : AnyObject] = [ZilyoClient.JSONResponseKeys.Id : (self.apartment?.id)!, ZilyoClient.JSONResponseKeys.LatLng : (self.apartment?.latLng)!, ZilyoClient.JSONResponseKeys.Location : (self.apartment?.location)!, ZilyoClient.JSONResponseKeys.Attr : (self.apartment?.attr)!, ZilyoClient.JSONResponseKeys.Provider : (self.apartment?.provider)!]
+                    let aptDict: [String : AnyObject] = [ZilyoClient.JSONResponseKeys.Id : (self.apartment?.id)! as AnyObject, ZilyoClient.JSONResponseKeys.LatLng : (self.apartment?.latLng)! as AnyObject, ZilyoClient.JSONResponseKeys.Location : (self.apartment?.location)! as AnyObject, ZilyoClient.JSONResponseKeys.Attr : (self.apartment?.attr)! as AnyObject, ZilyoClient.JSONResponseKeys.Provider : (self.apartment?.provider)! as AnyObject]
                     let apt = Apartment(dictionary: aptDict, context: self.sharedContext)
                     
                     // add amenities
@@ -340,9 +364,9 @@ class ApartmentDetailTableViewController: UITableViewController {
                 
             default:
                 
-                if Reachability.isConnectedToNetwork() == true {
+                if Reachability.shared.isConnectedToNetwork() == true {
                     print("Internet connection OK")
-                    let controller = storyboard!.instantiateViewControllerWithIdentifier("BookingViewController") as! BookingViewController
+                    let controller = storyboard!.instantiateViewController(withIdentifier: "BookingViewController") as! BookingViewController
                     
                     // set description text in detail controller
                     controller.urlString = apartment!.provider!["url"] as? String
@@ -362,7 +386,7 @@ class ApartmentDetailTableViewController: UITableViewController {
             // description
             case 0:
 
-                let controller = storyboard!.instantiateViewControllerWithIdentifier("DescriptionDetailViewController") as! DescriptionDetailViewController
+                let controller = storyboard!.instantiateViewController(withIdentifier: "DescriptionDetailViewController") as! DescriptionDetailViewController
                 
                 // set description text in detail controller
                 controller.descriptionText = apartment!.attr!["description"] as? String
@@ -373,7 +397,7 @@ class ApartmentDetailTableViewController: UITableViewController {
                 
             // amentites labels cell
             default:
-                let controller = storyboard!.instantiateViewControllerWithIdentifier("DescriptionDetailViewController") as! DescriptionDetailViewController
+                let controller = storyboard!.instantiateViewController(withIdentifier: "DescriptionDetailViewController") as! DescriptionDetailViewController
                 
                 var amenitiesArray = String()
                 for amenity in apartment!.amenities! {
@@ -398,17 +422,17 @@ class ApartmentDetailTableViewController: UITableViewController {
     
     // MARK: - Helpers
     
-    func showAlertView(errorMessage: String?) {
+    func showAlertView(_ errorMessage: String?) {
         
-        let alertController = UIAlertController(title: nil, message: errorMessage!, preferredStyle: .Alert)
+        let alertController = UIAlertController(title: nil, message: errorMessage!, preferredStyle: .alert)
         
-        let cancelAction = UIAlertAction(title: "Dismiss", style: .Cancel) {(action) in
+        let cancelAction = UIAlertAction(title: "Dismiss", style: .cancel) {(action) in
             
             
         }
         alertController.addAction(cancelAction)
         
-        self.presentViewController(alertController, animated: true){
+        self.present(alertController, animated: true){
             
         }
         

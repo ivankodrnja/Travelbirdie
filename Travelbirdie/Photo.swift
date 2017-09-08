@@ -14,15 +14,15 @@ class Photo : NSManagedObject {
     @NSManaged var path: String
     @NSManaged var apartment: Apartment?
     
-    override init(entity: NSEntityDescription, insertIntoManagedObjectContext context: NSManagedObjectContext?) {
-        super.init(entity: entity, insertIntoManagedObjectContext: context)
+    override init(entity: NSEntityDescription, insertInto context: NSManagedObjectContext?) {
+        super.init(entity: entity, insertInto: context)
     }
     
     init(dictionary: [String : AnyObject], context: NSManagedObjectContext) {
         
-        let entity =  NSEntityDescription.entityForName("Photo", inManagedObjectContext: context)!
+        let entity =  NSEntityDescription.entity(forEntityName: "Photo", in: context)!
 
-        super.init(entity: entity,insertIntoManagedObjectContext: context)
+        super.init(entity: entity,insertInto: context)
         
         path = dictionary["large"] as! String
         

@@ -17,16 +17,16 @@ class Price : NSManagedObject {
     @NSManaged var monthly: Int
     @NSManaged var apartment: Apartment?
     
-    override init(entity: NSEntityDescription, insertIntoManagedObjectContext context: NSManagedObjectContext?) {
-        super.init(entity: entity, insertIntoManagedObjectContext: context)
+    override init(entity: NSEntityDescription, insertInto context: NSManagedObjectContext?) {
+        super.init(entity: entity, insertInto: context)
     }
     
     
     init(dictionary: [String : AnyObject], context: NSManagedObjectContext) {
         
-        let entity =  NSEntityDescription.entityForName("Price", inManagedObjectContext: context)!
+        let entity =  NSEntityDescription.entity(forEntityName: "Price", in: context)!
         
-        super.init(entity: entity,insertIntoManagedObjectContext: context)
+        super.init(entity: entity,insertInto: context)
         
         nightly = dictionary["nightly"] as! Int
         weekendNight = dictionary["weekend"] as! Int

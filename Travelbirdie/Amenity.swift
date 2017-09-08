@@ -13,15 +13,15 @@ class Amenity : NSManagedObject {
     @NSManaged var list: String
     @NSManaged var apartment: Apartment?
 
-    override init(entity: NSEntityDescription, insertIntoManagedObjectContext context: NSManagedObjectContext?) {
-        super.init(entity: entity, insertIntoManagedObjectContext: context)
+    override init(entity: NSEntityDescription, insertInto context: NSManagedObjectContext?) {
+        super.init(entity: entity, insertInto: context)
     }
     
     
     init(dictionary: [String : AnyObject], context: NSManagedObjectContext) {
 
-        let entity =  NSEntityDescription.entityForName("Amenity", inManagedObjectContext: context)!
-        super.init(entity: entity,insertIntoManagedObjectContext: context)
+        let entity =  NSEntityDescription.entity(forEntityName: "Amenity", in: context)!
+        super.init(entity: entity,insertInto: context)
         
         /*
         for amenity in dictionary[ZilyoClient.JSONResponseKeys.Amenities] as! [[String : AnyObject]] {

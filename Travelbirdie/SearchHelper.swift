@@ -10,13 +10,13 @@ import Foundation
 
 class SearchHelper : NSObject {
     
-    typealias CompletionHander = (result: AnyObject!, error: NSError?) -> Void
+    typealias CompletionHander = (_ result: AnyObject?, _ error: NSError?) -> Void
     
     /* Shared Session */
-    var session: NSURLSession
+    var session: URLSession
     
     override init() {
-        session = NSURLSession.sharedSession()
+        session = URLSession.shared
         super.init()
     }
     
@@ -49,7 +49,7 @@ class SearchHelper : NSObject {
         static let BookNow = "BOOK NOW"
     }
     
-    func getDestinationDetails(correctedAddress : String, completionHandler: (result: [String : AnyObject]?, error: NSError?) -> Void) {
+    func getDestinationDetails(_ correctedAddress : String, completionHandlerForDestinationDetails: @escaping (_ result: [String : AnyObject]?, _ error: NSError?) -> Void) {
         
         /* 1. Set the parameters */
         // there is only one parameter
@@ -58,63 +58,77 @@ class SearchHelper : NSObject {
         
         /* 2. Build the URL */
         let urlString = SearchHelper.Constants.baseSecureUrl + correctedAddress
-        let url = NSURL(string: urlString)!
+        let url = URL(string: urlString)!
         
         /* 3. Configure the request */
-        let request = NSMutableURLRequest(URL: url)
+        let request = NSMutableURLRequest(url: url)
    
         
         /* 4. Make the request */
-        let task = session.dataTaskWithRequest(request) { data, response, error in
+        let task = session.dataTask(with: request as URLRequest) { (data, response, error) in
+            
+            func sendError(_ error: String) {
+                print(error)
+                let userInfo = [NSLocalizedDescriptionKey : error]
+                completionHandlerForDestinationDetails(nil, NSError(domain: "getDestinationDetails", code: 1, userInfo: userInfo))
+            }
             
             /* GUARD: Was there an error? */
             guard (error == nil) else {
                 
-                //completionHandler(result: nil, error: error)
-                print("There was an error with your request: \(error)")
+                sendError("There was an error with your request: \(error!)")
                 return
             }
             
             /* GUARD: Did we get a successful 2XX response? */
-            guard let statusCode = (response as? NSHTTPURLResponse)?.statusCode where statusCode >= 200 && statusCode <= 299 else {
-                if let response = response as? NSHTTPURLResponse {
-                    print("Your request returned an invalid response! Status code: \(response.statusCode)!")
-                } else if let response = response {
-                    print("Your request returned an invalid response! Response: \(response)!")
-                } else {
-                    print("Your request returned an invalid response!")
-                }
+            guard let statusCode = (response as? HTTPURLResponse)?.statusCode, statusCode >= 200 && statusCode <= 299 else {
+                sendError("Your request returned a status code other than 2xx!")
                 return
             }
             
             /* GUARD: Was there any data returned? */
             guard let data = data else {
-                print("No data was returned by the request!")
+                sendError("No data was returned by the request!")
                 return
             }
             
             /* 5. Parse the data */
-            let parsedResult: AnyObject!
+            let parsedResult: [String:AnyObject]
             do {
-                parsedResult = try NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableLeaves) as! NSDictionary
+                parsedResult = try JSONSerialization.jsonObject(with: data, options: .mutableLeaves) as! [String:AnyObject]
+                
             } catch {
-                parsedResult = nil
                 print("Could not parse the data as JSON: '\(data)'")
                 return
             }
             
-            /* 6. Use the data! */
-            if let dictionary = parsedResult.valueForKey("results")?.valueForKey("geometry")?.valueForKey("location")?.objectAtIndex(0) {
+            if let dictionary = parsedResult["results"] {
+       
                 
-                let lat = dictionary["lat"] as! Double
-                let lon = dictionary["lng"] as! Double
+                let geometry = dictionary.objectAt(0)["geometry"] as! [String:AnyObject]
+    
+                let location = geometry["location"]
+                print(location!)
+            }
+            
+            /* 6. Use the data! value(forKey:"geometry").value(forKey:"location").objectAtIndex(0)*/
+            if let dictionary = parsedResult["results"] {
                 
-                let resultDictionary = ["lat" : lat, "lon" : lon]
+                let geometry = dictionary.objectAt(0)["geometry"] as! [String:AnyObject]
                 
-                completionHandler(result: resultDictionary, error: nil)
+                let location = geometry["location"]
+                
+                if let lat = location?["lat"], let lon = location?["lng"] {
+                    let resultDictionary = ["lat" : lat, "lon" : lon]
+                    
+                    completionHandlerForDestinationDetails(resultDictionary as [String : AnyObject], nil)
+                }
+                
+ 
+                
                 
             } else {
-                completionHandler(result: nil, error: NSError(domain: "Results from Server", code: 0, userInfo: [NSLocalizedDescriptionKey: "Download (server) error occured. Please retry."]))
+                completionHandlerForDestinationDetails(nil, NSError(domain: "Results from Server", code: 0, userInfo: [NSLocalizedDescriptionKey: "Download (server) error occured. Please retry."]))
             }
             
         }

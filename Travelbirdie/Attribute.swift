@@ -17,15 +17,15 @@ class Attribute : NSManagedObject {
     @NSManaged var desc: String
     @NSManaged var apartment: Apartment?
     
-    override init(entity: NSEntityDescription, insertIntoManagedObjectContext context: NSManagedObjectContext?) {
-        super.init(entity: entity, insertIntoManagedObjectContext: context)
+    override init(entity: NSEntityDescription, insertInto context: NSManagedObjectContext?) {
+        super.init(entity: entity, insertInto: context)
     }
     
     init(dictionary: [String : AnyObject], context: NSManagedObjectContext) {
 
-        let entity =  NSEntityDescription.entityForName("Attribute", inManagedObjectContext: context)!
+        let entity =  NSEntityDescription.entity(forEntityName: "Attribute", in: context)!
     
-        super.init(entity: entity,insertIntoManagedObjectContext: context)
+        super.init(entity: entity,insertInto: context)
         
         bathrooms = dictionary["bedrooms"] as! Int
         bedrooms = dictionary["bathrooms"] as! Int

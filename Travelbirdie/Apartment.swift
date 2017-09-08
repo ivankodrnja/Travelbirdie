@@ -13,7 +13,7 @@ import CoreData
 // 2. Make Apartment a subclass of NSManagedObject
 class Apartment : NSManagedObject {
     
-    // 3. We are promoting these four from simple properties, to Core Data attributes
+    // 3. We are promoting these from simple properties, to Core Data attributes
     @NSManaged var id: String
     @NSManaged var location: String
     @NSManaged var name: String
@@ -26,8 +26,8 @@ class Apartment : NSManagedObject {
     @NSManaged var prices: [Price]
     
     // 4. Include this standard Core Data init method.
-    override init(entity: NSEntityDescription, insertIntoManagedObjectContext context: NSManagedObjectContext?) {
-        super.init(entity: entity, insertIntoManagedObjectContext: context)
+    override init(entity: NSEntityDescription, insertInto context: NSManagedObjectContext?) {
+        super.init(entity: entity, insertInto: context)
     }
     
     /**
@@ -43,12 +43,12 @@ class Apartment : NSManagedObject {
         // Get the entity associated with the "Apartment" type.  This is an object that contains
         // the information from the Model.xcdatamodeld file. We will talk about this file in
         // Lesson 4.
-        let entity =  NSEntityDescription.entityForName("Apartment", inManagedObjectContext: context)!
+        let entity =  NSEntityDescription.entity(forEntityName: "Apartment", in: context)!
         
         // Now we can call an init method that we have inherited from NSManagedObject. Remember that
         // the Apartment class is a subclass of NSManagedObject. This inherited init method does the
         // work of "inserting" our object into the context that was passed in as a parameter
-        super.init(entity: entity,insertIntoManagedObjectContext: context)
+        super.init(entity: entity,insertInto: context)
         
         // After the Core Data work has been taken care of we can init the properties from the
         // dictionary. This works in the same way that it did before we started on Core Data
@@ -62,5 +62,3 @@ class Apartment : NSManagedObject {
     
 
 }
-
-

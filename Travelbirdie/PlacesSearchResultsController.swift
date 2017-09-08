@@ -22,9 +22,9 @@ class PlacesSearchResultsController: UIViewController, UITableViewDelegate, UITa
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        activityIndicator.hidden = true
+        activityIndicator.isHidden = true
         
-        self.edgesForExtendedLayout = UIRectEdge.None
+        self.edgesForExtendedLayout = UIRectEdge()
         
         self.searchController.becomeFirstResponder()
         self.searchController.delegate = self
@@ -36,12 +36,12 @@ class PlacesSearchResultsController: UIViewController, UITableViewDelegate, UITa
         // Dispose of any resources that can be recreated.
     }
     
-    func reloadDataWithArray(array:[String]){
+    func reloadDataWithArray(_ array:[String]){
         self.searchResults = array
         self.tableView.reloadData()
     }
     
-    func searchBar(searchBar: UISearchBar,
+    func searchBar(_ searchBar: UISearchBar,
         textDidChange searchText: String){
             
             // if a user deletes previous entry clear the former results and don't alert with an error
@@ -53,20 +53,20 @@ class PlacesSearchResultsController: UIViewController, UITableViewDelegate, UITa
             
             self.view.alpha = 0.5
             self.activityIndicator.startAnimating()
-            activityIndicator.hidden = false
+            activityIndicator.isHidden = false
             
             let placesClient = GMSPlacesClient()
-            placesClient.autocompleteQuery(searchText, bounds: nil, filter: nil) { (results, error:NSError?) -> Void in
+        placesClient.autocompleteQuery(searchText, bounds: nil, filter: nil, callback: { (results, error) -> Void in
                 self.searchResults.removeAll()
                 
                 if error != nil {
-                    print(error?.localizedDescription)
-                    dispatch_async(dispatch_get_main_queue()) {
+                    print(error?.localizedDescription as Any)
+                    DispatchQueue.main.async {
                         self.view.alpha = 1
                         self.activityIndicator.hidesWhenStopped = true
                         self.activityIndicator.stopAnimating()
                         // Error, e.g. the internet connection is offline
-                        print("Error in PlacesSearchResultsController: \(error?.localizedDescription)")
+                        print("Error in PlacesSearchResultsController: \(String(describing: error?.localizedDescription))")
                         self.showAlertView(error?.localizedDescription)
                     }
                 }
@@ -88,51 +88,51 @@ class PlacesSearchResultsController: UIViewController, UITableViewDelegate, UITa
                 
                 
                 
-            }
+            })
     }
     
-    func searchBarCancelButtonClicked(searchBar: UISearchBar) {
-        self.dismissViewControllerAnimated(true, completion: nil)
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        self.dismiss(animated: true, completion: nil)
     }
     
     
     
     // MARK: - Table view data source
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         
         return 1
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
         return self.searchResults.count
     }
     
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("cellIdentifier", forIndexPath: indexPath)
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cellIdentifier", for: indexPath)
         
         cell.textLabel?.text = self.searchResults[indexPath.row]
         return cell
     }
     
     
-    func tableView(tableView: UITableView,
-        didSelectRowAtIndexPath indexPath: NSIndexPath){
+    func tableView(_ tableView: UITableView,
+        didSelectRowAt indexPath: IndexPath){
             
-            let correctedAddress:String! = self.searchResults[indexPath.row].stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.symbolCharacterSet())
+            let correctedAddress:String! = self.searchResults[indexPath.row].addingPercentEncoding(withAllowedCharacters: CharacterSet.symbols)
             
             SearchHelper.sharedInstance().getDestinationDetails(correctedAddress){(result, error) in
                 
                 if error == nil {
-                    ZilyoClient.sharedInstance().tempRequestParameters[ZilyoClient.Keys.location] = self.searchResults[indexPath.row]
+                    ZilyoClient.sharedInstance().tempRequestParameters[ZilyoClient.Keys.location] = self.searchResults[indexPath.row] as AnyObject
                     ZilyoClient.sharedInstance().tempRequestParameters[ZilyoClient.Keys.latitude] = result!["lat"]
                     ZilyoClient.sharedInstance().tempRequestParameters[ZilyoClient.Keys.longitude] = result!["lon"]
                     
                     print("Travelbirdie Location:\(ZilyoClient.sharedInstance().tempRequestParameters[ZilyoClient.Keys.location]!); Latitude:\(ZilyoClient.sharedInstance().tempRequestParameters[ZilyoClient.Keys.latitude]!) Longitude:\(ZilyoClient.sharedInstance().tempRequestParameters[ZilyoClient.Keys.longitude]!)")
-                    self.dismissViewControllerAnimated(true, completion: nil)
-                    self.dismissViewControllerAnimated(true, completion: nil)
+                    self.dismiss(animated: true, completion: nil)
+                    self.dismiss(animated: true, completion: nil)
                     
                 } else {
                     self.showAlertView(SearchHelper.Constants.PleaseRetry)
@@ -145,17 +145,17 @@ class PlacesSearchResultsController: UIViewController, UITableViewDelegate, UITa
     
     // MARK: - Helpers
     
-    func showAlertView(errorMessage: String?) {
+    func showAlertView(_ errorMessage: String?) {
         
-        let alertController = UIAlertController(title: nil, message: errorMessage!, preferredStyle: .Alert)
+        let alertController = UIAlertController(title: nil, message: errorMessage!, preferredStyle: .alert)
         
-        let cancelAction = UIAlertAction(title: "Dismiss", style: .Cancel) {(action) in
+        let cancelAction = UIAlertAction(title: "Dismiss", style: .cancel) {(action) in
             
             
         }
         alertController.addAction(cancelAction)
         
-        self.presentViewController(alertController, animated: true){
+        self.present(alertController, animated: true){
             
         }
         

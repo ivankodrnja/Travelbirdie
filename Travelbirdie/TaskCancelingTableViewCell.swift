@@ -15,7 +15,7 @@ class TaskCancelingTableViewCell: UITableViewCell {
     
     var imageName: String = ""
     
-    var taskToCancelifCellIsReused: NSURLSessionTask? {
+    var taskToCancelifCellIsReused: URLSessionTask? {
         
         didSet {
             if let taskToCancel = oldValue {

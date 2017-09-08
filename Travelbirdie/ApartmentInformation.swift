@@ -39,7 +39,7 @@ struct ApartmentInformation {
     }
     
     /* Helper: Given an array of dictionaries, convert them to an array of ApartmentInformation objects */
-    static func apartmentsFromResults(results: [[String : AnyObject]]) -> [ApartmentInformation] {
+    static func apartmentsFromResults(_ results: [[String : AnyObject]]) -> [ApartmentInformation] {
         var apartments = [ApartmentInformation]()
         
         for result in results {

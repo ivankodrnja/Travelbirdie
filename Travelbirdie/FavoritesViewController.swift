@@ -15,7 +15,7 @@ class FavoritesViewController: UIViewController, UITableViewDelegate, UITableVie
     @IBOutlet weak var noFavoritesContainerView: UIView!
     
     // will serve for caching images
-    var cache:NSCache!
+    var cache:NSCache<AnyObject, AnyObject>!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,17 +35,17 @@ class FavoritesViewController: UIViewController, UITableViewDelegate, UITableVie
         
     }
 
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
 
         // count the number of stored favorite apartments
         let sectionInfo = fetchedResultsController.sections![0]
         let numberOfObjects = sectionInfo.numberOfObjects
         // if there are favorite apartments show them
         if numberOfObjects > 0 {
-            noFavoritesContainerView.hidden = true
+            noFavoritesContainerView.isHidden = true
             // otherwise show a message
         } else {
-            noFavoritesContainerView.hidden = false
+            noFavoritesContainerView.isHidden = false
         }
         
 
@@ -62,9 +62,9 @@ class FavoritesViewController: UIViewController, UITableViewDelegate, UITableVie
         return CoreDataStackManager.sharedInstance().managedObjectContext
     }
     
-    lazy var fetchedResultsController: NSFetchedResultsController = {
+    lazy var fetchedResultsController: NSFetchedResultsController<Apartment> = {
         
-        let fetchRequest = NSFetchRequest(entityName: "Apartment")
+        let fetchRequest = NSFetchRequest<Apartment>(entityName: "Apartment")
         
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: "name", ascending: true)]
         let fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest,
@@ -78,30 +78,30 @@ class FavoritesViewController: UIViewController, UITableViewDelegate, UITableVie
     
     // MARK: - Table View
     
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 350
     }
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let sectionInfo = self.fetchedResultsController.sections![section]
         return sectionInfo.numberOfObjects
         
     }
     
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         /* Get cell type */
         
-        let apartment = fetchedResultsController.objectAtIndexPath(indexPath) as! Apartment
+        let apartment = fetchedResultsController.object(at: indexPath) 
         
         let cellReuseIdentifier = "SearchResultViewCell"
-        tableView.registerNib(UINib(nibName: "SearchResultViewCell", bundle: nil), forCellReuseIdentifier: cellReuseIdentifier)
+        tableView.register(UINib(nibName: "SearchResultViewCell", bundle: nil), forCellReuseIdentifier: cellReuseIdentifier)
         
-        let cell = tableView.dequeueReusableCellWithIdentifier(cellReuseIdentifier)! as! SearchResultViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier)! as! SearchResultViewCell
         
         configureCell(cell, withApartment: apartment, atIndexPath: indexPath)
     
@@ -110,32 +110,32 @@ class FavoritesViewController: UIViewController, UITableViewDelegate, UITableVie
     }
     
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        let controller = storyboard!.instantiateViewControllerWithIdentifier("FavoriteApartmentDetailViewController") as! FavoriteApartmentDetailViewController
+        let controller = storyboard!.instantiateViewController(withIdentifier: "FavoriteApartmentDetailViewController") as! FavoriteApartmentDetailViewController
         
-        let apartment = fetchedResultsController.objectAtIndexPath(indexPath) as! Apartment
+        let apartment = fetchedResultsController.object(at: indexPath) 
         // set apartment object in the detail VC
         controller.apartment = apartment
         // set the first image to show in the detail VC
         
-        if(self.cache.objectForKey(indexPath.row) != nil){
-            controller.firstImage = (self.cache.objectForKey(indexPath.row) as? UIImage)!
+        if(self.cache.object(forKey: indexPath.row as AnyObject) != nil){
+            controller.firstImage = (self.cache.object(forKey: indexPath.row as AnyObject) as? UIImage)!
         }
         
         self.navigationController!.pushViewController(controller, animated: true)
         
     }
     
-    func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle,
-        forRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle,
+        forRowAt indexPath: IndexPath) {
             
             switch (editingStyle) {
-            case .Delete:
+            case .delete:
                 
                 // Here we get the actor, then delete it from core data
-                let apartment = fetchedResultsController.objectAtIndexPath(indexPath) as! Apartment
-                sharedContext.deleteObject(apartment)
+                let apartment = fetchedResultsController.object(at: indexPath) 
+                sharedContext.delete(apartment)
                 CoreDataStackManager.sharedInstance().saveContext()
                 
             default:
@@ -143,60 +143,60 @@ class FavoritesViewController: UIViewController, UITableViewDelegate, UITableVie
             }
     }
     
-    func controllerWillChangeContent(controller: NSFetchedResultsController) {
+    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         self.tableView.beginUpdates()
     }
     
-    func controller(controller: NSFetchedResultsController,
-        didChangeSection sectionInfo: NSFetchedResultsSectionInfo,
-        atIndex sectionIndex: Int,
-        forChangeType type: NSFetchedResultsChangeType) {
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>,
+        didChange sectionInfo: NSFetchedResultsSectionInfo,
+        atSectionIndex sectionIndex: Int,
+        for type: NSFetchedResultsChangeType) {
             
             switch type {
-            case .Insert:
-                self.tableView.insertSections(NSIndexSet(index: sectionIndex), withRowAnimation: .Fade)
+            case .insert:
+                self.tableView.insertSections(IndexSet(integer: sectionIndex), with: .fade)
                 
-            case .Delete:
-                self.tableView.deleteSections(NSIndexSet(index: sectionIndex), withRowAnimation: .Fade)
+            case .delete:
+                self.tableView.deleteSections(IndexSet(integer: sectionIndex), with: .fade)
                 
             default:
                 return
             }
     }
     
-    func controller(controller: NSFetchedResultsController,
-        didChangeObject anObject: AnyObject,
-        atIndexPath indexPath: NSIndexPath?,
-        forChangeType type: NSFetchedResultsChangeType,
-        newIndexPath: NSIndexPath?) {
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>,
+        didChange anObject: Any,
+        at indexPath: IndexPath?,
+        for type: NSFetchedResultsChangeType,
+        newIndexPath: IndexPath?) {
             
             switch type {
-            case .Insert:
+            case .insert:
                 // check for previously cached images at indexPath.row
-                if(self.cache.objectForKey(newIndexPath!.row) != nil){
-                    self.cache.removeObjectForKey((newIndexPath?.row)!)
+                if(self.cache.object(forKey: newIndexPath!.row as AnyObject) != nil){
+                    self.cache.removeObject(forKey: (newIndexPath?.row)! as AnyObject)
                 }
-                tableView.insertRowsAtIndexPaths([newIndexPath!], withRowAnimation: .Fade)
+                tableView.insertRows(at: [newIndexPath!], with: .fade)
     
                 
-            case .Delete:
-                self.cache.removeObjectForKey((indexPath?.row)!)
-                tableView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: .Fade)
+            case .delete:
+                self.cache.removeObject(forKey: (indexPath?.row)! as AnyObject)
+                tableView.deleteRows(at: [indexPath!], with: .fade)
                 
-            case .Update:
-                self.cache.removeObjectForKey((indexPath?.row)!)
-                self.cache.removeObjectForKey((newIndexPath?.row)!)
-                let cell = tableView.cellForRowAtIndexPath(indexPath!) as! SearchResultViewCell
-                let apartment = controller.objectAtIndexPath(indexPath!) as! Apartment
+            case .update:
+                self.cache.removeObject(forKey: (indexPath?.row)! as AnyObject)
+                self.cache.removeObject(forKey: (newIndexPath?.row)! as AnyObject)
+                let cell = tableView.cellForRow(at: indexPath!) as! SearchResultViewCell
+                let apartment = controller.object(at: indexPath!) as! Apartment
                 self.configureCell(cell, withApartment: apartment, atIndexPath: indexPath!)
                 
-            case .Move:
-                tableView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: .Fade)
-                tableView.insertRowsAtIndexPaths([newIndexPath!], withRowAnimation: .Fade)
+            case .move:
+                tableView.deleteRows(at: [indexPath!], with: .fade)
+                tableView.insertRows(at: [newIndexPath!], with: .fade)
                 
             }
     }
-    func controllerDidChangeContent(controller: NSFetchedResultsController) {
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         self.tableView.endUpdates()
     }
 
@@ -207,10 +207,10 @@ class FavoritesViewController: UIViewController, UITableViewDelegate, UITableVie
     // Refactoring it into its own method allow the logic to be reused in the fetch results
     // delegate methods
     
-    func configureCell(cell: SearchResultViewCell, withApartment apartment: Apartment, atIndexPath indexPath: NSIndexPath) {
+    func configureCell(_ cell: SearchResultViewCell, withApartment apartment: Apartment, atIndexPath indexPath: IndexPath) {
         // make table cell separators stretch throught the screen width, in Storyboard separator insets of the table view and the cell have also set to 0
         cell.preservesSuperviewLayoutMargins = false
-        cell.layoutMargins = UIEdgeInsetsZero
+        cell.layoutMargins = UIEdgeInsets.zero
         
         //***** set the apartment image *****//
         cell.apartmentImageView.clipsToBounds = true
@@ -220,9 +220,9 @@ class FavoritesViewController: UIViewController, UITableViewDelegate, UITableVie
 
         
         // first check if the image is cached
-        if(self.cache.objectForKey(indexPath.row) != nil){
+        if(self.cache.object(forKey: indexPath.row as AnyObject) != nil){
             print(indexPath.row)
-            cell.apartmentImageView.image = self.cache.objectForKey(indexPath.row) as? UIImage
+            cell.apartmentImageView.image = self.cache.object(forKey: indexPath.row as AnyObject) as? UIImage
         } else {
             // if the image is not cached download it
             // get the first object in array of photos
@@ -235,7 +235,7 @@ class FavoritesViewController: UIViewController, UITableViewDelegate, UITableVie
                     
                     if let error = error {
                         print("Title download error: \(error.localizedDescription) url:\(photo)")
-                        dispatch_async(dispatch_get_main_queue()) {
+                        DispatchQueue.main.async {
                             cell.apartmentImageView.image = UIImage(named: "noImage")
                         }
                     }
@@ -243,16 +243,16 @@ class FavoritesViewController: UIViewController, UITableViewDelegate, UITableVie
                     // no error ocurred, show the image
                     if let data = data {
                         // update the cell on the main thread
-                        dispatch_async(dispatch_get_main_queue()) {
+                        DispatchQueue.main.async {
                             // check whether the cell is visible on screen before updating the image
-                            if let updateCell : SearchResultViewCell = (self.tableView.cellForRowAtIndexPath(indexPath)) as? SearchResultViewCell{
+                            if let updateCell : SearchResultViewCell = (self.tableView.cellForRow(at: indexPath)) as? SearchResultViewCell{
                                 
                                 // create the image, show it and cache it
                                 let image:UIImage!  = UIImage(data: data)
                                 
                                 if let secureImage = image {
                                     updateCell.apartmentImageView?.image = secureImage
-                                    self.cache.setObject(secureImage, forKey: indexPath.row)
+                                    self.cache.setObject(secureImage, forKey: indexPath.row as AnyObject)
                                 }
                                 
                             }
