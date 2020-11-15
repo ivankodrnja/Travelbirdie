@@ -56,8 +56,8 @@ class Apartment : NSManagedObject {
         location = dictionary[ZilyoClient.JSONResponseKeys.Location]!["city"] as! String
         name = dictionary[ZilyoClient.JSONResponseKeys.Attr]!["heading"] as! String
         providerUrl = dictionary[ZilyoClient.JSONResponseKeys.Provider]!["url"] as! String
-        latitude = dictionary[ZilyoClient.JSONResponseKeys.LatLng]![0] as! Double
-        longitude = dictionary[ZilyoClient.JSONResponseKeys.LatLng]![1] as! Double
+        latitude = dictionary[ZilyoClient.JSONResponseKeys.LatLng] as! Double
+        longitude = dictionary[ZilyoClient.JSONResponseKeys.LatLng] as! Double
     }
     
 

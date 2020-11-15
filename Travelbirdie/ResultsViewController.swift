@@ -214,13 +214,13 @@ class ResultsViewController: UIViewController, UITableViewDelegate, UITableViewD
             if error == nil {
                 // Store the current number of apartments before adding any new batch
                 self.currentCountOfApartments = ZilyoClient.sharedInstance().apartmentDict.count
-                print("currentCountOfApartments count:\(self.currentCountOfApartments)\n")
+                print("currentCountOfApartments count:\(String(describing: self.currentCountOfApartments))\n")
                 
                 print("Current page:\(self.currentPage)\n")
                 ZilyoClient.sharedInstance().apartmentDict += result!
                 
                 self.totalCountOfApartments = ZilyoClient.sharedInstance().apartmentDict.count
-                print("totalCountOfApartments count:\(self.totalCountOfApartments)\n")
+                print("totalCountOfApartments count:\(String(describing: self.totalCountOfApartments))\n")
                 
                 DispatchQueue.main.async {
                     

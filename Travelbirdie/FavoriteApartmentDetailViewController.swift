@@ -25,7 +25,7 @@ class FavoriteApartmentDetailViewController: UITableViewController {
         super.viewDidLoad()
         
         tableView.tableFooterView = UIView(frame: CGRect.zero)
-        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 44
         
 
@@ -129,13 +129,13 @@ class FavoriteApartmentDetailViewController: UITableViewController {
                 // add to favorites
             case 1:
                 let cell = tableView.dequeueReusableCell(withIdentifier: "FavoritesCell", for: indexPath)
-                cell.accessoryType = UITableViewCellAccessoryType.none
+                cell.accessoryType = UITableViewCell.AccessoryType.none
                 cell.backgroundColor = UIColor.gray
                 cell.textLabel?.textAlignment = .center
                 cell.textLabel!.font = UIFont.boldSystemFont(ofSize: 20)
                 cell.textLabel?.textColor = UIColor.white
                 cell.textLabel?.text = "Remove from Favorites"
-                cell.selectionStyle = UITableViewCellSelectionStyle.none
+                cell.selectionStyle = UITableViewCell.SelectionStyle.none
                 
                 return cell
                 // labels cell
@@ -164,13 +164,13 @@ class FavoriteApartmentDetailViewController: UITableViewController {
             default:
                 let cell = tableView.dequeueReusableCell(withIdentifier: "BookCell", for: indexPath)
                 
-                cell.accessoryType = UITableViewCellAccessoryType.none
+                cell.accessoryType = UITableViewCell.AccessoryType.none
                 cell.backgroundColor = UIColor.orange
                 cell.textLabel?.textAlignment = .center
                 cell.textLabel!.font = UIFont.boldSystemFont(ofSize: 20)
                 cell.textLabel?.textColor = UIColor.white
                 cell.textLabel?.text = SearchHelper.Constants.BookNow
-                cell.selectionStyle = UITableViewCellSelectionStyle.none
+                cell.selectionStyle = UITableViewCell.SelectionStyle.none
                 
                 
                 return cell
@@ -203,7 +203,7 @@ class FavoriteApartmentDetailViewController: UITableViewController {
             
             let location = CLLocationCoordinate2D(latitude: apartment!.latitude, longitude: apartment!.longitude)
             
-            let span = MKCoordinateSpanMake(0.03, 0.03)
+            let span = MKCoordinateSpan.init(latitudeDelta: 0.03, longitudeDelta: 0.03)
             let region = MKCoordinateRegion(center: location, span: span)
             
             cell.mapView.setRegion(region, animated: true)

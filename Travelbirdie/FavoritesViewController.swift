@@ -127,7 +127,7 @@ class FavoritesViewController: UIViewController, UITableViewDelegate, UITableVie
         
     }
     
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle,
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle,
         forRowAt indexPath: IndexPath) {
             
             switch (editingStyle) {

@@ -91,12 +91,12 @@ class TravelbirdieSearchViewController: UIViewController, UITableViewDelegate, U
         case 0:
             cell.textLabel?.text = SearchHelper.Constants.Location + ": " + (ZilyoClient.sharedInstance().tempRequestParameters[ZilyoClient.Keys.location] as! String)
             cell.imageView?.image = UIImage(named: "Pin")
-            cell.selectionStyle = UITableViewCellSelectionStyle.none
+            cell.selectionStyle = UITableViewCell.SelectionStyle.none
             cell.backgroundColor = UIColor(white: 1, alpha: 0.7)
         case 1:
             cell.textLabel?.text = SearchHelper.Constants.NumberOfGuests + ": " + String(describing: ZilyoClient.sharedInstance().tempRequestParameters[ZilyoClient.Keys.guests]!)
             cell.imageView?.image = UIImage(named: "Guests")
-            cell.selectionStyle = UITableViewCellSelectionStyle.none
+            cell.selectionStyle = UITableViewCell.SelectionStyle.none
             cell.backgroundColor = UIColor(white: 1, alpha: 0.7)
         case 2:
             let dateFormatter = DateFormatter()
@@ -105,7 +105,7 @@ class TravelbirdieSearchViewController: UIViewController, UITableViewDelegate, U
             
             cell.textLabel?.text = SearchHelper.Constants.CheckIn + ": " + string
             cell.imageView?.image = UIImage(named: "Calendar")
-            cell.selectionStyle = UITableViewCellSelectionStyle.none
+            cell.selectionStyle = UITableViewCell.SelectionStyle.none
             cell.backgroundColor = UIColor(white: 1, alpha: 0.7)
         case 3:
             let dateFormatter = DateFormatter()
@@ -114,16 +114,16 @@ class TravelbirdieSearchViewController: UIViewController, UITableViewDelegate, U
             
             cell.textLabel?.text = SearchHelper.Constants.CheckOut + ": " + string
             cell.imageView?.image = UIImage(named: "Calendar")
-            cell.selectionStyle = UITableViewCellSelectionStyle.none
+            cell.selectionStyle = UITableViewCell.SelectionStyle.none
             cell.backgroundColor = UIColor(white: 1, alpha: 0.7)
         case 4:
-            cell.accessoryType = UITableViewCellAccessoryType.none
+            cell.accessoryType = UITableViewCell.AccessoryType.none
             cell.backgroundColor = UIColor.orange
             cell.textLabel?.textAlignment = .center
             cell.textLabel!.font = UIFont.boldSystemFont(ofSize: 20)
             cell.textLabel?.textColor = UIColor.white
             cell.textLabel?.text = SearchHelper.Constants.SearchRentals
-            cell.selectionStyle = UITableViewCellSelectionStyle.none
+            cell.selectionStyle = UITableViewCell.SelectionStyle.none
             
         default:
             break

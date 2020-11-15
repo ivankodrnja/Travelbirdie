@@ -55,7 +55,7 @@ class ApartmentDetailTableViewController: UITableViewController {
         super.viewDidLoad()
         
         tableView.tableFooterView = UIView(frame: CGRect.zero)
-        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 44
         
         // make an array of urls of large apartment photos
@@ -175,7 +175,7 @@ class ApartmentDetailTableViewController: UITableViewController {
             // add to favorites
             case 1:
                 let cell = tableView.dequeueReusableCell(withIdentifier: "FavoritesCell", for: indexPath)
-                cell.accessoryType = UITableViewCellAccessoryType.none
+                cell.accessoryType = UITableViewCell.AccessoryType.none
                 cell.backgroundColor = UIColor.gray
                 cell.textLabel?.textAlignment = .center
                 cell.textLabel!.font = UIFont.boldSystemFont(ofSize: 20)
@@ -185,7 +185,7 @@ class ApartmentDetailTableViewController: UITableViewController {
                 } else {
                     cell.textLabel?.text = "Add to Favorites"
                 }
-                cell.selectionStyle = UITableViewCellSelectionStyle.none
+                cell.selectionStyle = UITableViewCell.SelectionStyle.none
                 
                 return cell
             // labels cell
@@ -215,13 +215,13 @@ class ApartmentDetailTableViewController: UITableViewController {
             default:
                 let cell = tableView.dequeueReusableCell(withIdentifier: "BookCell", for: indexPath) 
                 
-                cell.accessoryType = UITableViewCellAccessoryType.none
+                cell.accessoryType = UITableViewCell.AccessoryType.none
                 cell.backgroundColor = UIColor.orange
                 cell.textLabel?.textAlignment = .center
                 cell.textLabel!.font = UIFont.boldSystemFont(ofSize: 20)
                 cell.textLabel?.textColor = UIColor.white
                 cell.textLabel?.text = SearchHelper.Constants.BookNow
-                cell.selectionStyle = UITableViewCellSelectionStyle.none
+                cell.selectionStyle = UITableViewCell.SelectionStyle.none
                 
                 
                 return cell
@@ -254,7 +254,7 @@ class ApartmentDetailTableViewController: UITableViewController {
             
             let location = CLLocationCoordinate2D(latitude: apartment!.latLng![0], longitude: apartment!.latLng![1])
             
-            let span = MKCoordinateSpanMake(0.03, 0.03)
+            let span = MKCoordinateSpan.init(latitudeDelta: 0.03, longitudeDelta: 0.03)
             let region = MKCoordinateRegion(center: location, span: span)
             
             cell.mapView.setRegion(region, animated: true)

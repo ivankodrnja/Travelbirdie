@@ -90,7 +90,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Travelbirdie/ResultsViewController.swift"
-            timestampString = "477033721.459946"
+            timestampString = "627156519.7394"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "16"
@@ -503,13 +503,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Travelbirdie/ResultsViewController.swift"
-            timestampString = "478246382.861135"
+            timestampString = "627156519.739711"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "60"
             endingLineNumber = "60"
-            landmarkName = "tableView(_:cellForRowAtIndexPath:)"
-            landmarkType = "5">
+            landmarkName = "tableView(_:cellForRowAt:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -519,13 +519,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Travelbirdie/ResultsViewController.swift"
-            timestampString = "478246382.861135"
+            timestampString = "627156519.739764"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "83"
             endingLineNumber = "83"
-            landmarkName = "tableView(_:cellForRowAtIndexPath:)"
-            landmarkType = "5">
+            landmarkName = "tableView(_:cellForRowAt:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -535,13 +535,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Travelbirdie/ResultsViewController.swift"
-            timestampString = "478246382.861135"
+            timestampString = "627156519.739814"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "91"
             endingLineNumber = "91"
-            landmarkName = "tableView(_:cellForRowAtIndexPath:)"
-            landmarkType = "5">
+            landmarkName = "tableView(_:cellForRowAt:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -551,13 +551,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Travelbirdie/ResultsViewController.swift"
-            timestampString = "478246382.861135"
+            timestampString = "627156519.739862"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "69"
             endingLineNumber = "69"
-            landmarkName = "tableView(_:cellForRowAtIndexPath:)"
-            landmarkType = "5">
+            landmarkName = "tableView(_:cellForRowAt:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -567,13 +567,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Travelbirdie/ResultsViewController.swift"
-            timestampString = "478246382.861135"
+            timestampString = "627156519.73991"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "100"
             endingLineNumber = "100"
-            landmarkName = "tableView(_:cellForRowAtIndexPath:)"
-            landmarkType = "5">
+            landmarkName = "tableView(_:cellForRowAt:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -901,8 +901,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "36"
             endingLineNumber = "36"
-            landmarkName = "ApartmentDetailTableViewController"
-            landmarkType = "3">
+            landmarkName = "unknown"
+            landmarkType = "0">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1058,8 +1058,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "36"
             endingLineNumber = "36"
-            landmarkName = "ApartmentDetailTableViewController"
-            landmarkType = "3">
+            landmarkName = "unknown"
+            landmarkType = "0">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1373,13 +1373,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Travelbirdie/Apartment.swift"
-            timestampString = "478246382.861135"
+            timestampString = "627156519.740374"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "53"
             endingLineNumber = "53"
             landmarkName = "init(dictionary:context:)"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1437,13 +1437,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Travelbirdie/Apartment.swift"
-            timestampString = "478243708.852317"
+            timestampString = "627156519.740769"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "50"
             endingLineNumber = "50"
             landmarkName = "init(dictionary:context:)"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1849,31 +1849,31 @@
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "Travelbirdie.ZilyoClient.getRentals (Swift.Double, locationLon : Swift.Double, guestsNumber : Swift.Int, checkIn : Swift.Double, checkOut : Swift.Double, page : Swift.Int, completionHandlerForGetRentals : (Swift.Optional&lt;Swift.Array&lt;Travelbirdie.ApartmentInformation&gt;&gt;, Swift.Optional&lt;__ObjC.NSError&gt;) -&gt; ()) -&gt; ()"
+                  symbolName = "Travelbirdie.ZilyoClient.getRentals(_: Swift.Double, locationLon: Swift.Double, guestsNumber: Swift.Int, checkIn: Swift.Double, checkOut: Swift.Double, page: Swift.Int, completionHandlerForGetRentals: (Swift.Optional&lt;Swift.Array&lt;Travelbirdie.ApartmentInformation&gt;&gt;, Swift.Optional&lt;__C.NSError&gt;) -&gt; ()) -&gt; ()"
                   moduleName = "Travelbirdie"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/ivanalex/xcodeprojects/iosnanodegree/Travelbirdie/Travelbirdie/ZilyoClient.swift"
-                  timestampString = "526600121.919768"
+                  timestampString = "627156519.9859689"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "85"
                   endingLineNumber = "85"
-                  offsetFromSymbolStart = "1910">
+                  offsetFromSymbolStart = "2037">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "Travelbirdie.ZilyoClient.(getRentals (Swift.Double, locationLon : Swift.Double, guestsNumber : Swift.Int, checkIn : Swift.Double, checkOut : Swift.Double, page : Swift.Int, completionHandlerForGetRentals : (Swift.Optional&lt;Swift.Array&lt;Travelbirdie.ApartmentInformation&gt;&gt;, Swift.Optional&lt;__ObjC.NSError&gt;) -&gt; ()) -&gt; ()).(closure #1)"
+                  symbolName = "closure #1 (Swift.Optional&lt;Foundation.Data&gt;, Swift.Optional&lt;__C.NSURLResponse&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in Travelbirdie.ZilyoClient.getRentals(_: Swift.Double, locationLon: Swift.Double, guestsNumber: Swift.Int, checkIn: Swift.Double, checkOut: Swift.Double, page: Swift.Int, completionHandlerForGetRentals: (Swift.Optional&lt;Swift.Array&lt;Travelbirdie.ApartmentInformation&gt;&gt;, Swift.Optional&lt;__C.NSError&gt;) -&gt; ()) -&gt; ()"
                   moduleName = "Travelbirdie"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/ivanalex/xcodeprojects/iosnanodegree/Travelbirdie/Travelbirdie/ZilyoClient.swift"
-                  timestampString = "526600121.921744"
+                  timestampString = "627156519.988385"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "94"
                   endingLineNumber = "94"
-                  offsetFromSymbolStart = "31">
+                  offsetFromSymbolStart = "91">
                </Location>
             </Locations>
          </BreakpointContent>
