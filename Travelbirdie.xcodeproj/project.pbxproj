@@ -378,16 +378,16 @@
 					8354E0221BD3CB5D003593B8 = {
 						CreatedOnToolsVersion = 7.0.1;
 						DevelopmentTeam = WX8RBF8LDC;
-						LastSwiftMigration = 1010;
+						LastSwiftMigration = 1220;
 					};
 					8354E0361BD3CB5E003593B8 = {
 						CreatedOnToolsVersion = 7.0.1;
-						LastSwiftMigration = 1010;
+						LastSwiftMigration = 1220;
 						TestTargetID = 8354E0221BD3CB5D003593B8;
 					};
 					8354E0411BD3CB5E003593B8 = {
 						CreatedOnToolsVersion = 7.0.1;
-						LastSwiftMigration = 1010;
+						LastSwiftMigration = 1220;
 						TestTargetID = 8354E0221BD3CB5D003593B8;
 					};
 				};
@@ -694,7 +694,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -712,7 +712,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};
@@ -725,7 +725,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = hr.2plus2.TravelbirdieTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Travelbirdie.app/Travelbirdie";
 			};
 			name = Debug;
@@ -739,7 +739,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = hr.2plus2.TravelbirdieTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Travelbirdie.app/Travelbirdie";
 			};
 			name = Release;
@@ -752,7 +752,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = hr.2plus2.TravelbirdieUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TEST_TARGET_NAME = Travelbirdie;
 				USES_XCTRUNNER = YES;
 			};
@@ -766,7 +766,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = hr.2plus2.TravelbirdieUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TEST_TARGET_NAME = Travelbirdie;
 				USES_XCTRUNNER = YES;
 			};

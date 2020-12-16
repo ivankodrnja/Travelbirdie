@@ -102,19 +102,20 @@ class SearchHelper : NSObject {
                 return
             }
             
-            if let dictionary = parsedResult["results"] {
-       
+            if let dictionaryGeo = parsedResult["results"] {
                 
-                let geometry = dictionary.objectAt(0)["geometry"] as! [String:AnyObject]
+                let dictionaryGeoResult = dictionaryGeo[0] as! [String:AnyObject]
+                let geometry = dictionaryGeoResult["geometry"] as! [String:AnyObject]
     
                 let location = geometry["location"]
                 print(location!)
             }
             
             /* 6. Use the data! value(forKey:"geometry").value(forKey:"location").objectAtIndex(0)*/
-            if let dictionary = parsedResult["results"] {
+            if let dictionaryGeo = parsedResult["results"] {
                 
-                let geometry = dictionary.objectAt(0)["geometry"] as! [String:AnyObject]
+                let dictionaryGeoResult = dictionaryGeo[0] as! [String:AnyObject]
+                let geometry = dictionaryGeoResult["geometry"] as! [String:AnyObject]
                 
                 let location = geometry["location"]
                 
