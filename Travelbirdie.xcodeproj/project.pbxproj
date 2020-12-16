@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		17D2B4CAD961EEC96C533C83 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FD2A8DCEE6A3008A16FAD0E0 /* libPods.a */; };
+		56DAF13152ACB772CF7A38B4 /* libPods-Travelbirdie.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E1B5AB0D0F1273248D7C5B5E /* libPods-Travelbirdie.a */; };
 		8305758C1C7AD69C00AB0A11 /* AukDistrib.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8305758B1C7AD69C00AB0A11 /* AukDistrib.swift */; };
 		8305758E1C7AD81200AB0A11 /* MoaDistrib.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8305758D1C7AD81200AB0A11 /* MoaDistrib.swift */; };
 		830575901C7AD8C700AB0A11 /* ImageSliderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8305758F1C7AD8C700AB0A11 /* ImageSliderCell.swift */; };
@@ -75,8 +75,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		1071DD97E31198EECC9319F6 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
-		2A0A8238FC8C93BA95CBAF5F /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		269EB0ECE30FD88202DE3102 /* Pods-Travelbirdie.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Travelbirdie.debug.xcconfig"; path = "Target Support Files/Pods-Travelbirdie/Pods-Travelbirdie.debug.xcconfig"; sourceTree = "<group>"; };
+		5855EEB13705571764A6D995 /* Pods-Travelbirdie.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Travelbirdie.release.xcconfig"; path = "Target Support Files/Pods-Travelbirdie/Pods-Travelbirdie.release.xcconfig"; sourceTree = "<group>"; };
 		8305758B1C7AD69C00AB0A11 /* AukDistrib.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AukDistrib.swift; sourceTree = "<group>"; };
 		8305758D1C7AD81200AB0A11 /* MoaDistrib.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoaDistrib.swift; sourceTree = "<group>"; };
 		8305758F1C7AD8C700AB0A11 /* ImageSliderCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageSliderCell.swift; sourceTree = "<group>"; };
@@ -117,7 +117,7 @@
 		83F058201C783BE0002B3F1C /* ApartmentDetailTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApartmentDetailTableViewController.swift; sourceTree = "<group>"; };
 		83F058281C791705002B3F1C /* LabelTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LabelTableViewCell.swift; sourceTree = "<group>"; };
 		83F0582A1C791A2A002B3F1C /* MapTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapTableViewCell.swift; sourceTree = "<group>"; };
-		FD2A8DCEE6A3008A16FAD0E0 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		E1B5AB0D0F1273248D7C5B5E /* libPods-Travelbirdie.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Travelbirdie.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -125,7 +125,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				17D2B4CAD961EEC96C533C83 /* libPods.a in Frameworks */,
+				56DAF13152ACB772CF7A38B4 /* libPods-Travelbirdie.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -146,13 +146,21 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		33B0C5DBBCD458F94DA127AA /* Pods */ = {
+		3AA56B5E349B0539B8E98EA1 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				2A0A8238FC8C93BA95CBAF5F /* Pods.debug.xcconfig */,
-				1071DD97E31198EECC9319F6 /* Pods.release.xcconfig */,
+				269EB0ECE30FD88202DE3102 /* Pods-Travelbirdie.debug.xcconfig */,
+				5855EEB13705571764A6D995 /* Pods-Travelbirdie.release.xcconfig */,
 			);
-			name = Pods;
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		6E50A9847F5660D235393685 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				E1B5AB0D0F1273248D7C5B5E /* libPods-Travelbirdie.a */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		832D15221C00E18B0001AAA7 /* Search */ = {
@@ -170,8 +178,8 @@
 				8354E03A1BD3CB5E003593B8 /* TravelbirdieTests */,
 				8354E0451BD3CB5E003593B8 /* TravelbirdieUITests */,
 				8354E0241BD3CB5D003593B8 /* Products */,
-				33B0C5DBBCD458F94DA127AA /* Pods */,
-				D42A98612D76512E0878BA09 /* Frameworks */,
+				3AA56B5E349B0539B8E98EA1 /* Pods */,
+				6E50A9847F5660D235393685 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -299,14 +307,6 @@
 			name = Favorites;
 			sourceTree = "<group>";
 		};
-		D42A98612D76512E0878BA09 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				FD2A8DCEE6A3008A16FAD0E0 /* libPods.a */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -314,13 +314,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 8354E04B1BD3CB5E003593B8 /* Build configuration list for PBXNativeTarget "Travelbirdie" */;
 			buildPhases = (
-				F8ACFFE13EB4BF987D953020 /* Check Pods Manifest.lock */,
+				8CD628352DAEBE20B6B31A64 /* [CP] Check Pods Manifest.lock */,
 				8354E01F1BD3CB5D003593B8 /* Sources */,
 				8354E0201BD3CB5D003593B8 /* Frameworks */,
 				8354E0211BD3CB5D003593B8 /* Resources */,
 				83EF16F91C09FD3E002819A7 /* Embed Frameworks */,
-				6FE01A7C8AD9EF5B67422622 /* Embed Pods Frameworks */,
-				BA3756CFC93CADEEB621B813 /* Copy Pods Resources */,
+				C2469CE2379BCE47716CE0CB /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -373,7 +372,7 @@
 		8354E01B1BD3CB5D003593B8 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 1010;
+				LastUpgradeCheck = 1220;
 				ORGANIZATIONNAME = "Ivan Kodrnja";
 				TargetAttributes = {
 					8354E0221BD3CB5D003593B8 = {
@@ -395,7 +394,7 @@
 			};
 			buildConfigurationList = 8354E01E1BD3CB5D003593B8 /* Build configuration list for PBXProject "Travelbirdie" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
@@ -442,49 +441,46 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		6FE01A7C8AD9EF5B67422622 /* Embed Pods Frameworks */ = {
+		8CD628352DAEBE20B6B31A64 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputPaths = (
+			inputFileListPaths = (
 			);
-			name = "Embed Pods Frameworks";
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Travelbirdie-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		BA3756CFC93CADEEB621B813 /* Copy Pods Resources */ = {
+		C2469CE2379BCE47716CE0CB /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Travelbirdie/Pods-Travelbirdie-resources.sh",
+				"${PODS_ROOT}/GoogleMaps/Maps/Frameworks/GoogleMaps.framework/Resources/GoogleMaps.bundle",
+				"${PODS_ROOT}/GooglePlaces/Frameworks/GooglePlaces.framework/Resources/GooglePlaces.bundle",
 			);
-			name = "Copy Pods Resources";
+			name = "[CP] Copy Pods Resources";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleMaps.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GooglePlaces.bundle",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		F8ACFFE13EB4BF987D953020 /* Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Check Pods Manifest.lock";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Travelbirdie/Pods-Travelbirdie-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -580,6 +576,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -598,6 +595,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -635,6 +633,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -653,6 +652,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -682,7 +682,7 @@
 		};
 		8354E04C1BD3CB5E003593B8 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2A0A8238FC8C93BA95CBAF5F /* Pods.debug.xcconfig */;
+			baseConfigurationReference = 269EB0ECE30FD88202DE3102 /* Pods-Travelbirdie.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -700,7 +700,7 @@
 		};
 		8354E04D1BD3CB5E003593B8 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 1071DD97E31198EECC9319F6 /* Pods.release.xcconfig */;
+			baseConfigurationReference = 5855EEB13705571764A6D995 /* Pods-Travelbirdie.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;

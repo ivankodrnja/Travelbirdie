@@ -8,7 +8,7 @@
 
 import UIKit
 import GoogleMaps
-
+import GooglePlaces
 
 class PlacesSearchResultsController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
     
@@ -55,8 +55,12 @@ class PlacesSearchResultsController: UIViewController, UITableViewDelegate, UITa
             self.activityIndicator.startAnimating()
             activityIndicator.isHidden = false
             
+        // As per Google spec https://developers.google.com/places/ios-sdk/autocomplete?hl=en#getting_place_predictions_programmatically
+        let token = GMSAutocompleteSessionToken.init()
+        let filter = GMSAutocompleteFilter()
+        filter.type = .establishment
             let placesClient = GMSPlacesClient()
-        placesClient.autocompleteQuery(searchText, bounds: nil, filter: nil, callback: { (results, error) -> Void in
+        placesClient.findAutocompletePredictions(fromQuery: searchText, filter: filter, sessionToken: token, callback: { (results, error) -> Void in
                 self.searchResults.removeAll()
                 
                 if error != nil {
@@ -76,7 +80,7 @@ class PlacesSearchResultsController: UIViewController, UITableViewDelegate, UITa
                 }
                 
                 for result in results!{
-                    if let result = result as? GMSAutocompletePrediction{
+                    if let result = (result as? GMSAutocompletePrediction){
                         self.searchResults.append(result.attributedFullText.string)
                     }
                 }
@@ -85,8 +89,6 @@ class PlacesSearchResultsController: UIViewController, UITableViewDelegate, UITa
                 self.activityIndicator.stopAnimating()
                 
                 self.reloadDataWithArray(self.searchResults)
-                
-                
                 
             })
     }
