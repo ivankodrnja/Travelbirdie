@@ -3,7 +3,7 @@
 //  Travelbirdie
 //
 //  Created by Ivan Kodrnja on 18/10/15.
-//  Copyright © 2015-2012 Ivan Kodrnja . All rights reserved.
+//  Copyright © 2015-2012 Ivan Kodrnja. All rights reserved.
 //
 
 import UIKit
