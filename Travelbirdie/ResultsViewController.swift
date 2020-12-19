@@ -71,7 +71,7 @@ class ResultsViewController: UIViewController, UITableViewDelegate, UITableViewD
         } else {
             // if the image is not cached download it
             // get the first object in array of photos
-            var photo = apartment.photos![0]
+            let photo = apartment.photos![0]
             // get the large image from the first object in photos array
             let largePhotoUrl = photo["large"]
             

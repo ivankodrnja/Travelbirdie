@@ -194,6 +194,8 @@ class FavoritesViewController: UIViewController, UITableViewDelegate, UITableVie
                 tableView.deleteRows(at: [indexPath!], with: .fade)
                 tableView.insertRows(at: [newIndexPath!], with: .fade)
                 
+            default:
+                print("Default case")
             }
     }
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {

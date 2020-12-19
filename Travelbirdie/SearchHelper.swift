@@ -36,7 +36,7 @@ class SearchHelper : NSObject {
     struct Constants {
         
         static let baseSecureUrl: String = "https://maps.googleapis.com/maps/api/geocode/json?sensor=false&address="
-        static let ApplicationID = "AIzaSyCu-8E-ipkzCL_pnv_kZHMspFgf0qLaAWU"
+        static let PlacesApplicationID = "PUT_YOUR_GOOGLE_PLACES_API_KEY_HERE"
         static let Location = "Destination"
         static let Unknown = "Unknown"
         static let NumberOfGuests = "Number of guests"
@@ -48,7 +48,7 @@ class SearchHelper : NSObject {
         static let PleaseRetry = "Please retry!"
         static let BookNow = "BOOK NOW"
     }
-    
+
     func getDestinationDetails(_ correctedAddress : String, completionHandlerForDestinationDetails: @escaping (_ result: [String : AnyObject]?, _ error: NSError?) -> Void) {
         
         /* 1. Set the parameters */
@@ -136,4 +136,5 @@ class SearchHelper : NSObject {
         /* 7. Start the request */
         task.resume()
     }
+ 
 }

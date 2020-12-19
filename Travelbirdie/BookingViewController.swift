@@ -7,12 +7,12 @@
 //
 
 import UIKit
+import WebKit
 
-
-class BookingViewController: UIViewController, UIWebViewDelegate {
+class BookingViewController: UIViewController, WKNavigationDelegate {
 
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
-    @IBOutlet weak var webView: UIWebView!
+    @IBOutlet weak var webView: WKWebView!
     var urlString: String!
   
     
@@ -20,10 +20,10 @@ class BookingViewController: UIViewController, UIWebViewDelegate {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        self.webView.delegate = self
+        webView?.navigationDelegate = self
         let url = URL(string: self.urlString!)
         
-        self.webView.loadRequest(URLRequest(url: url!))
+        self.webView.load(URLRequest(url: url!))
         
     }
     
@@ -36,12 +36,12 @@ class BookingViewController: UIViewController, UIWebViewDelegate {
         self.navigationController?.hidesBarsOnSwipe = true
     }
     
-    func webViewDidStartLoad(_ webView: UIWebView) {
+    func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
         activityIndicator.startAnimating()
         activityIndicator.isHidden = false
     }
     
-    func webViewDidFinishLoad(_ webView: UIWebView) {
+    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         activityIndicator.stopAnimating()
         activityIndicator.isHidden = true
     }

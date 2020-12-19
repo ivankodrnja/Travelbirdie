@@ -36,6 +36,7 @@ class TravelbirdieSearchViewController: UIViewController, UITableViewDelegate, U
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        tableViewContainer.reloadData()
         
         // set default values for the search query
         ZilyoClient.sharedInstance().tempRequestParameters[ZilyoClient.Keys.location] = SearchHelper.Constants.Unknown as AnyObject
@@ -151,10 +152,6 @@ class TravelbirdieSearchViewController: UIViewController, UITableViewDelegate, U
             let controller = storyboard!.instantiateViewController(withIdentifier: "PlacesSearchResultsController") as! PlacesSearchResultsController
             self.present(controller, animated: true, completion: nil)
             
-            /*
-            let placesSearchController = PlacesSearchResultsController()
-            self.presentViewController(placesSearchController, animated: true, completion: nil)
-            */
             // select number of guests
         case 1:
             if(searchTapped){

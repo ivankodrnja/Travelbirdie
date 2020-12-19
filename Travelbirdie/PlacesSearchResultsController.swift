@@ -7,16 +7,19 @@
 //
 
 import UIKit
-import GoogleMaps
 import GooglePlaces
 
 class PlacesSearchResultsController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
     
     @IBOutlet weak var tableView: UITableView!
-    var searchResults = [String]()
+    
+    var searchResults = [String]() //store destination names
+    var placeIDArray = [String]() // store destination IDs
+    var googleSessionToken : GMSAutocompleteSessionToken?
     
     @IBOutlet weak var searchController: UISearchBar!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    
     
     
     override func viewDidLoad() {
@@ -26,8 +29,10 @@ class PlacesSearchResultsController: UIViewController, UITableViewDelegate, UITa
         
         self.edgesForExtendedLayout = UIRectEdge()
         
+   
         self.searchController.becomeFirstResponder()
         self.searchController.delegate = self
+        
     }
     
     
@@ -36,18 +41,25 @@ class PlacesSearchResultsController: UIViewController, UITableViewDelegate, UITa
         // Dispose of any resources that can be recreated.
     }
     
-    func reloadDataWithArray(_ array:[String]){
+    func reloadSearchResultsDataWithArray(_ array:[String]){
         self.searchResults = array
+        self.tableView.reloadData()
+    }
+    
+    func reloadDataWithArray(_ array:[String]){
+        self.placeIDArray = array
         self.tableView.reloadData()
     }
     
     func searchBar(_ searchBar: UISearchBar,
         textDidChange searchText: String){
-            
+              
             // if a user deletes previous entry clear the former results and don't alert with an error
             if searchText.isEmpty {
                 self.searchResults.removeAll()
-                self.reloadDataWithArray(self.searchResults)
+                self.placeIDArray.removeAll()
+                self.reloadSearchResultsDataWithArray(self.searchResults)
+                self.reloadDataWithArray(self.placeIDArray)
                 return
             }
             
@@ -57,11 +69,14 @@ class PlacesSearchResultsController: UIViewController, UITableViewDelegate, UITa
             
         // As per Google spec https://developers.google.com/places/ios-sdk/autocomplete?hl=en#getting_place_predictions_programmatically
         let token = GMSAutocompleteSessionToken.init()
+        self.googleSessionToken = token // save token for later to fetch place details
+        
         let filter = GMSAutocompleteFilter()
         filter.type = .establishment
-            let placesClient = GMSPlacesClient()
+        let placesClient = GMSPlacesClient()
         placesClient.findAutocompletePredictions(fromQuery: searchText, filter: filter, sessionToken: token, callback: { (results, error) -> Void in
                 self.searchResults.removeAll()
+                self.placeIDArray.removeAll()
                 
                 if error != nil {
                     print(error?.localizedDescription as Any)
@@ -80,24 +95,31 @@ class PlacesSearchResultsController: UIViewController, UITableViewDelegate, UITa
                 }
                 
                 for result in results!{
-                    if let result = (result as? GMSAutocompletePrediction){
-                        self.searchResults.append(result.attributedFullText.string)
-                    }
+                    /*
+                    var localResult = [String]()
+                    localResult.append(result.attributedFullText.string)
+                    localResult.append(result.placeID)
+                    self.searchResults.append(contentsOf: localResult)
+                    */
+                    // store place name to show in the table
+                    self.searchResults.append(result.attributedFullText.string)
+                    // store placeID to fetch place details - arrays are ordered lists so we will be able to retrieve corresponding placeID using indexPath.row
+                    self.placeIDArray.append(result.placeID)
                 }
                 self.view.alpha = 1
                 self.activityIndicator.hidesWhenStopped = true
                 self.activityIndicator.stopAnimating()
                 
-                self.reloadDataWithArray(self.searchResults)
+                self.reloadSearchResultsDataWithArray(self.searchResults)
+                self.reloadDataWithArray(self.placeIDArray)
                 
             })
     }
     
+    
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         self.dismiss(animated: true, completion: nil)
     }
-    
-    
     
     // MARK: - Table view data source
     
@@ -114,7 +136,7 @@ class PlacesSearchResultsController: UIViewController, UITableViewDelegate, UITa
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cellIdentifier", for: indexPath)
-        
+   
         cell.textLabel?.text = self.searchResults[indexPath.row]
         return cell
     }
@@ -122,26 +144,40 @@ class PlacesSearchResultsController: UIViewController, UITableViewDelegate, UITa
     
     func tableView(_ tableView: UITableView,
         didSelectRowAt indexPath: IndexPath){
-            
+            /*
             let correctedAddress:String! = self.searchResults[indexPath.row].addingPercentEncoding(withAllowedCharacters: CharacterSet.symbols)
-            
-            SearchHelper.sharedInstance().getDestinationDetails(correctedAddress){(result, error) in
-                
-                if error == nil {
-                    ZilyoClient.sharedInstance().tempRequestParameters[ZilyoClient.Keys.location] = self.searchResults[indexPath.row] as AnyObject
-                    ZilyoClient.sharedInstance().tempRequestParameters[ZilyoClient.Keys.latitude] = result!["lat"]
-                    ZilyoClient.sharedInstance().tempRequestParameters[ZilyoClient.Keys.longitude] = result!["lon"]
-                    
-                    print("Travelbirdie Location:\(ZilyoClient.sharedInstance().tempRequestParameters[ZilyoClient.Keys.location]!); Latitude:\(ZilyoClient.sharedInstance().tempRequestParameters[ZilyoClient.Keys.latitude]!) Longitude:\(ZilyoClient.sharedInstance().tempRequestParameters[ZilyoClient.Keys.longitude]!)")
-                    self.dismiss(animated: true, completion: nil)
-                    self.dismiss(animated: true, completion: nil)
-                    
-                } else {
-                    self.showAlertView(SearchHelper.Constants.PleaseRetry)
-                }
-                
+         */
+        print("Selected Place ID:\(self.placeIDArray[indexPath.row]) for the destination \(self.searchResults[indexPath.row])")
+        let placeID = self.placeIDArray[indexPath.row]
+        let placesClient = GMSPlacesClient()
+        // Specify the place data types to return.
+        let fields: GMSPlaceField = GMSPlaceField(rawValue: GMSPlaceField.coordinate.rawValue | GMSPlaceField.name.rawValue)
+        
+        placesClient.fetchPlace(fromPlaceID: placeID, placeFields: fields, sessionToken:self.googleSessionToken, callback: {(place: GMSPlace?, error: Error?) in
+            if let error = error {
+              print("An error occurred: \(error.localizedDescription)")
+              return
             }
+            if let place = place {
+                
+                print("The \(place.name!)'s coordinates are: \(place.coordinate.longitude) and \(place.coordinate.latitude)")
+                ZilyoClient.sharedInstance().tempRequestParameters[ZilyoClient.Keys.location] = self.searchResults[indexPath.row] as AnyObject
+                ZilyoClient.sharedInstance().tempRequestParameters[ZilyoClient.Keys.latitude] = place.coordinate.latitude as AnyObject
+                ZilyoClient.sharedInstance().tempRequestParameters[ZilyoClient.Keys.longitude] = place.coordinate.longitude as AnyObject
+                
+                print("Travelbirdie Location:\(ZilyoClient.sharedInstance().tempRequestParameters[ZilyoClient.Keys.location]!); Latitude:\(ZilyoClient.sharedInstance().tempRequestParameters[ZilyoClient.Keys.latitude]!) Longitude:\(ZilyoClient.sharedInstance().tempRequestParameters[ZilyoClient.Keys.longitude]!)")
+                self.dismiss(animated: true, completion: nil)
+            }
+          })
             
+        
+           
+                
+         
+                    
+            
+                
+          
             
     }
     
