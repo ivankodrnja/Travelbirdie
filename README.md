@@ -1,6 +1,9 @@
-﻿## Travelbirdie
+## Travelbirdie
 
 This is the capstone project towards Udacity's iOS Nanodegree. 
+
+## Important note as of beginning of 2021
+You need to put GooglePlaces API KEY in SearchHelper.swift. ZILYO API IS DEPRECATED SO SEARCH FUNCTION IS NOT SUPPORTED ANYMORE.
 
 ## Overview
 
@@ -25,7 +28,7 @@ Podfile is already present in the repository. After installation .xcworkspace is
 
 ## Special notes to Udacity reviewers
 
-Search results data is intentinolly not persisted as it can happen that the user makes frequent searchs and this way he gets fresh results. Persistence is enabled in the Favorites section of the app.
+Search results data is intentinally not persisted as it can happen that the user makes frequent searchs and this way he gets fresh results. Persistence is enabled in the Favorites section of the app.
 Google Maps API is installed using Cocoa Pods. 
 Image gallery slider in the apartment detail view is done using Auk image slideshow library from https://github.com/evgenyneu/Auk.
 Booking is intended to be done on the web page of the vacation renatal provider, in the app it is done using a webview. As there is no special agreement between me and providers, like Homeaway, I'm not able to share a specific booking link for each property. Once this app goes to its commercial phase, the process of booking will be made with a better user experience.
@@ -34,7 +37,7 @@ Booking is intended to be done on the web page of the vacation renatal provider,
 
 The MIT License (MIT)
 
-Copyright (c) 2015 Ivan Kodrnja
+Copyright (c) 2015-2021 Ivan Kodrnja
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
