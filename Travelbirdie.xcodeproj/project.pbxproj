@@ -377,16 +377,18 @@
 				TargetAttributes = {
 					8354E0221BD3CB5D003593B8 = {
 						CreatedOnToolsVersion = 7.0.1;
-						DevelopmentTeam = WX8RBF8LDC;
+						DevelopmentTeam = RZJ38BZUN6;
 						LastSwiftMigration = 1220;
 					};
 					8354E0361BD3CB5E003593B8 = {
 						CreatedOnToolsVersion = 7.0.1;
+						DevelopmentTeam = RZJ38BZUN6;
 						LastSwiftMigration = 1220;
 						TestTargetID = 8354E0221BD3CB5D003593B8;
 					};
 					8354E0411BD3CB5E003593B8 = {
 						CreatedOnToolsVersion = 7.0.1;
+						DevelopmentTeam = RZJ38BZUN6;
 						LastSwiftMigration = 1220;
 						TestTargetID = 8354E0221BD3CB5D003593B8;
 					};
@@ -688,6 +690,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = RZJ38BZUN6;
 				INFOPLIST_FILE = Travelbirdie/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = hr.2plus2.Travelbirdie;
@@ -706,6 +709,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = RZJ38BZUN6;
 				INFOPLIST_FILE = Travelbirdie/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = hr.2plus2.Travelbirdie;
@@ -720,6 +724,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
+				DEVELOPMENT_TEAM = RZJ38BZUN6;
 				INFOPLIST_FILE = TravelbirdieTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = hr.2plus2.TravelbirdieTests;
@@ -734,6 +740,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
+				DEVELOPMENT_TEAM = RZJ38BZUN6;
 				INFOPLIST_FILE = TravelbirdieTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = hr.2plus2.TravelbirdieTests;
@@ -747,6 +755,7 @@
 		8354E0521BD3CB5E003593B8 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				DEVELOPMENT_TEAM = RZJ38BZUN6;
 				INFOPLIST_FILE = TravelbirdieUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = hr.2plus2.TravelbirdieUITests;
@@ -761,6 +770,7 @@
 		8354E0531BD3CB5E003593B8 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				DEVELOPMENT_TEAM = RZJ38BZUN6;
 				INFOPLIST_FILE = TravelbirdieUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = hr.2plus2.TravelbirdieUITests;
